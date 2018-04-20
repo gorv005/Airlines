@@ -4,12 +4,15 @@ import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.media.ExifInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -21,12 +24,21 @@ import android.text.format.DateFormat;
 import android.text.style.StyleSpan;
 import android.util.Base64;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import com.truck.airlines.airlines.R;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -37,7 +49,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -769,6 +783,66 @@ public class Util {
         }
         return false;
     }
+    public static Dialog getProgressDialog(Context context, int msg) {
+        Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(R.layout.progress_dialog);
+        TextView text = (TextView) dialog.findViewById(R.id.tvMsg);
+        text.setText(context.getResources().getString(msg));
+        ImageView image = (ImageView) dialog.findViewById(R.id.ivLoader);
+        Animation animation = AnimationUtils.loadAnimation(context, R.anim.rotation);
+        image.setAnimation(animation);
+        animation.start();
+        return dialog;
+    }
+    public static Map<String, String> getHeader(Context context) {
+        HashMap<String, String> headers = new HashMap<String, String>();
+        String authToken = SharedPreference.getInstance(context).getString(C.AUTH_TOKEN);
+        headers.put("authtoken", authToken);
+        headers.put("Accept", "application/json");
+        headers.put("Content-Type", "application/json");
+        return headers;
+    }
+    public static void showAlert(Context context, String title, String msg, String btnText, int img) {
 
+
+        final LayoutInflater factory = LayoutInflater.from(context);
+        final View deleteDialogView = factory.inflate(
+                R.layout.dialog_alert, null);
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        //   dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(deleteDialogView);
+        dialog.setCancelable(false);
+
+        TextView tvMsg = (TextView) deleteDialogView.findViewById(R.id.tvMsg);
+        tvMsg.setText(msg);
+
+        TextView tvTitle = (TextView) deleteDialogView.findViewById(R.id.tvTitle);
+        tvTitle.setText(title);
+        ImageView ivAlertImage = (ImageView) deleteDialogView.findViewById(R.id.ivAlertImage);
+        ivAlertImage.setImageResource(img);
+        Button btnDone = (Button) deleteDialogView.findViewById(R.id.btnDone);
+        btnDone.setText(btnText);
+
+
+        btnDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                dialog.dismiss();
+
+            }
+        });
+
+
+        dialog.show();
+
+
+    }
 
 }

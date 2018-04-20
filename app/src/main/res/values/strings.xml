@@ -25,4 +25,8 @@
     <string name="state">State</string>
     <string name="continue_text">Continue</string>
     <string name="pan_digit">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</string>
+    <string name="please_wait">Please wait...</string>
+    <string name="alert">Alert</string>
+    <string name="ok">OK</string>
+    <string name="confirm_add">Confirm add</string>
 </resources>
