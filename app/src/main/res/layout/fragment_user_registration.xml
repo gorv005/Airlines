@@ -45,7 +45,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:background="@android:drawable/dialog_holo_light_frame"
                 android:orientation="vertical"
                 android:padding="20dp">
@@ -60,7 +59,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/first_name"
+                        android:inputType="textCapWords"
                         android:lines="1"
+                        android:maxLength="50"
                         android:maxLines="1"
                         android:textColor="@color/colortext" />
 
@@ -75,7 +76,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/last_name"
+                        android:inputType="textCapWords"
                         android:lines="1"
+                        android:maxLength="50"
                         android:maxLines="1"
                         android:textColor="@color/colortext" />
 
@@ -90,7 +93,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/email"
+                        android:inputType="textEmailAddress"
                         android:lines="1"
+                        android:maxLength="50"
                         android:maxLines="1"
                         android:textColor="@color/colortext" />
 
@@ -105,7 +110,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/transporter_name"
+                        android:inputType="textCapWords"
                         android:lines="1"
+                        android:maxLength="50"
                         android:maxLines="1"
                         android:textColor="@color/colortext" />
 
@@ -121,6 +128,9 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/pan_number"
                         android:lines="1"
+                        android:textAllCaps="true"
+                        android:digits="@string/pan_digit"
+                        android:maxLength="10"
                         android:maxLines="1"
                         android:textColor="@color/colortext" />
 
@@ -188,7 +198,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/pincode"
+                        android:inputType="number"
                         android:lines="1"
+                        android:maxLength="6"
                         android:maxLines="1"
                         android:textColor="@color/colortext" />
 
