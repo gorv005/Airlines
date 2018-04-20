@@ -1,6 +1,27 @@
 <resources>
-    <string name="app_name">Airlines</string>
+    <string name="app_name">TTS</string>
 
+    <string name="total_transport_system">Total Transport System</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enter_phone_number">Enter your phone number</string>
+    <string name="submit">SUBMIT</string>
+    <string name="transporter">Transporter</string>
+    <string name="select_user_type">Select User Type</string>
+    <string name="driver">Driver</string>
+    <string name="Customer">Customer</string>
+    <string name="personal_details">Personal Details</string>
+    <string name="first_name">First name</string>
+    <string name="transporter_name">Transporter Name</string>
+    <string name="pan_number">Pan number</string>
+    <string name="email">Email</string>
+    <string name="last_name">Last name</string>
+    <string name="address_details">Address Details</string>
+    <string name="address_line1">Address line 1</string>
+    <string name="address_line2">Address line 2</string>
+    <string name="pincode">Pincode</string>
+    <string name="city">City</string>
+    <string name="district">District</string>
+    <string name="state">State</string>
+    <string name="continue_text">Continue</string>
 </resources>

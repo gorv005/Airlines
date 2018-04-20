@@ -1,0 +1,56 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.truck.airlines.airlines.fragments.FragmentUserType">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/select_user_type"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnTransporterName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_button"
+            android:text="@string/transporter"
+            android:textColor="@color/colorwhite"
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/btnDrive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_button"
+            android:text="@string/driver"
+            android:textColor="@color/colorwhite"
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/btnCustomer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_button"
+            android:text="@string/Customer"
+            android:textColor="@color/colorwhite"
+            android:textSize="20dp" />
+    </LinearLayout>
+</LinearLayout>

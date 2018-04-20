@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.truck.airlines.airlines.fragments.FragmentOTP;
+import com.truck.airlines.airlines.fragments.FragmentSplash;
 import com.truck.airlines.airlines.utils.C;
 
 import java.util.List;
@@ -57,9 +59,13 @@ public class ActivityContainer extends AppCompatActivity {
                 fragmentTransaction.replace(R.id.container, fragment);
                 fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_SPLASH);
                 break;
+            case C.FRAGMENT_OTP:
+                getSupportActionBar().hide();
 
-
-
+                fragment = new FragmentOTP();
+                fragmentTransaction.replace(R.id.container, fragment);
+                fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_OTP);
+                break;
         }
         fragment.setArguments(bundle);
         fragmentTransaction.commit();
@@ -108,7 +114,7 @@ public class ActivityContainer extends AppCompatActivity {
 //                    case C.TAG_FRAGMENT_ADD_INQUEU:
 //                        tvTitle.setText(R.string.select_patient);
 //                        break;
-                    
+
                 }
             }
 

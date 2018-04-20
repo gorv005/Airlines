@@ -9,7 +9,9 @@ public interface C {
 
     String FRAGMENT_ACTION = "action";
     int FRAGMENT_SPLASH = 0;
+    int FRAGMENT_OTP =1 ;
     String BUNDLE = "bundle" ;
     String TAG_FRAGMENT_SPLASH ="TAG_FRAGMENT_SPLASH" ;
-    long SPLASH_LOADER_TIME =2000 ;
+    String TAG_FRAGMENT_OTP ="TAG_FRAGMENT_OTP" ;
+    long SPLASH_LOADER_TIME =500 ;
 }
