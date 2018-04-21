@@ -123,17 +123,25 @@ public class FragmentOTP extends Fragment {
                     Gson gson = new Gson();
                     Response responsePost = gson.fromJson(response.toString(), Response.class);
                     if (responsePost.getStatus().equals(C.STATUS_SUCCESS)) {
+                        showDialog(responsePost.getMessage());
+
 //                        if() {
 //                            doLogin(doctorRegistration.getEmail(), doctorRegistration.getPassword());
 //                        }
 //                        else {
 //                            doLogin(requestPatientRegistration.getEmail(),requestPatientRegistration.getPassword());
 //                        }
+
                         if (responsePost.getIsRegister()) {
+                            showDialog(responsePost.getMessage());
+
                             showScreenOTP();
                         } else {
 
                             Intent intent = new Intent(getActivity(), ActivityContainer.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString(C.MOBILE_NUMBER, etPhoneNumber.getText().toString());
+                            intent.putExtra(C.BUNDLE, bundle);
                             intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_REGISTER);
                             startActivity(intent);
                         }
@@ -154,7 +162,14 @@ public class FragmentOTP extends Fragment {
             public void notifyError(String requestType, String error) {
 
                 Log.e("Response :", error.toString());
-                dialog.dismiss();
+                showDialog("ServerError :"+error.toString());
+
+//
+//                Intent intent = new Intent(getActivity(), ActivityContainer.class);
+//                intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_USER_TYPE);
+//                startActivity(intent);
+//
+//                dialog.dismiss();
 
             }
         }, "otp", C.API_CHECK_NUMBER, Util.getHeader(getActivity()), obj);

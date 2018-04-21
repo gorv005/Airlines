@@ -128,8 +128,8 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/pan_number"
                         android:lines="1"
+                        android:inputType="number|text"
                         android:textAllCaps="true"
-                        android:digits="@string/pan_digit"
                         android:maxLength="10"
                         android:maxLines="1"
                         android:textColor="@color/colortext" />

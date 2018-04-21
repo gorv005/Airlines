@@ -8,14 +8,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.truck.airlines.airlines.fragments.FragmentOTP;
 import com.truck.airlines.airlines.fragments.FragmentSplash;
 import com.truck.airlines.airlines.fragments.FragmentUserRegistration;
+import com.truck.airlines.airlines.fragments.FragmentUserType;
 import com.truck.airlines.airlines.utils.C;
 
 import java.util.List;
@@ -26,8 +24,7 @@ public class ActivityContainer extends AppCompatActivity {
     private Fragment fragment;
     private Bundle bundle;
     private int fragmentAction;
-    private Button btnAddDependent;
-    private ImageView ivQuestionMark;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,14 +59,17 @@ public class ActivityContainer extends AppCompatActivity {
                 break;
             case C.FRAGMENT_OTP:
                 getSupportActionBar().hide();
-
                 fragment = new FragmentOTP();
                 fragmentTransaction.replace(R.id.container, fragment);
                 fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_OTP);
                 break;
 
+            case C.FRAGMENT_USER_TYPE:
+                fragment = new FragmentUserType();
+                fragmentTransaction.replace(R.id.container, fragment);
+                fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_USER_TYPE);
+                break;
             case C.FRAGMENT_REGISTER:
-                getSupportActionBar().hide();
                 fragment = new FragmentUserRegistration();
                 fragmentTransaction.replace(R.id.container, fragment);
                 fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_REGISTER);
@@ -81,8 +81,6 @@ public class ActivityContainer extends AppCompatActivity {
 
 
     }
-
-
 
 
     private Fragment getVisibleFragment() {
@@ -97,10 +95,8 @@ public class ActivityContainer extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Fragment fragment=getVisibleFragment();
+        Fragment fragment = getVisibleFragment();
 
-        btnAddDependent.setVisibility(View.GONE);
-        ivQuestionMark.setVisibility(View.GONE);
         getSupportFragmentManager().executePendingTransactions();
         if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
 

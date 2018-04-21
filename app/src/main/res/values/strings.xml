@@ -24,9 +24,19 @@
     <string name="district">District</string>
     <string name="state">State</string>
     <string name="continue_text">Continue</string>
-    <string name="pan_digit">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</string>
+
     <string name="please_wait">Please wait...</string>
     <string name="alert">Alert</string>
     <string name="ok">OK</string>
     <string name="confirm_add">Confirm add</string>
+    <string name="first_name_required">First name required</string>
+    <string name="first_name_should_be_more_then_3_character">First name should be more then 3 characters</string>
+    <string name="name_could_not_starts_with_dot">Name could not start with dot</string>
+    <string name="last_name_required">Last name required</string>
+    <string name="last_name_should_be_more_then_3_character">Last name should be more then 3 charaters</string>
+    <string name="email_is_required">Email is required</string>
+    <string name="please_enter_valid_email">Please enter valid email</string>
+    <string name="transporter_required">Transporter name required</string>
+    <string name="pan_number_required">Pan number required</string>
+    <string name="address_line_one">Please enter valid address</string>
 </resources>
