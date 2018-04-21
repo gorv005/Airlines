@@ -39,4 +39,17 @@
     <string name="transporter_required">Transporter name required</string>
     <string name="pan_number_required">Pan number required</string>
     <string name="address_line_one">Please enter valid address</string>
+    <string name="Load_Type">Load Type</string>
+    <string name="full_truck_load">Full truck Load</string>
+    <string name="part_truck_load">Part Truck Load</string>
+    <string name="scheduling_type">Scheduling Type</string>
+    <string name="one_time">One Time</string>
+    <string name="daily">Daily</string>
+    <string name="weekly">Weekly</string>
+    <string name="Source_city">Source City</string>
+    <string name="destination_city">Destination City</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="weight">Weight (Metric Tons)</string>
+    <string name="Materialtype">Material Type</string>
 </resources>

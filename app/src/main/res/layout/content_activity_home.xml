@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/content_activity_home"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:padding="20dp"
+        android:orientation="vertical"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <TextView
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:id="@+id/tvLoadType"
+        android:layout_width="wrap_content"
+        android:text="@string/Load_Type"
+        android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/rbFullLoad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/full_truck_load" />
+
+
+
+            <RadioButton
+                android:id="@+id/rbPartLoad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/part_truck_load" />
+        </LinearLayout>
+
+        <TextView
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:text="@string/scheduling_type"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/rbOneTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/one_time" />
+
+            <RadioButton
+                android:id="@+id/rbDaily"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/daily" />
+
+
+            <RadioButton
+                android:id="@+id/rbWeekly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/weekly" />
+        </LinearLayout>
+        <TextView
+            android:layout_marginTop="10dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:text="@string/Source_city"
+            android:layout_height="wrap_content" />
+
+
+            <EditText
+                android:id="@+id/etSourceCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapWords"
+                android:lines="1"
+                android:maxLength="50"
+                android:maxLines="1"
+                android:textColor="@color/colortext" />
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:text="@string/destination_city"
+            android:layout_height="wrap_content" />
+
+
+        <EditText
+            android:id="@+id/etDestinationCity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapWords"
+            android:lines="1"
+            android:maxLength="50"
+            android:maxLines="1"
+            android:textColor="@color/colortext" />
+        <TextView
+            android:layout_marginTop="10dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:text="@string/Materialtype"
+            android:layout_height="wrap_content" />
+
+
+        <EditText
+            android:id="@+id/etMaterialtype"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:drawableEnd="@drawable/down_arrow"
+            android:maxLength="50"
+            android:maxLines="1"
+            android:editable="false"
+            android:focusable="false"
+            android:textColor="@color/colortext" />
+
+        <Spinner
+            android:id="@+id/spinnerMaterialtype"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_gravity="start"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:gravity="start"
+            android:paddingStart="40dp"
+            android:visibility="invisible" />
+        <TextView
+            android:layout_marginTop="10dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:text="@string/weight"
+            android:layout_height="wrap_content" />
+
+
+        <EditText
+            android:id="@+id/etWeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:drawableEnd="@drawable/down_arrow"
+            android:maxLength="50"
+            android:maxLines="1"
+            android:editable="false"
+            android:focusable="false"
+            android:textColor="@color/colortext" />
+
+        <Spinner
+            android:id="@+id/spinnerWeight"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_gravity="start"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:gravity="start"
+            android:paddingStart="40dp"
+            android:visibility="invisible" />
+    </LinearLayout>
+</RelativeLayout>
