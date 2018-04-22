@@ -24,6 +24,8 @@ public interface C {
     String BASE_URL = "http://truck.dataheadstudio.com/api/users";
     String API_CHECK_NUMBER = BASE_URL + "/check_phone";
     String API_USER_LOGIN= BASE_URL + "/user_login ";
+    String API_USER_REGISTER= BASE_URL + "/user_register ";
+
     String STATUS_SUCCESS = "RDS001";
     String MOBILE_NUMBER ="MOBILE_NUMBER" ;
     String USER_TYPE = "USER_TYPE";
@@ -31,4 +33,5 @@ public interface C {
     String TRUCK_OPERATOR = "truckoperator";
     String TRANSPORTER = "transporter";
 
+    String API_GET_ADDRESS = "http://postalpincode.in/api/pincode/";
 }

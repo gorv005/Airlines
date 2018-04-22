@@ -47,10 +47,13 @@ public class User {
     private String panNo;
     @SerializedName("privacy")
     @Expose
-    private Boolean privacy;
+    private String privacy;
     @SerializedName("group")
     @Expose
     private String group;
+    @SerializedName("pincode")
+    @Expose
+    private String pincode;
 
     public String getTransportName() {
         return transportName;
@@ -148,11 +151,11 @@ public class User {
         this.panNo = panNo;
     }
 
-    public Boolean getPrivacy() {
+    public String getPrivacy() {
         return privacy;
     }
 
-    public void setPrivacy(Boolean privacy) {
+    public void setPrivacy(String privacy) {
         this.privacy = privacy;
     }
 
@@ -164,4 +167,11 @@ public class User {
         this.group = group;
     }
 
+    public void setPincode(String pincode) {
+        this.pincode = pincode;
+    }
+
+    public String getPincode() {
+        return pincode;
+    }
 }

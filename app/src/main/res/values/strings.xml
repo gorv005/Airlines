@@ -52,4 +52,5 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="weight">Weight (Metric Tons)</string>
     <string name="Materialtype">Material Type</string>
+    <string name="please_enter_valid_pincode">Please enter valid pincode</string>
 </resources>

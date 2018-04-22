@@ -5,11 +5,13 @@ import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.truck.airlines.airlines.interfaces.IResult;
 
@@ -42,7 +44,7 @@ public class VolleyService {
                     if (mResultCallback != null) {
                         Log.e("RESPONSE=",response.toString());
 
-                        mResultCallback.notifySuccess(requestType, response);
+                        mResultCallback.notifySuccess(requestType, response.toString());
                     }
                 }
             }, new Response.ErrorListener() {
@@ -70,5 +72,44 @@ public class VolleyService {
                 mResultCallback.notifyError(requestType, e.toString());
         }
     }
+
+    public void getRequest(IResult resultCallback, final String requestType, String url, final Map<String, String> headers) {
+        mResultCallback = resultCallback;
+        try {
+
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    if (mResultCallback != null) {
+                        Log.e("RESPONSE=",response.toString());
+
+                        mResultCallback.notifySuccess(requestType, response);
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    if (mResultCallback != null)
+                        mResultCallback.notifyError(requestType, volleyError.toString());
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    return headers;
+
+                }
+            };
+            RetryPolicy policy = new DefaultRetryPolicy(120000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+            stringRequest.setRetryPolicy(policy);
+            RequestQueue requestQueue = Volley.newRequestQueue(context);
+            requestQueue.add(stringRequest);
+
+
+        } catch (Exception e) {
+            if (mResultCallback != null)
+                mResultCallback.notifyError(requestType, e.toString());
+        }
+    }
+
 
 }

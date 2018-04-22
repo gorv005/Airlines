@@ -115,7 +115,7 @@ public class FragmentOTP extends Fragment {
         VolleyService volleyService = new VolleyService(getActivity());
         volleyService.postDataVolley(new IResult() {
             @Override
-            public void notifySuccess(String requestType, JSONObject response) {
+            public void notifySuccess(String requestType, String response) {
                 Log.e("Response :", response.toString());
                 dialog.dismiss();
 
@@ -123,7 +123,6 @@ public class FragmentOTP extends Fragment {
                     Gson gson = new Gson();
                     Response responsePost = gson.fromJson(response.toString(), Response.class);
                     if (responsePost.getStatus().equals(C.STATUS_SUCCESS)) {
-                        showDialog(responsePost.getMessage());
 
 //                        if() {
 //                            doLogin(doctorRegistration.getEmail(), doctorRegistration.getPassword());
@@ -134,7 +133,6 @@ public class FragmentOTP extends Fragment {
 
                         if (responsePost.getIsRegister()) {
                             showDialog(responsePost.getMessage());
-
                             showScreenOTP();
                         } else {
 
@@ -142,7 +140,7 @@ public class FragmentOTP extends Fragment {
                             Bundle bundle = new Bundle();
                             bundle.putString(C.MOBILE_NUMBER, etPhoneNumber.getText().toString());
                             intent.putExtra(C.BUNDLE, bundle);
-                            intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_REGISTER);
+                            intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_USER_TYPE);
                             startActivity(intent);
                         }
 
