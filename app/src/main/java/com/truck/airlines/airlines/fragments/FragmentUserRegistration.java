@@ -33,8 +33,6 @@ import com.truck.airlines.airlines.webservice.VolleyService;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -369,7 +367,15 @@ public class FragmentUserRegistration extends Fragment {
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        getActivity().onBackPressed();
+
+                        Intent intent = new Intent(getActivity(), ActivityContainer.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString(C.MOBILE_NUMBER, phone);
+                        intent.putExtra(C.BUNDLE, bundle);
+                        intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_OTP);
+                        startActivity(intent);
+                        getActivity().finish();
+
                     }
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)

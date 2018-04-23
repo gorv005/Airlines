@@ -97,10 +97,6 @@ public class ActivityContainer extends AppCompatActivity {
     public void onBackPressed() {
         Fragment fragment = getVisibleFragment();
 
-        if(fragment instanceof FragmentUserType)
-        {
-            onBackPressed();
-        }
         getSupportFragmentManager().executePendingTransactions();
         if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
 

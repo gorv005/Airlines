@@ -50,11 +50,19 @@ public class FragmentOTP extends Fragment {
     TextView tvMsg;
 
     private Dialog dialog;
+    private String phone;
 
     public FragmentOTP() {
         // Required empty public constructor
     }
 
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null)
+            phone = getArguments().getString(C.MOBILE_NUMBER, null);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -88,6 +96,10 @@ public class FragmentOTP extends Fragment {
             }
         });
 
+
+        if (phone != null) {
+            etPhoneNumber.setText(phone + "");
+        }
     }
 
     private void showDialog(String msg) {
@@ -226,6 +238,7 @@ public class FragmentOTP extends Fragment {
                         intent.putExtra(C.BUNDLE, bundle);
                         intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_USER_TYPE);
                         startActivity(intent);
+                        getActivity().finish();
 
 
                     } else {
