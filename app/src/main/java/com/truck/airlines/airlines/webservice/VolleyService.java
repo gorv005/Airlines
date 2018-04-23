@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
@@ -73,24 +72,25 @@ public class VolleyService {
         }
     }
 
-    public void getRequest(IResult resultCallback, final String requestType, String url, final Map<String, String> headers) {
+    public void getRequest(IResult resultCallback, final int requestType, String url, final Map<String, String> headers) {
         mResultCallback = resultCallback;
+        System.out.println("Header : "+headers.toString());
         try {
 
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            StringRequest stringRequest = new StringRequest(requestType, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     if (mResultCallback != null) {
                         Log.e("RESPONSE=",response.toString());
 
-                        mResultCallback.notifySuccess(requestType, response);
+                        mResultCallback.notifySuccess(requestType+"", response);
                     }
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     if (mResultCallback != null)
-                        mResultCallback.notifyError(requestType, volleyError.toString());
+                        mResultCallback.notifyError(requestType+"", volleyError.toString());
                 }
             }) {
                 @Override
@@ -107,7 +107,7 @@ public class VolleyService {
 
         } catch (Exception e) {
             if (mResultCallback != null)
-                mResultCallback.notifyError(requestType, e.toString());
+                mResultCallback.notifyError(requestType+"", e.toString());
         }
     }
 

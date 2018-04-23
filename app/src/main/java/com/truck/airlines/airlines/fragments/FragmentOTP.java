@@ -22,8 +22,10 @@ import com.truck.airlines.airlines.ActivityContainer;
 import com.truck.airlines.airlines.ActivityMain;
 import com.truck.airlines.airlines.R;
 import com.truck.airlines.airlines.interfaces.IResult;
+import com.truck.airlines.airlines.pojos.LoginUser;
 import com.truck.airlines.airlines.pojos.Response;
 import com.truck.airlines.airlines.utils.C;
+import com.truck.airlines.airlines.utils.SharedPreference;
 import com.truck.airlines.airlines.utils.Util;
 import com.truck.airlines.airlines.webservice.VolleyService;
 
@@ -229,9 +231,10 @@ public class FragmentOTP extends Fragment {
 
                 try {
                     Gson gson = new Gson();
-                    Response responsePost = gson.fromJson(response.toString(), Response.class);
+                    LoginUser responsePost = gson.fromJson(response.toString(), LoginUser.class);
                     if (responsePost.getStatus().equals(C.STATUS_SUCCESS)) {
 
+                        SharedPreference.getInstance(getActivity()).setLoginUser(C.USER,responsePost);
                         Intent intent = new Intent(getActivity(), ActivityMain.class);
                         Bundle bundle = new Bundle();
                         bundle.putString(C.MOBILE_NUMBER, etPhoneNumber.getText().toString());

@@ -21,10 +21,14 @@ public interface C {
 
     long SPLASH_LOADER_TIME = 500;
     String AUTH_TOKEN = "token";
-    String BASE_URL = "http://truck.dataheadstudio.com/api/users";
-    String API_CHECK_NUMBER = BASE_URL + "/check_phone";
-    String API_USER_LOGIN= BASE_URL + "/user_login ";
-    String API_USER_REGISTER= BASE_URL + "/user_register ";
+    String BASE_URL = "http://truck.dataheadstudio.com/api/";
+    String API_CHECK_NUMBER = BASE_URL + "users/check_phone";
+    String API_USER_LOGIN= BASE_URL + "users/user_login";
+    String API_USER_REGISTER= BASE_URL + "users/user_register";
+    String API_MATERIAL_TYPE= BASE_URL + "trucks/material_type";
+    String API_TRUCK_TYPE= BASE_URL + "trucks/truck_type";
+    String API_WEIGHT= BASE_URL + "trucks/weight";
+
 
     String STATUS_SUCCESS = "RDS001";
     String MOBILE_NUMBER ="MOBILE_NUMBER" ;
@@ -34,4 +38,5 @@ public interface C {
     String TRANSPORTER = "transporter";
 
     String API_GET_ADDRESS = "http://postalpincode.in/api/pincode/";
+    String USER = "user";
 }

@@ -3,7 +3,6 @@ package com.truck.airlines.airlines;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -28,15 +27,20 @@ import com.google.gson.Gson;
 import com.truck.airlines.airlines.adapter.AdapterSideMenu;
 import com.truck.airlines.airlines.interfaces.IResult;
 import com.truck.airlines.airlines.pojos.Location;
+import com.truck.airlines.airlines.pojos.ResponseList;
 import com.truck.airlines.airlines.utils.C;
-import com.truck.airlines.airlines.utils.SharedPreference;
 import com.truck.airlines.airlines.utils.Util;
 import com.truck.airlines.airlines.webservice.VolleyService;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ActivityMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class ActivityMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.etSourcePincode)
@@ -71,8 +75,10 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
     @BindView(R.id.lvMenuItem)
     ListView listView;
     private AdapterSideMenu adapterSideMenu;
-    private Dialog dialog;
     boolean isSource=false;
+    private ArrayList truckList;
+    private Dialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +104,9 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
         adapterSideMenu = new AdapterSideMenu(this, Util.getSideMenuList());
         listView.setAdapter(adapterSideMenu);
+
+
+        getTruckList();
     }
 
 
@@ -271,7 +280,7 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
                 dialog.dismiss();
 
             }
-        }, "otp", C.API_GET_ADDRESS+pincode, Util.getHeader(this));
+        }, 2, C.API_GET_ADDRESS+pincode, Util.getHeader(this));
 
 
     }
@@ -344,5 +353,53 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         return false;
+    }
+
+
+    public void getTruckList() {
+
+
+        dialog = Util.getProgressDialog(this, R.string.please_wait);
+        dialog.setCancelable(false);
+        dialog.show();
+
+
+        JSONObject obj = null;
+        try {
+            obj = new JSONObject("{\"ff\":\"ff\"}");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        VolleyService volleyService = new VolleyService(this);
+        volleyService.postDataVolley(new IResult() {
+            @Override
+            public void notifySuccess(String requestType, String response) {
+                Log.e("Response :", response.toString());
+                dialog.dismiss();
+
+                Gson gson = new Gson();
+                try {
+                    ResponseList alArrayList = gson.fromJson(response, ResponseList.class);
+
+                    System.out.println("Total Truck :" + alArrayList.getData().size());
+
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void notifyError(String requestType, String error) {
+
+                Log.e("Response :", error.toString());
+                dialog.dismiss();
+
+
+            }
+        }, "truckType", C.API_WEIGHT, Util.getHeader(this), obj);
+
     }
 }

@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.android.volley.Request;
 import com.google.gson.Gson;
 import com.truck.airlines.airlines.ActivityContainer;
 import com.truck.airlines.airlines.BuildConfig;
@@ -216,8 +217,6 @@ public class FragmentUserRegistration extends Fragment {
             }
         }, "otp", C.API_USER_REGISTER, Util.getHeader(getActivity()), obj);
 
-
-
     }
 
     public boolean isAllValid() {
@@ -350,7 +349,7 @@ public class FragmentUserRegistration extends Fragment {
                 dialog.dismiss();
 
             }
-        }, "otp", C.API_GET_ADDRESS+pincode, Util.getHeader(getActivity()));
+        }, Request.Method.GET, C.API_GET_ADDRESS+pincode, Util.getHeader(getActivity()));
 
 
     }

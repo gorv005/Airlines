@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.google.gson.Gson;
+import com.truck.airlines.airlines.pojos.LoginUser;
+
 import java.io.Serializable;
 
 /**
@@ -13,6 +16,7 @@ public class SharedPreference implements Serializable {
 
     private Context context;
     private static volatile SharedPreference savePreferenceAndData;
+    private LoginUser loginUser;
 
     public static SharedPreference getInstance(Context context) {
         if (savePreferenceAndData == null) {
@@ -90,21 +94,22 @@ public class SharedPreference implements Serializable {
     }
 
 
-//    public User getUser(String key) {
-//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-//        String data = prefs.getString(key, null);
-//        Gson gson = new Gson();
-//        return gson.fromJson(data, User.class);
-//
-//    }
-//
-//    public void setUser(String key, User user) {
-//        Gson gson = new Gson();
-//        String json = gson.toJson(user);
-//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-//        prefs.edit().putString(key, json).apply();
-//
-//    }
+
+    public LoginUser getLoginUser(String key) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String data = prefs.getString(key, null);
+        Gson gson = new Gson();
+        return gson.fromJson(data, LoginUser.class);
+
+    }
+
+    public void setLoginUser(String key, LoginUser user) {
+        Gson gson = new Gson();
+        String json = gson.toJson(user);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefs.edit().putString(key, json).apply();
+
+    }
 
 }
 
