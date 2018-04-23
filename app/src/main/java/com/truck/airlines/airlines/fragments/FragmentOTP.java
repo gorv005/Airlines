@@ -15,9 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.truck.airlines.airlines.ActivityContainer;
+import com.truck.airlines.airlines.ActivityMain;
 import com.truck.airlines.airlines.R;
 import com.truck.airlines.airlines.interfaces.IResult;
 import com.truck.airlines.airlines.pojos.Response;
@@ -42,6 +44,11 @@ public class FragmentOTP extends Fragment {
     Button btnSubmit;
     @BindView(R.id.etPhoneNumber)
     EditText etPhoneNumber;
+    @BindView(R.id.etOTP)
+    EditText etOTP;
+    @BindView(R.id.tvMsg)
+    TextView tvMsg;
+
     private Dialog dialog;
 
     public FragmentOTP() {
@@ -65,10 +72,18 @@ public class FragmentOTP extends Fragment {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Util.isValidMobile(etPhoneNumber.getText().toString())) {
-                    otpRequest(etPhoneNumber.getText().toString());
+                if (etPhoneNumber.getVisibility() == View.VISIBLE) {
+                    if (Util.isValidMobile(etPhoneNumber.getText().toString())) {
+                        otpRequest(etPhoneNumber.getText().toString());
+                    } else {
+                        showDialog("Please enter valid number");
+                    }
                 } else {
-                    showDialog("Please enter valid number");
+                    if (etOTP.getText().toString().length() > 0) {
+                        login(etPhoneNumber.getText().toString(), etOTP.getText().toString());
+                    } else {
+                        showDialog("Please enter password");
+                    }
                 }
             }
         });
@@ -124,15 +139,8 @@ public class FragmentOTP extends Fragment {
                     Response responsePost = gson.fromJson(response.toString(), Response.class);
                     if (responsePost.getStatus().equals(C.STATUS_SUCCESS)) {
 
-//                        if() {
-//                            doLogin(doctorRegistration.getEmail(), doctorRegistration.getPassword());
-//                        }
-//                        else {
-//                            doLogin(requestPatientRegistration.getEmail(),requestPatientRegistration.getPassword());
-//                        }
-
                         if (responsePost.getIsRegister()) {
-                            showDialog(responsePost.getMessage());
+//                            showDialog(responsePost.getMessage());
                             showScreenOTP();
                         } else {
 
@@ -160,7 +168,7 @@ public class FragmentOTP extends Fragment {
             public void notifyError(String requestType, String error) {
 
                 Log.e("Response :", error.toString());
-                showDialog("ServerError :"+error.toString());
+                showDialog("ServerError :" + error.toString());
 
 //
 //                Intent intent = new Intent(getActivity(), ActivityContainer.class);
@@ -176,6 +184,77 @@ public class FragmentOTP extends Fragment {
     }
 
     private void showScreenOTP() {
+        etOTP.setVisibility(View.VISIBLE);
+        etPhoneNumber.setVisibility(View.GONE);
+        tvMsg.setText(R.string.please_enter_password);
+
+
+    }
+
+    private void login(String phone, String password) {
+
+        dialog = Util.getProgressDialog(getActivity(), R.string.please_wait);
+        dialog.setCancelable(false);
+        dialog.show();
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("phone", phone);
+        hashMap.put("password", password);
+        final Gson gson = new Gson();
+        String json = gson.toJson(hashMap);
+        JSONObject obj = null;
+        try {
+            obj = new JSONObject(json);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        VolleyService volleyService = new VolleyService(getActivity());
+        volleyService.postDataVolley(new IResult() {
+            @Override
+            public void notifySuccess(String requestType, String response) {
+                Log.e("Response :", response.toString());
+                dialog.dismiss();
+
+                try {
+                    Gson gson = new Gson();
+                    Response responsePost = gson.fromJson(response.toString(), Response.class);
+                    if (responsePost.getStatus().equals(C.STATUS_SUCCESS)) {
+
+                        Intent intent = new Intent(getActivity(), ActivityMain.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString(C.MOBILE_NUMBER, etPhoneNumber.getText().toString());
+                        intent.putExtra(C.BUNDLE, bundle);
+                        intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_USER_TYPE);
+                        startActivity(intent);
+
+
+                    } else {
+//                        Util.showAlert(getActivity(), getString(R.string.alert), responsePost.getMessage(), getString(R.string.ok), R.drawable.warning);
+                        showDialog(responsePost.getMessage());
+                    }
+
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void notifyError(String requestType, String error) {
+
+                Log.e("Response :", error.toString());
+                showDialog("ServerError :" + error.toString());
+
+//
+//                Intent intent = new Intent(getActivity(), ActivityContainer.class);
+//                intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_USER_TYPE);
+//                startActivity(intent);
+//
+//                dialog.dismiss();
+
+            }
+        }, "otp", C.API_USER_LOGIN, Util.getHeader(getActivity()), obj);
 
 
     }

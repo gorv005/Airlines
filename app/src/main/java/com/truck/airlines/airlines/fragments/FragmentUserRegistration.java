@@ -189,6 +189,7 @@ public class FragmentUserRegistration extends Fragment {
                         showDialog(responsePost.getMessage());
 
 
+
                     } else {
 //                        Util.showAlert(getActivity(), getString(R.string.alert), responsePost.getMessage(), getString(R.string.ok), R.drawable.warning);
                         showDialog(responsePost.getMessage());
@@ -368,6 +369,7 @@ public class FragmentUserRegistration extends Fragment {
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
+                        getActivity().onBackPressed();
                     }
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)

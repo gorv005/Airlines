@@ -59,7 +59,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight=".36">
+            android:layout_weight=".40">
 
 
             <RelativeLayout
@@ -76,6 +76,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tvMsg"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/enter_phone_number"
@@ -84,6 +85,16 @@
 
                     <EditText
                         android:id="@+id/etPhoneNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:gravity="center"
+                        android:maxLength="10"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/etOTP"
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
@@ -97,7 +108,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="15dp"
                         android:background="@drawable/bg_button"
                         android:minWidth="120dp"
                         android:text="@string/submit"
