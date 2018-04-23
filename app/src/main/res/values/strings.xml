@@ -54,4 +54,20 @@
     <string name="Materialtype">Material Type</string>
     <string name="please_enter_valid_pincode">Please enter valid pincode</string>
     <string name="please_enter_password">Please enter password</string>
+    <string name="my_part_load">My Part Loads</string>
+    <string name="gps_suvidha">GPS Suvidha</string>
+    <string name="toll_calculator">Toll Calculator</string>
+    <string name="search_truck">Search Truck</string>
+    <string name="profile">Profile</string>
+    <string name="kyc_document">KYC Documents</string>
+    <string name="Alternate_mobile_no">Alternate Mobile No</string>
+    <string name="my_loads">My Loads</string>
+    <string name="my_part_loads">My Part Loads</string>
+    <string name="about_us">About Us</string>
+    <string name="policy_info">Policy Info</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="logout">Logout</string>
+    <string name="truck_type">Truck Type</string>
+    <string name="date_of_load">Date Of Load</string>
+    <string name="no_of_trucks">No Of Trucks</string>
 </resources>

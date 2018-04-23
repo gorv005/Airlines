@@ -39,6 +39,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.truck.airlines.airlines.R;
+import com.truck.airlines.airlines.pojos.SideMenuItem;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -46,6 +47,7 @@ import java.sql.Time;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -159,6 +161,28 @@ public class Util {
 
     }
 
+    public static ArrayList<SideMenuItem> getSideMenuList() {
+        ArrayList<SideMenuItem> sideMenuItems = new ArrayList<SideMenuItem>();
+
+            sideMenuItems.add(new SideMenuItem(R.string.my_part_load, R.drawable.truck_left));
+        sideMenuItems.add(new SideMenuItem(R.string.gps_suvidha, R.drawable.truck_left));
+        sideMenuItems.add(new SideMenuItem(R.string.search_truck, R.drawable.truck_left));
+        sideMenuItems.add(new SideMenuItem(R.string.profile, R.drawable.truck_left));
+        sideMenuItems.add(new SideMenuItem(R.string.kyc_document, R.drawable.truck_left));
+        sideMenuItems.add(new SideMenuItem(R.string.Alternate_mobile_no, R.drawable.truck_left));
+        sideMenuItems.add(new SideMenuItem(R.string.my_loads, R.drawable.truck_left));
+        sideMenuItems.add(new SideMenuItem(R.string.my_part_loads, R.drawable.truck_left));
+        sideMenuItems.add(new SideMenuItem(R.string.gps_suvidha, R.drawable.truck_left));
+         sideMenuItems.add(new SideMenuItem(R.string.toll_calculator, R.drawable.truck_left));
+            sideMenuItems.add(new SideMenuItem(R.string.about_us, R.drawable.truck_left));
+            sideMenuItems.add(new SideMenuItem(R.string.policy_info, R.drawable.truck_left));
+            sideMenuItems.add(new SideMenuItem(R.string.contact_us, R.drawable.truck_left));
+            sideMenuItems.add(new SideMenuItem(R.string.logout, R.drawable.truck_left));
+
+
+
+        return sideMenuItems;
+    }
 
     public static String getMessageTimn(long mili) {
 //        SimpleDateFormat sdf;

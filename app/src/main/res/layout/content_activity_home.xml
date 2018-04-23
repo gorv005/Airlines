@@ -7,8 +7,13 @@
     android:background="@color/white"
     android:orientation="vertical">
 
+    <ScrollView
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <LinearLayout
-        android:padding="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:orientation="vertical"
         android:layout_marginTop="5dp"
         android:layout_width="match_parent"
@@ -17,11 +22,14 @@
         android:textSize="16sp"
         android:textStyle="bold"
         android:id="@+id/tvLoadType"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:text="@string/Load_Type"
         android:layout_height="wrap_content" />
 
         <LinearLayout
+            android:visibility="gone"
+
             android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -46,6 +54,8 @@
         </LinearLayout>
 
         <TextView
+            android:visibility="gone"
+
             android:textSize="16sp"
             android:textStyle="bold"
             android:layout_width="wrap_content"
@@ -53,6 +63,8 @@
             android:layout_height="wrap_content" />
 
         <LinearLayout
+            android:visibility="gone"
+
             android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -96,7 +108,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textCapWords"
-                android:lines="1"
                 android:maxLength="50"
                 android:maxLines="1"
                 android:textColor="@color/colortext" />
@@ -115,7 +126,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textCapWords"
-            android:lines="1"
             android:maxLength="50"
             android:maxLines="1"
             android:textColor="@color/colortext" />
@@ -132,7 +142,6 @@
             android:id="@+id/etMaterialtype"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:lines="1"
             android:drawableEnd="@drawable/down_arrow"
             android:maxLength="50"
             android:maxLines="1"
@@ -166,7 +175,6 @@
             android:lines="1"
             android:drawableEnd="@drawable/down_arrow"
             android:maxLength="50"
-            android:maxLines="1"
             android:editable="false"
             android:focusable="false"
             android:textColor="@color/colortext" />
@@ -181,5 +189,88 @@
             android:gravity="start"
             android:paddingStart="40dp"
             android:visibility="invisible" />
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:text="@string/truck_type"
+            android:layout_height="wrap_content" />
+
+
+        <EditText
+            android:id="@+id/etTruckType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:drawableEnd="@drawable/down_arrow"
+            android:maxLength="50"
+            android:editable="false"
+            android:focusable="false"
+            android:textColor="@color/colortext" />
+
+        <Spinner
+            android:id="@+id/spinnerTruckType"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_gravity="start"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:gravity="start"
+            android:paddingStart="40dp"
+            android:visibility="invisible" />
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:text="@string/date_of_load"
+            android:layout_height="wrap_content" />
+
+
+        <EditText
+            android:id="@+id/etDateOfLoad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:drawableEnd="@drawable/destination"
+            android:maxLength="50"
+            android:editable="false"
+            android:focusable="false"
+            android:textColor="@color/colortext" />
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:text="@string/no_of_trucks"
+            android:layout_height="wrap_content" />
+
+
+        <EditText
+            android:id="@+id/etNoOfTruck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:drawableEnd="@drawable/down_arrow"
+            android:maxLength="50"
+            android:editable="false"
+            android:focusable="false"
+            android:textColor="@color/colortext" />
+
+        <Spinner
+            android:id="@+id/spinnerNoOfTruck"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_gravity="start"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:gravity="start"
+            android:paddingStart="40dp"
+            android:visibility="invisible" />
     </LinearLayout>
+    </ScrollView>
 </RelativeLayout>
