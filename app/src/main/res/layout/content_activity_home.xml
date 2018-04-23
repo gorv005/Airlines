@@ -27,6 +27,7 @@
             android:layout_height="wrap_content">
 
             <RadioButton
+                android:theme="@style/MyRaidoButton"
                 android:id="@+id/rbFullLoad"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -36,6 +37,7 @@
 
 
             <RadioButton
+                android:theme="@style/MyRaidoButton"
                 android:id="@+id/rbPartLoad"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -56,6 +58,7 @@
             android:layout_height="wrap_content">
 
             <RadioButton
+                android:theme="@style/MyRaidoButton"
                 android:id="@+id/rbOneTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -63,6 +66,7 @@
                 android:text="@string/one_time" />
 
             <RadioButton
+                android:theme="@style/MyRaidoButton"
                 android:id="@+id/rbDaily"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -71,6 +75,7 @@
 
 
             <RadioButton
+                android:theme="@style/MyRaidoButton"
                 android:id="@+id/rbWeekly"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
