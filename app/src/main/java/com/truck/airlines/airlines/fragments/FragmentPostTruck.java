@@ -1,44 +1,38 @@
-package com.truck.airlines.airlines;
+package com.truck.airlines.airlines.fragments;
+
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.google.gson.Gson;
-import com.truck.airlines.airlines.adapter.AdapterSideMenu;
+import com.truck.airlines.airlines.R;
 import com.truck.airlines.airlines.interfaces.IResult;
 import com.truck.airlines.airlines.pojos.Location;
 import com.truck.airlines.airlines.utils.C;
-import com.truck.airlines.airlines.utils.SharedPreference;
 import com.truck.airlines.airlines.utils.Util;
 import com.truck.airlines.airlines.webservice.VolleyService;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
-public class ActivityMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class FragmentPostTruck extends Fragment {
+
     @BindView(R.id.etSourcePincode)
     EditText etSourcePincode;
     @BindView(R.id.etSourceCity)
@@ -47,83 +41,44 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
     EditText etDestinationPincode;
     @BindView(R.id.etDestinationCity)
     EditText etDestinationCity;
-    @BindView(R.id.etMaterialtype)
-    EditText etMaterialtype;
     @BindView(R.id.etWeight)
     EditText etWeight;
     @BindView(R.id.etTruckType)
     EditText etTruckType;
-    @BindView(R.id.etDateOfLoad)
-    EditText etDateOfLoad;
-    @BindView(R.id.etNoOfTruck)
-    EditText etNoOfTruck;
-    @BindView(R.id.spinnerMaterialtype)
-    Spinner spinnerMaterialtype;
-    @BindView(R.id.spinnerWeight)
+    @BindView(R.id.etDateOfPost)
+    EditText etDateOfPost;
+    @BindView(R.id.etDateOfPost)
+    EditText etVehiclePart1;
+    @BindView(R.id.etVehiclePart1)
+    EditText etVehiclePart2;
+    @BindView(R.id.etVehiclePart2)
+    EditText etVehiclePart3;
+    @BindView(R.id.etVehiclePart3)
+    EditText etDriverName;
+    @BindView(R.id.etDriverName)
+    EditText etMobileNumber;
+    @BindView(R.id.etMobileNumber)
     Spinner spinnerWeight;
     @BindView(R.id.spinnerTruckType)
     Spinner spinnerTruckType;
-    @BindView(R.id.spinnerNoOfTruck)
-    Spinner spinnerNoOfTruck;
 
     @BindView(R.id.btnSubmit)
     Button btnSubmit;
-    @BindView(R.id.lvMenuItem)
-    ListView listView;
-    private AdapterSideMenu adapterSideMenu;
     private Dialog dialog;
     boolean isSource=false;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
-
-        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        toggle.setDrawerIndicatorEnabled(false);
-        toggle.setHomeAsUpIndicator(R.drawable.menu);
-        toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawer.openDrawer(GravityCompat.START);
-            }
-        });
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        adapterSideMenu = new AdapterSideMenu(this, Util.getSideMenuList());
-        listView.setAdapter(adapterSideMenu);
+    public FragmentPostTruck() {
+        // Required empty public constructor
     }
 
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_post_truck, container, false);
+    }
     void initialize(){
-        spinnerMaterialtype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        spinnerNoOfTruck.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
         spinnerTruckType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -146,6 +101,7 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
 
             }
         });
+
 
         etSourcePincode.addTextChangedListener(new TextWatcher() {
             @Override
@@ -200,7 +156,6 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
             }
         });
 
-
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -209,18 +164,17 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
                 }
             }
         });
+
     }
-
-
 
     private void getAddress(String pincode) {
 
-        dialog = Util.getProgressDialog(this, R.string.please_wait);
+        dialog = Util.getProgressDialog(getActivity(), R.string.please_wait);
         dialog.setCancelable(false);
         dialog.show();
 
 
-        VolleyService volleyService = new VolleyService(this);
+        VolleyService volleyService = new VolleyService(getActivity());
         volleyService.getRequest(new IResult() {
             @Override
             public void notifySuccess(String requestType, String response) {
@@ -270,7 +224,7 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
                 dialog.dismiss();
 
             }
-        }, "otp", C.API_GET_ADDRESS+pincode, Util.getHeader(this));
+        }, "otp", C.API_GET_ADDRESS+pincode, Util.getHeader(getActivity()));
 
 
     }
@@ -278,9 +232,9 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
 
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+            builder = new AlertDialog.Builder(getActivity(), android.R.style.Theme_Material_Dialog_Alert);
         } else {
-            builder = new AlertDialog.Builder(this);
+            builder = new AlertDialog.Builder(getActivity());
         }
         builder.setTitle("Alert")
                 .setMessage(msg)
@@ -294,7 +248,6 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
                 .show();
     }
 
-
     public boolean isAllValid() {
 
         if (etSourcePincode.getText().toString().length() == 0) {
@@ -305,11 +258,7 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
             etDestinationPincode.setError(this.getResources().getString(R.string.required_field));
             etDestinationPincode.requestFocus();
             return false;
-        } else  if (etMaterialtype.getText().toString().length() == 0) {
-            etMaterialtype.setError(this.getResources().getString(R.string.required_field));
-            etMaterialtype.requestFocus();
-            return false;
-        }else  if (etWeight.getText().toString().length() == 0) {
+        } else  if (etWeight.getText().toString().length() == 0) {
             etWeight.setError(this.getResources().getString(R.string.required_field));
             etWeight.requestFocus();
             return false;
@@ -317,13 +266,33 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
             etTruckType.setError(this.getResources().getString(R.string.required_field));
             etTruckType.requestFocus();
             return false;
-        } else  if (etDateOfLoad.getText().toString().length() == 0) {
-            etDateOfLoad.setError(this.getResources().getString(R.string.required_field));
-            etDateOfLoad.requestFocus();
+        } else  if (etVehiclePart1.getText().toString().length() == 0) {
+            etVehiclePart1.setError(this.getResources().getString(R.string.required_field));
+            etVehiclePart1.requestFocus();
             return false;
-        } else  if (etNoOfTruck.getText().toString().length() == 0) {
-            etNoOfTruck.setError(this.getResources().getString(R.string.required_field));
-            etNoOfTruck.requestFocus();
+        } else  if (etVehiclePart2.getText().toString().length() == 0) {
+            etVehiclePart2.setError(this.getResources().getString(R.string.required_field));
+            etVehiclePart2.requestFocus();
+            return false;
+        }
+        else  if (etVehiclePart3.getText().toString().length() == 0) {
+            etVehiclePart3.setError(this.getResources().getString(R.string.required_field));
+            etVehiclePart3.requestFocus();
+            return false;
+        }
+        else  if (etDriverName.getText().toString().length() == 0) {
+            etDriverName.setError(this.getResources().getString(R.string.required_field));
+            etDriverName.requestFocus();
+            return false;
+        }
+        else  if (etMobileNumber.getText().toString().length() == 0) {
+            etMobileNumber.setError(this.getResources().getString(R.string.required_field));
+            etMobileNumber.requestFocus();
+            return false;
+        }
+        else  if (etMobileNumber.getText().toString().length() <14) {
+            etMobileNumber.setError(this.getResources().getString(R.string.enter_valid_phone_number));
+            etMobileNumber.requestFocus();
             return false;
         }
         else  if (etSourcePincode.getText().toString().length() < 6) {
@@ -336,12 +305,8 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
             etDestinationPincode.requestFocus();
             return false;
         }
-
         return true;
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
-    }
+
 }
