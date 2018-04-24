@@ -28,6 +28,8 @@ public class FragmentUserType extends Fragment {
     Button btnDrive;
     @BindView(R.id.btnCustomer)
     Button btnCustomer;
+    @BindView(R.id.btnOfflineLogin)
+    Button btnOfflineLogin;
     private String phone;
 
     public FragmentUserType() {
@@ -77,6 +79,19 @@ public class FragmentUserType extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString(C.MOBILE_NUMBER, phone);
                 bundle.putString(C.USER_TYPE, C.TRUCK_OPERATOR);
+                intent.putExtra(C.BUNDLE, bundle);
+                intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_REGISTER);
+                startActivity(intent);
+            }
+        });
+        btnCustomer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getActivity(), ActivityContainer.class);
+                Bundle bundle = new Bundle();
+                bundle.putString(C.MOBILE_NUMBER, phone);
+                bundle.putString(C.USER_TYPE, C.CUSTOMER);
                 intent.putExtra(C.BUNDLE, bundle);
                 intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_REGISTER);
                 startActivity(intent);

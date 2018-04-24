@@ -12,10 +12,10 @@ import com.truck.airlines.airlines.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FragmentLogin extends Fragment {
+public class FragmentOfflineOTP extends Fragment {
 
 
-    public FragmentLogin() {
+    public FragmentOfflineOTP() {
         // Required empty public constructor
     }
 

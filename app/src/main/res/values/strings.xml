@@ -91,4 +91,12 @@
     <string name="no_pincode_found">Please enter valid pincode</string>
     <string name="connect_to_internet">Please connect to internet</string>
     <string name="total_truck">Total Trcuks</string>
+    <string name="or">OR</string>
+    <string name="offline">Offline Register</string>
+    <string name="enter_otp">Enter your OTP</string>
+    <string name="pancard">Pancard of Firm/Account Holder*</string>
+    <string name="passport_photo">Passport Size Photo</string>
+    <string name="visiting_card">Visiting Card</string>
+    <string name="aadhar_number">Aadhaar Number</string>
+    <string name="noFileChoosen">No file chosen</string>
 </resources>
