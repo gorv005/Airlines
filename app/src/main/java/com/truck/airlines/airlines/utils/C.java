@@ -12,6 +12,8 @@ public interface C {
     int FRAGMENT_OTP = 1;
     int  FRAGMENT_USER_TYPE = 2;
     int FRAGMENT_REGISTER = 3;
+    int FRAGMENT_POST_TRUCK = 4;
+
     String BUNDLE = "bundle";
     String TAG_FRAGMENT_SPLASH = "TAG_FRAGMENT_SPLASH";
     String TAG_FRAGMENT_OTP = "TAG_FRAGMENT_OTP";
@@ -39,4 +41,5 @@ public interface C {
 
     String API_GET_ADDRESS = "http://postalpincode.in/api/pincode/";
     String USER = "user";
+    String TAG_FRAGMENT_POST_TRUCK = "TAG_FRAGMENT_POST_TRUCK";
 }

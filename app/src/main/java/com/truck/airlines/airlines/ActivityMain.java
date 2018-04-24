@@ -3,6 +3,8 @@ package com.truck.airlines.airlines;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,17 +19,28 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import com.android.volley.Request;
 import com.google.gson.Gson;
 import com.truck.airlines.airlines.adapter.AdapterSideMenu;
 import com.truck.airlines.airlines.interfaces.IResult;
+import com.truck.airlines.airlines.pojos.GeneralPojoKeyValue;
 import com.truck.airlines.airlines.pojos.Location;
-import com.truck.airlines.airlines.pojos.ResponseList;
+import com.truck.airlines.airlines.pojos.MaterialType;
+import com.truck.airlines.airlines.pojos.MaterialTypeResponse;
+import com.truck.airlines.airlines.pojos.SideMenuItem;
+import com.truck.airlines.airlines.pojos.TruckType;
+import com.truck.airlines.airlines.pojos.TruckTypeResponse;
+import com.truck.airlines.airlines.pojos.WeightResponse;
+import com.truck.airlines.airlines.pojos.WeightType;
 import com.truck.airlines.airlines.utils.C;
 import com.truck.airlines.airlines.utils.Util;
 import com.truck.airlines.airlines.webservice.VolleyService;
@@ -36,6 +49,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -78,6 +93,22 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
     boolean isSource=false;
     private ArrayList truckList;
     private Dialog dialog;
+    List<TruckType> truckTypesList;
+    List<WeightType> weightTypesList;
+    List<MaterialType> materialTypesList;
+    String[] noOfTruck = new String[]{
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10"
+
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,9 +135,25 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
         adapterSideMenu = new AdapterSideMenu(this, Util.getSideMenuList());
         listView.setAdapter(adapterSideMenu);
+        initialize();
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (drawer.isDrawerOpen(GravityCompat.START)) {
+                    drawer.closeDrawer(GravityCompat.START);
+                }
+                SideMenuItem sideMenuItem = adapterSideMenu.getItem(position);
 
-
-        getTruckList();
+                if (sideMenuItem.getNameResourse() == R.string.gps_suvidha) {
+                    Intent intent = new Intent(ActivityMain.this, ActivityContainer.class);
+                    intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_POST_TRUCK);
+                    startActivity(intent);
+                }
+            }
+        });
+        getMatirialType();
+        //getMatirialType();
+      //  getWeightList();
     }
 
 
@@ -115,7 +162,10 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
         spinnerMaterialtype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                            if(position!=0){
+                                etMaterialtype.setText(materialTypesList.get(position).getMaterialName());
+                                getWeightList();
+                            }
             }
 
             @Override
@@ -126,7 +176,9 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
         spinnerNoOfTruck.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                    if(position!=0){
+                        etNoOfTruck.setText(noOfTruck[position]);
+                    }
             }
 
             @Override
@@ -134,10 +186,72 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
 
             }
         });
+        etNoOfTruck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                spinnerNoOfTruck.performClick();
+            }
+        });
+        final List<String> specialityList = new ArrayList<>(Arrays.asList(noOfTruck));
+        final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
+                this,R.layout.spinner_item_new,specialityList){
+            @Override
+            public boolean isEnabled(int position){
+                if(position == 0)
+                {
+                    // Disable the first item from Spinner
+                    // First item will be use for hint
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            @Override
+            public View getDropDownView(int position, View convertView,
+                                        ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if(position == 0){
+                    // Set the hint text color gray
+                    tv.setTextColor(Color.GRAY);
+                }
+                else {
+                    tv.setTextColor(Color.BLACK);
+                }
+                return view;
+            }
+        };
+        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerNoOfTruck.setAdapter(spinnerArrayAdapter);
+
+
+        etTruckType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                spinnerTruckType.performClick();
+            }
+        });
+        etWeight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                spinnerWeight.performClick();
+            }
+        });
+        etMaterialtype.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                spinnerMaterialtype.performClick();
+            }
+        });
         spinnerTruckType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position!=0){
+                    etTruckType.setText(truckTypesList.get(position).getTruckType());
 
+                }
             }
 
             @Override
@@ -148,7 +262,10 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
         spinnerWeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                if(position!=0){
+                    etWeight.setText(weightTypesList.get(position).getWeight());
+                    getTruckType();
+                }
             }
 
             @Override
@@ -243,11 +360,11 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
                     if (responsePost.getStatus().equals("Success")) {
 
                         if(isSource) {
-                            etSourceCity.setText(responsePost.getPostOffice().get(0).getName() + ", " + responsePost.getPostOffice().get(0).getTaluk() + ", " +
+                            etSourceCity.setText(responsePost.getPostOffice().get(0).getName() + ", " +
                                     responsePost.getPostOffice().get(0).getDistrict() + ", " + responsePost.getPostOffice().get(0).getState());
                         }
                         else {
-                            etDestinationCity.setText(responsePost.getPostOffice().get(0).getName() + ", " + responsePost.getPostOffice().get(0).getTaluk() + ", " +
+                            etDestinationCity.setText(responsePost.getPostOffice().get(0).getName()  + ", " +
                                     responsePost.getPostOffice().get(0).getDistrict() + ", " + responsePost.getPostOffice().get(0).getState());
 
                         }
@@ -280,7 +397,7 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
                 dialog.dismiss();
 
             }
-        }, 2, C.API_GET_ADDRESS+pincode, Util.getHeader(this));
+        }, Request.Method.GET, C.API_GET_ADDRESS+pincode, Util.getHeader(this));
 
 
     }
@@ -354,9 +471,7 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         return false;
     }
-
-
-    public void getTruckList() {
+    public void getMatirialType() {
 
 
         dialog = Util.getProgressDialog(this, R.string.please_wait);
@@ -380,10 +495,192 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
 
                 Gson gson = new Gson();
                 try {
-                    ResponseList alArrayList = gson.fromJson(response, ResponseList.class);
+                    MaterialTypeResponse alArrayList = gson.fromJson(response, MaterialTypeResponse.class);
 
-                    System.out.println("Total Truck :" + alArrayList.getData().size());
+                    if(alArrayList.getStatusCode().equals(C.STATUS_SUCCESS)) {
+                        MaterialType truckType=new MaterialType();
+                        truckType.setId(0);
+                        truckType.setMaterialName(getString(R.string.select));
+                        alArrayList.getData().set(0,truckType);
+                        materialTypesList=alArrayList.getData();
+                        setspinnerItemForMaterial(materialTypesList);
+                    }
 
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void notifyError(String requestType, String error) {
+
+                Log.e("Response :", error.toString());
+                dialog.dismiss();
+
+
+            }
+        }, "truckType", C.API_MATERIAL_TYPE, Util.getHeader(this), obj);
+
+    }
+    void setspinnerItemForMaterial(List<MaterialType> list){
+
+        etMaterialtype.setHint(getString(R.string.select));
+        final ArrayAdapter<MaterialType> spinnerDisabilityArrayAdapter = new ArrayAdapter<MaterialType>(
+                this, R.layout.spinner_item_new, list) {
+            @Override
+            public boolean isEnabled(int position) {
+                if (position == 0) {
+                    // Disable the first item from Spinner
+                    // First item will be use for hint
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView,
+                                        ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if (position == 0) {
+                    // Set the hint text color gray
+                    tv.setTextColor(Color.GRAY);
+                } else {
+                    tv.setTextColor(Color.BLACK);
+                }
+                return view;
+            }
+        };
+        spinnerDisabilityArrayAdapter.setDropDownViewResource(R.layout.dialog_spinner_dropdown_item);
+        spinnerMaterialtype.setAdapter(spinnerDisabilityArrayAdapter);
+    }
+
+    public void getTruckType() {
+
+
+        dialog = Util.getProgressDialog(this, R.string.please_wait);
+        dialog.setCancelable(false);
+        dialog.show();
+
+
+        JSONObject obj = null;
+        try {
+            obj = new JSONObject("{\"ff\":\"ff\"}");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        VolleyService volleyService = new VolleyService(this);
+        volleyService.postDataVolley(new IResult() {
+            @Override
+            public void notifySuccess(String requestType, String response) {
+                Log.e("Response :", response.toString());
+                dialog.dismiss();
+
+                Gson gson = new Gson();
+                try {
+                    TruckTypeResponse alArrayList = gson.fromJson(response, TruckTypeResponse.class);
+                    if(alArrayList.getStatusCode().equals(C.STATUS_SUCCESS)) {
+                        TruckType truckType=new TruckType();
+                        truckType.setId(0);
+                        truckType.setTruckType(getString(R.string.select));
+                        alArrayList.getData().set(0,truckType);
+                        truckTypesList=alArrayList.getData();
+                        setspinnerItemForTruck(truckTypesList);
+                    }
+
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void notifyError(String requestType, String error) {
+
+                Log.e("Response :", error.toString());
+                dialog.dismiss();
+
+
+            }
+        }, "truckType", C.API_TRUCK_TYPE, Util.getHeader(this), obj);
+
+    }
+
+
+    void setspinnerItemForTruck(List<TruckType> list){
+
+
+
+       etTruckType.setHint(getString(R.string.select));
+        final ArrayAdapter<TruckType> spinnerDisabilityArrayAdapter = new ArrayAdapter<TruckType>(
+                this, R.layout.spinner_item_new, list) {
+            @Override
+            public boolean isEnabled(int position) {
+                if (position == 0) {
+                    // Disable the first item from Spinner
+                    // First item will be use for hint
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView,
+                                        ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if (position == 0) {
+                    // Set the hint text color gray
+                    tv.setTextColor(Color.GRAY);
+                } else {
+                    tv.setTextColor(Color.BLACK);
+                }
+                return view;
+            }
+        };
+        spinnerDisabilityArrayAdapter.setDropDownViewResource(R.layout.dialog_spinner_dropdown_item);
+        spinnerTruckType.setAdapter(spinnerDisabilityArrayAdapter);
+    }
+    public void getWeightList() {
+
+
+        dialog = Util.getProgressDialog(this, R.string.please_wait);
+        dialog.setCancelable(false);
+        dialog.show();
+
+
+        JSONObject obj = null;
+        try {
+            obj = new JSONObject("{\"ff\":\"ff\"}");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        VolleyService volleyService = new VolleyService(this);
+        volleyService.postDataVolley(new IResult() {
+            @Override
+            public void notifySuccess(String requestType, String response) {
+                Log.e("Response :", response.toString());
+                dialog.dismiss();
+
+                Gson gson = new Gson();
+                try {
+                    WeightResponse alArrayList = gson.fromJson(response, WeightResponse.class);
+
+                    if(alArrayList.getStatusCode().equals(C.STATUS_SUCCESS)) {
+                        WeightType truckType=new WeightType();
+                        truckType.setId(0);
+                        truckType.setWeight(getString(R.string.select));
+                        alArrayList.getData().set(0,truckType);
+                        weightTypesList=alArrayList.getData();
+                        setspinnerItemForWeight(weightTypesList);
+                    }
                 } catch (Exception e) {
 
                     e.printStackTrace();
@@ -402,4 +699,39 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
         }, "truckType", C.API_WEIGHT, Util.getHeader(this), obj);
 
     }
+
+    void setspinnerItemForWeight(List<WeightType> list){
+
+        etWeight.setHint(getString(R.string.select));
+        final ArrayAdapter<WeightType> spinnerDisabilityArrayAdapter = new ArrayAdapter<WeightType>(
+                this, R.layout.spinner_item_new, list) {
+            @Override
+            public boolean isEnabled(int position) {
+                if (position == 0) {
+                    // Disable the first item from Spinner
+                    // First item will be use for hint
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView,
+                                        ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if (position == 0) {
+                    // Set the hint text color gray
+                    tv.setTextColor(Color.GRAY);
+                } else {
+                    tv.setTextColor(Color.BLACK);
+                }
+                return view;
+            }
+        };
+        spinnerDisabilityArrayAdapter.setDropDownViewResource(R.layout.dialog_spinner_dropdown_item);
+        spinnerWeight.setAdapter(spinnerDisabilityArrayAdapter);
+    }
+
 }

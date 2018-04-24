@@ -823,8 +823,10 @@ public class Util {
     }
     public static Map<String, String> getHeader(Context context) {
         HashMap<String, String> headers = new HashMap<String, String>();
-        String authToken = SharedPreference.getInstance(context).getLoginUser(C.USER).getToken();
-        headers.put("authtoken", authToken);
+        if(SharedPreference.getInstance(context).getLoginUser(C.USER)!=null) {
+            String authToken = SharedPreference.getInstance(context).getLoginUser(C.USER).getToken();
+            headers.put("authtoken", authToken);
+        }
         headers.put("Accept", "application/json");
         headers.put("Content-Type", "application/json");
         return headers;

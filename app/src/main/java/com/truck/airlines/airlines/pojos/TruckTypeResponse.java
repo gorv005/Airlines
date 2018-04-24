@@ -7,9 +7,10 @@ package com.truck.airlines.airlines.pojos;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ResponseList {
+public class TruckTypeResponse implements Serializable {
 
     @SerializedName("status_code")
     @Expose

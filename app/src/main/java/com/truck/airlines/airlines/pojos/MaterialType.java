@@ -9,14 +9,14 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class TruckType implements Serializable{
+public class MaterialType implements Serializable {
 
     @SerializedName("id")
     @Expose
     private Integer id;
-    @SerializedName("truck_type")
+    @SerializedName("material_name")
     @Expose
-    private String truckType;
+    private String materialName;
 
     public Integer getId() {
         return id;
@@ -26,15 +26,16 @@ public class TruckType implements Serializable{
         this.id = id;
     }
 
-    public String getTruckType() {
-        return truckType;
+    public String getMaterialName() {
+        return materialName;
     }
 
-    public void setTruckType(String truckType) {
-        this.truckType = truckType;
+    public void setMaterialName(String materialName) {
+        this.materialName = materialName;
     }
+
     @Override
     public String toString() {
-        return truckType;
+        return materialName;
     }
 }
