@@ -161,7 +161,7 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
                 }
                 SideMenuItem sideMenuItem = adapterSideMenu.getItem(position);
 
-                if (sideMenuItem.getNameResourse() == R.string.gps_suvidha) {
+                if (sideMenuItem.getNameResourse() == R.string.post_truck) {
                     Intent intent = new Intent(ActivityMain.this, ActivityContainer.class);
                     intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_POST_TRUCK);
                     startActivity(intent);
