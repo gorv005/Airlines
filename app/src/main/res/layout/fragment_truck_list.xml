@@ -20,6 +20,8 @@
 
     <ListView
         android:id="@+id/lvTruckList"
+        android:dividerHeight="0dp"
+        android:divider="@null"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
