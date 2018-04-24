@@ -5,6 +5,9 @@
         <!-- Customize your theme here. -->
     </style>
     <style name="AppTheme.NoActionBar">
+        <item name="android:titleTextStyle">@style/MyTheme.ActionBar.TitleTextStyle</item>
+        <item name="titleTextStyle">@style/MyTheme.ActionBar.TitleTextStyle</item>
+        <item name="colorControlNormal">@color/white</item>
         <item name="android:windowBackground">@color/colorwhite</item>
         <item name="android:typeface">monospace</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -31,5 +34,8 @@
         <item name="colorAccent">@color/colorbutton</item>
         <item name="android:textColorPrimaryDisableOnly">@color/grey</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat</item>
+    </style>
+    <style name="MyTheme.ActionBar.TitleTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" >
+        <item name="android:textColor">#FFFFFF</item>
     </style>
 </resources>

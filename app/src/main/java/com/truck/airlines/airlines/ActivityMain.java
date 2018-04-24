@@ -32,7 +32,6 @@ import com.android.volley.Request;
 import com.google.gson.Gson;
 import com.truck.airlines.airlines.adapter.AdapterSideMenu;
 import com.truck.airlines.airlines.interfaces.IResult;
-import com.truck.airlines.airlines.pojos.GeneralPojoKeyValue;
 import com.truck.airlines.airlines.pojos.Location;
 import com.truck.airlines.airlines.pojos.MaterialType;
 import com.truck.airlines.airlines.pojos.MaterialTypeResponse;
@@ -42,6 +41,7 @@ import com.truck.airlines.airlines.pojos.TruckTypeResponse;
 import com.truck.airlines.airlines.pojos.WeightResponse;
 import com.truck.airlines.airlines.pojos.WeightType;
 import com.truck.airlines.airlines.utils.C;
+import com.truck.airlines.airlines.utils.SharedPreference;
 import com.truck.airlines.airlines.utils.Util;
 import com.truck.airlines.airlines.webservice.VolleyService;
 
@@ -89,6 +89,12 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
     Button btnSubmit;
     @BindView(R.id.lvMenuItem)
     ListView listView;
+
+    @BindView(R.id.tvName)
+    TextView tvName;
+    @BindView(R.id.tvMobile)
+    TextView tvMobile;
+
     private AdapterSideMenu adapterSideMenu;
     boolean isSource=false;
     private ArrayList truckList;
@@ -149,8 +155,18 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
                     intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_POST_TRUCK);
                     startActivity(intent);
                 }
+                else if (sideMenuItem.getNameResourse() == R.string.profile) {
+                    Intent intent = new Intent(ActivityMain.this, ActivityContainer.class);
+                    intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_PROFILE);
+                    startActivity(intent);
+                }
             }
         });
+
+
+        tvName.setText(SharedPreference.getInstance(this).getLoginUser(C.USER).getData().getFirstName()+" "+SharedPreference.getInstance(this).getLoginUser(C.USER).getData().getLastName());
+        tvMobile.setText(SharedPreference.getInstance(this).getLoginUser(C.USER).getData().getPhone());
+
         getMatirialType();
         //getMatirialType();
       //  getWeightList();

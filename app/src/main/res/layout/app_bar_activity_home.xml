@@ -22,7 +22,25 @@
             app:contentInsetStart="0dp"
             app:contentInsetStartWithNavigation="0dp"
             >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal">
 
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:textStyle="bold"
+                    android:text="@string/total_transport_system"
+                    android:textColor="@color/colorwhite"
+                    android:textSize="18sp" />
+
+
+            </RelativeLayout>
         </android.support.v7.widget.Toolbar>
 
 

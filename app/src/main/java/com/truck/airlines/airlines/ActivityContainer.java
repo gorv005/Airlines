@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.truck.airlines.airlines.fragments.FragmentOTP;
 import com.truck.airlines.airlines.fragments.FragmentPostTruck;
+import com.truck.airlines.airlines.fragments.FragmentProfile;
 import com.truck.airlines.airlines.fragments.FragmentSplash;
 import com.truck.airlines.airlines.fragments.FragmentUserRegistration;
 import com.truck.airlines.airlines.fragments.FragmentUserType;
@@ -79,6 +80,11 @@ public class ActivityContainer extends AppCompatActivity {
                 fragment = new FragmentPostTruck();
                 fragmentTransaction.replace(R.id.container, fragment);
                 fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_POST_TRUCK);
+                break;
+            case C.FRAGMENT_PROFILE:
+                fragment = new FragmentProfile();
+                fragmentTransaction.replace(R.id.container, fragment);
+                fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_PROFILE);
                 break;
         }
         fragment.setArguments(bundle);
