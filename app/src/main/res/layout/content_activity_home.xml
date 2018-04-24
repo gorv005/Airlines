@@ -110,7 +110,7 @@
             android:inputType="number"
             android:maxLength="6"
             android:maxLines="1"
-            android:textColor="@color/colortext" />
+            android:textColor="@color/black" />
         <TextView
             android:layout_marginTop="10dp"
             android:textSize="16sp"
@@ -128,7 +128,7 @@
             android:editable="false"
             android:focusable="false"
             android:maxLines="1"
-            android:textColor="@color/colortext" />
+            android:textColor="@color/black" />
         <TextView
             android:layout_marginTop="10dp"
             android:textSize="16sp"
@@ -145,7 +145,7 @@
             android:inputType="number"
             android:maxLength="6"
             android:maxLines="1"
-            android:textColor="@color/colortext" />
+            android:textColor="@color/black" />
         <TextView
             android:layout_marginTop="10dp"
             android:textSize="16sp"
@@ -163,7 +163,7 @@
             android:editable="false"
             android:focusable="false"
             android:maxLines="1"
-            android:textColor="@color/colortext" />
+            android:textColor="@color/black" />
         <TextView
             android:layout_marginTop="10dp"
             android:textSize="16sp"
@@ -182,7 +182,7 @@
             android:maxLines="1"
             android:editable="false"
             android:focusable="false"
-            android:textColor="@color/colortext" />
+            android:textColor="@color/black" />
 
         <Spinner
             android:id="@+id/spinnerMaterialtype"
@@ -212,7 +212,7 @@
             android:maxLength="50"
             android:editable="false"
             android:focusable="false"
-            android:textColor="@color/colortext" />
+            android:textColor="@color/black" />
 
         <Spinner
             android:id="@+id/spinnerWeight"
@@ -243,7 +243,7 @@
             android:maxLength="50"
             android:editable="false"
             android:focusable="false"
-            android:textColor="@color/colortext" />
+            android:textColor="@color/black" />
 
         <Spinner
             android:id="@+id/spinnerTruckType"
@@ -274,7 +274,7 @@
             android:maxLength="50"
             android:editable="false"
             android:focusable="false"
-            android:textColor="@color/colortext" />
+            android:textColor="@color/black" />
 
         <TextView
             android:layout_marginTop="10dp"
@@ -294,7 +294,7 @@
             android:maxLength="50"
             android:editable="false"
             android:focusable="false"
-            android:textColor="@color/colortext" />
+            android:textColor="@color/black" />
 
         <Spinner
             android:id="@+id/spinnerNoOfTruck"

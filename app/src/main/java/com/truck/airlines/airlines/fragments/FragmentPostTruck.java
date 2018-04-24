@@ -2,6 +2,7 @@ package com.truck.airlines.airlines.fragments;
 
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -10,14 +11,17 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
+import android.text.Selection;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -28,6 +32,9 @@ import com.truck.airlines.airlines.R;
 import com.truck.airlines.airlines.interfaces.IResult;
 import com.truck.airlines.airlines.pojos.Location;
 import com.truck.airlines.airlines.pojos.MaterialType;
+import com.truck.airlines.airlines.pojos.PostLoad;
+import com.truck.airlines.airlines.pojos.PostTruck;
+import com.truck.airlines.airlines.pojos.Response;
 import com.truck.airlines.airlines.pojos.TruckType;
 import com.truck.airlines.airlines.pojos.TruckTypeResponse;
 import com.truck.airlines.airlines.pojos.WeightResponse;
@@ -39,9 +46,12 @@ import com.truck.airlines.airlines.webservice.VolleyService;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -89,7 +99,10 @@ public class FragmentPostTruck extends Fragment {
     boolean isSource=false;
     List<TruckType> truckTypesList;
     List<WeightType> weightTypesList;
+    String weightId,truckTypeId,mNoOfTruck,dateOFLoad;
+
     String[] noOfTruck = new String[]{
+            "Select",
             "1",
             "2",
             "3",
@@ -102,6 +115,8 @@ public class FragmentPostTruck extends Fragment {
             "10"
 
     };
+    Calendar myCalendar = Calendar.getInstance(Locale.US);
+
     public FragmentPostTruck() {
         // Required empty public constructor
     }
@@ -124,6 +139,61 @@ public class FragmentPostTruck extends Fragment {
     }
 
     void initialize(){
+        etMobileNumber.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (etMobileNumber.getText().length() == 0)
+                    etMobileNumber.setText(C.NUMBER_FORMAT);
+                return false;
+            }
+        });
+        etMobileNumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+
+                if (!hasFocus && etMobileNumber.getText().toString().equals(C.NUMBER_FORMAT))
+                    etMobileNumber.setText("");
+            }
+        });
+        etMobileNumber.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+            /*    if (s != null && s.length() == 5 && (s.charAt(4) < '7')) {
+                    etMobileNumber.setText("");
+                    etMobileNumber.setError("Number should start with 9,8 and 7");
+                }*/
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+                if (!s.toString().startsWith(C.NUMBER_FORMAT)) {
+                    etMobileNumber.setText(C.NUMBER_FORMAT);
+                    Selection.setSelection(etMobileNumber.getText(), etMobileNumber
+                            .getText().length());
+
+                }
+            }
+        });
+        etMobileNumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+              /*  if (!hasFocus && etMobileNumber.getText().toString().length() != 14)
+                    etMobileNumber.setError("Phone number must be 10 digits");*/
+
+            }
+        });
+        etDateOfPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCalender();
+            }
+        });
+
         etTruckType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,6 +212,7 @@ public class FragmentPostTruck extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position!=0){
                     etNoOfTruck.setText(noOfTruck[position]);
+                    mNoOfTruck=""+noOfTruck[position];
                 }
             }
 
@@ -194,7 +265,7 @@ public class FragmentPostTruck extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position!=0){
                     etTruckType.setText(truckTypesList.get(position).getTruckType());
-
+                    truckTypeId=truckTypesList.get(position).getId();
                 }
             }
 
@@ -208,6 +279,8 @@ public class FragmentPostTruck extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position!=0){
                     etWeight.setText(weightTypesList.get(position).getWeight());
+                    weightId=weightTypesList.get(position).getId();
+
                     getTruckType();
                 }
             }
@@ -276,13 +349,101 @@ public class FragmentPostTruck extends Fragment {
             @Override
             public void onClick(View v) {
                 if(isAllValid()){
-
+                    PostTruck postTruck=new PostTruck();
+                    postTruck.setWeightId(weightId);
+                    postTruck.setTruckTypeId(truckTypeId);
+                    postTruck.setTruckNumber(etVehiclePart1.getText().toString()+ " "+
+                            etVehiclePart2.getText().toString()+" "+etVehiclePart3.getText().toString());
+                    postTruck.setDriverName(etDriverName.getText().toString());
+                    postTruck.setDriverNumber(etMobileNumber.getText().toString().split("-")[1]);
+                    postTruck.setSourcePincode(etSourcePincode.getText().toString());
+                    postTruck.setSourceCity(etSourceCity.getText().toString());
+                    postTruck.setDestinationPincode(etDestinationPincode.getText().toString());
+                    postTruck.setDestinationCity(etDestinationCity.getText().toString());
+                    postTruck.setDate(dateOFLoad);
+                    doPost(postTruck);
                 }
             }
         });
 
+    }    private void doPost(PostTruck postTruck) {
+
+        dialog = Util.getProgressDialog(getActivity(), R.string.please_wait);
+        dialog.setCancelable(false);
+        dialog.show();
+
+        final Gson gson = new Gson();
+        String json = gson.toJson(postTruck);
+        JSONObject obj = null;
+        try {
+            obj = new JSONObject(json);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        VolleyService volleyService = new VolleyService(getActivity());
+        volleyService.postDataVolley(new IResult() {
+            @Override
+            public void notifySuccess(String requestType, String response) {
+                Log.e("Response :", response.toString());
+                dialog.dismiss();
+
+                try {
+                    Gson gson = new Gson();
+                    Response responsePost = gson.fromJson(response.toString(), Response.class);
+                    if (responsePost.getStatus().equals(C.STATUS_SUCCESS)) {
+                       emptyFields();
+
+                        showDialog(responsePost.getMessage());
+
+
+
+                    } else {
+//                        Util.showAlert(getActivity(), getString(R.string.alert), responsePost.getMessage(), getString(R.string.ok), R.drawable.warning);
+                        showDialog(responsePost.getMessage());
+                    }
+
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void notifyError(String requestType, String error) {
+                dialog.dismiss();
+
+                Log.e("Response :", error.toString());
+                showDialog("ServerError :"+error.toString());
+
+//
+//                Intent intent = new Intent(getActivity(), ActivityContainer.class);
+//                intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_USER_TYPE);
+//                startActivity(intent);
+//
+//                dialog.dismiss();
+
+            }
+        }, "otp", C.API_TRUCK_POST, Util.getHeader(getActivity()), obj);
+
     }
 
+
+    void emptyFields(){
+        etWeight.setText("");
+        etTruckType.setText("");
+        etVehiclePart1.setText("");
+        etVehiclePart2.setText("");
+        etVehiclePart3.setText("");
+        etDriverName.setText("");
+        etMobileNumber.setText("");
+        etSourcePincode.setText("");
+        etSourceCity.setText("");
+        etDestinationPincode.setText("");
+        etDestinationCity.setText("");
+        etDateOfPost.setText("");
+    }
     private void getAddress(String pincode) {
 
         dialog = Util.getProgressDialog(getActivity(), R.string.please_wait);
@@ -315,7 +476,7 @@ public class FragmentPostTruck extends Fragment {
                     }
                     else
                     {
-                        showDialog(responsePost.getMessage());
+                        showDialog(getString(R.string.no_pincode_found));
 
                     }
 
@@ -347,12 +508,14 @@ public class FragmentPostTruck extends Fragment {
     private void showDialog(String msg) {
 
         AlertDialog.Builder builder;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+       /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder = new AlertDialog.Builder(getActivity(), android.R.style.Theme_Material_Dialog_Alert);
         } else {
             builder = new AlertDialog.Builder(getActivity());
-        }
-        builder.setTitle("Alert")
+        }*/
+        builder = new AlertDialog.Builder(getActivity());
+
+        builder.setTitle(getString(R.string.alert))
                 .setMessage(msg)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -363,7 +526,41 @@ public class FragmentPostTruck extends Fragment {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
+    private void openCalender() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH));
+        //  myCalendar.set(Calendar.YEAR, myCalendar.get(Calendar.MONTH) +1);
+        myCalendar.setTimeInMillis(System.currentTimeMillis());
+        datePickerDialog.getDatePicker().setMinDate(myCalendar.getTimeInMillis());
+        //datePickerDialog.getDatePicker().setMaxDate(myCalendar.getTimeInMillis()+1000*60*60*24*30);
 
+
+        datePickerDialog.show();
+
+
+    }
+
+    DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel();
+        }
+
+    };
+
+    private void updateLabel() {
+
+        String myFormat = C.DATE_FORMAT;
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ENGLISH);
+
+        etDateOfPost.setText(sdf.format(myCalendar.getTime()));
+        dateOFLoad=""+myCalendar.getTimeInMillis();
+
+    }
     public boolean isAllValid() {
 
         if (etSourcePincode.getText().toString().length() == 0) {
@@ -451,7 +648,7 @@ public class FragmentPostTruck extends Fragment {
                     TruckTypeResponse alArrayList = gson.fromJson(response, TruckTypeResponse.class);
                     if(alArrayList.getStatusCode().equals(C.STATUS_SUCCESS)) {
                         TruckType truckType=new TruckType();
-                        truckType.setId(0);
+                        truckType.setId("0");
                         truckType.setTruckType(getString(R.string.select));
                         alArrayList.getData().set(0,truckType);
                         truckTypesList=alArrayList.getData();
@@ -542,7 +739,7 @@ public class FragmentPostTruck extends Fragment {
 
                     if(alArrayList.getStatusCode().equals(C.STATUS_SUCCESS)) {
                         WeightType truckType=new WeightType();
-                        truckType.setId(0);
+                        truckType.setId("0");
                         truckType.setWeight(getString(R.string.select));
                         alArrayList.getData().set(0,truckType);
                         weightTypesList=alArrayList.getData();

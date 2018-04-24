@@ -107,12 +107,14 @@ public class FragmentOTP extends Fragment {
     private void showDialog(String msg) {
 
         AlertDialog.Builder builder;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+    /*    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder = new AlertDialog.Builder(getActivity(), android.R.style.Theme_Material_Dialog_Alert);
         } else {
             builder = new AlertDialog.Builder(getActivity());
-        }
-        builder.setTitle("Alert")
+        }*/
+        builder = new AlertDialog.Builder(getActivity());
+
+        builder.setTitle(getString(R.string.alert))
                 .setMessage(msg)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {

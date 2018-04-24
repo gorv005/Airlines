@@ -1,6 +1,7 @@
 package com.truck.airlines.airlines;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -35,9 +37,12 @@ import com.truck.airlines.airlines.interfaces.IResult;
 import com.truck.airlines.airlines.pojos.Location;
 import com.truck.airlines.airlines.pojos.MaterialType;
 import com.truck.airlines.airlines.pojos.MaterialTypeResponse;
+import com.truck.airlines.airlines.pojos.PostLoad;
+import com.truck.airlines.airlines.pojos.Response;
 import com.truck.airlines.airlines.pojos.SideMenuItem;
 import com.truck.airlines.airlines.pojos.TruckType;
 import com.truck.airlines.airlines.pojos.TruckTypeResponse;
+import com.truck.airlines.airlines.pojos.User;
 import com.truck.airlines.airlines.pojos.WeightResponse;
 import com.truck.airlines.airlines.pojos.WeightType;
 import com.truck.airlines.airlines.utils.C;
@@ -48,9 +53,12 @@ import com.truck.airlines.airlines.webservice.VolleyService;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -102,7 +110,9 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
     List<TruckType> truckTypesList;
     List<WeightType> weightTypesList;
     List<MaterialType> materialTypesList;
+    String weightId,truckTypeId, materialId,mNoOfTruck,dateOFLoad;
     String[] noOfTruck = new String[]{
+            "Select",
             "1",
             "2",
             "3",
@@ -115,6 +125,7 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
             "10"
 
     };
+    Calendar myCalendar = Calendar.getInstance(Locale.US);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,7 +150,7 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        adapterSideMenu = new AdapterSideMenu(this, Util.getSideMenuList());
+        adapterSideMenu = new AdapterSideMenu(this, Util.getSideMenuList(ActivityMain.this));
         listView.setAdapter(adapterSideMenu);
         initialize();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -175,11 +186,18 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
 
     void initialize(){
 
+        etDateOfLoad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCalender();
+            }
+        });
         spinnerMaterialtype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             if(position!=0){
                                 etMaterialtype.setText(materialTypesList.get(position).getMaterialName());
+                                materialId=""+materialTypesList.get(position).getId();
                                 getWeightList();
                             }
             }
@@ -194,6 +212,8 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     if(position!=0){
                         etNoOfTruck.setText(noOfTruck[position]);
+                        mNoOfTruck=""+noOfTruck[position];
+
                     }
             }
 
@@ -266,6 +286,7 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position!=0){
                     etTruckType.setText(truckTypesList.get(position).getTruckType());
+                    truckTypeId=""+truckTypesList.get(position).getId();
 
                 }
             }
@@ -280,6 +301,8 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position!=0){
                     etWeight.setText(weightTypesList.get(position).getWeight());
+                    weightId=""+weightTypesList.get(position).getId();
+
                     getTruckType();
                 }
             }
@@ -349,12 +372,95 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
             public void onClick(View v) {
                 if(isAllValid()){
 
+                    PostLoad postLoad=new PostLoad();
+                    postLoad.setWeightId(weightId);
+                    postLoad.setTruckTypeId(truckTypeId);
+                    postLoad.setMaterialTypeId(materialId);
+                    postLoad.setSourcePincode(etSourcePincode.getText().toString());
+                    postLoad.setSourceCity(etSourceCity.getText().toString());
+                    postLoad.setDestinationPincode(etDestinationPincode.getText().toString());
+                    postLoad.setDestinationCity(etDestinationCity.getText().toString());
+                    postLoad.setNoOfTruck(mNoOfTruck);
+                    postLoad.setDate(dateOFLoad);
+                    doLoad(postLoad);
                 }
             }
         });
     }
 
+    private void doLoad(PostLoad postLoad) {
 
+        dialog = Util.getProgressDialog(this, R.string.please_wait);
+        dialog.setCancelable(false);
+        dialog.show();
+
+        final Gson gson = new Gson();
+        String json = gson.toJson(postLoad);
+        JSONObject obj = null;
+        try {
+            obj = new JSONObject(json);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        VolleyService volleyService = new VolleyService(this);
+        volleyService.postDataVolley(new IResult() {
+            @Override
+            public void notifySuccess(String requestType, String response) {
+                Log.e("Response :", response.toString());
+                dialog.dismiss();
+
+                try {
+                    Gson gson = new Gson();
+                    Response responsePost = gson.fromJson(response.toString(), Response.class);
+                    if (responsePost.getStatus().equals(C.STATUS_SUCCESS)) {
+                        emptyFields();
+                        showDialog(responsePost.getMessage());
+
+
+
+                    } else {
+//                        Util.showAlert(getActivity(), getString(R.string.alert), responsePost.getMessage(), getString(R.string.ok), R.drawable.warning);
+                        showDialog(responsePost.getMessage());
+                    }
+
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void notifyError(String requestType, String error) {
+                dialog.dismiss();
+
+                Log.e("Response :", error.toString());
+                showDialog("ServerError :"+error.toString());
+
+//
+//                Intent intent = new Intent(getActivity(), ActivityContainer.class);
+//                intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_USER_TYPE);
+//                startActivity(intent);
+//
+//                dialog.dismiss();
+
+            }
+        }, "otp", C.API_TRUCK_LOAD, Util.getHeader(this), obj);
+
+    }
+
+    void emptyFields(){
+        etWeight.setText("");
+        etTruckType.setText("");
+        etMaterialtype.setText("");
+        etNoOfTruck.setText("");
+        etSourcePincode.setText("");
+        etSourceCity.setText("");
+        etDestinationPincode.setText("");
+        etDestinationCity.setText("");
+        etDateOfLoad.setText("");
+    }
 
     private void getAddress(String pincode) {
 
@@ -388,7 +494,7 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
                     }
                     else
                     {
-                        showDialog(responsePost.getMessage());
+                        showDialog(getString(R.string.no_pincode_found));
 
                     }
 
@@ -420,11 +526,14 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
     private void showDialog(String msg) {
 
         AlertDialog.Builder builder;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
         } else {
             builder = new AlertDialog.Builder(this);
-        }
+        }*/
+
+        builder = new AlertDialog.Builder(this);
+
         builder.setTitle("Alert")
                 .setMessage(msg)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -437,7 +546,41 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
                 .show();
     }
 
+    private void openCalender() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH));
+      //  myCalendar.set(Calendar.YEAR, myCalendar.get(Calendar.MONTH) +1);
+        myCalendar.setTimeInMillis(System.currentTimeMillis());
+        datePickerDialog.getDatePicker().setMinDate(myCalendar.getTimeInMillis());
+        //datePickerDialog.getDatePicker().setMaxDate(myCalendar.getTimeInMillis()+1000*60*60*24*30);
 
+
+        datePickerDialog.show();
+
+
+    }
+
+    DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel();
+        }
+
+    };
+
+    private void updateLabel() {
+
+        String myFormat = C.DATE_FORMAT;
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ENGLISH);
+
+        etDateOfLoad.setText(sdf.format(myCalendar.getTime()));
+        dateOFLoad=""+myCalendar.getTimeInMillis();
+
+    }
     public boolean isAllValid() {
 
         if (etSourcePincode.getText().toString().length() == 0) {
@@ -515,7 +658,7 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
 
                     if(alArrayList.getStatusCode().equals(C.STATUS_SUCCESS)) {
                         MaterialType truckType=new MaterialType();
-                        truckType.setId(0);
+                        truckType.setId("0");
                         truckType.setMaterialName(getString(R.string.select));
                         alArrayList.getData().set(0,truckType);
                         materialTypesList=alArrayList.getData();
@@ -601,7 +744,7 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
                     TruckTypeResponse alArrayList = gson.fromJson(response, TruckTypeResponse.class);
                     if(alArrayList.getStatusCode().equals(C.STATUS_SUCCESS)) {
                         TruckType truckType=new TruckType();
-                        truckType.setId(0);
+                        truckType.setId("0");
                         truckType.setTruckType(getString(R.string.select));
                         alArrayList.getData().set(0,truckType);
                         truckTypesList=alArrayList.getData();
@@ -691,7 +834,7 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
 
                     if(alArrayList.getStatusCode().equals(C.STATUS_SUCCESS)) {
                         WeightType truckType=new WeightType();
-                        truckType.setId(0);
+                        truckType.setId("0");
                         truckType.setWeight(getString(R.string.select));
                         alArrayList.getData().set(0,truckType);
                         weightTypesList=alArrayList.getData();

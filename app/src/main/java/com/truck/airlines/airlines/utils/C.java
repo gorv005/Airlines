@@ -26,13 +26,17 @@ public interface C {
     String AUTH_TOKEN = "token";
     String BASE_URL = "http://truck.dataheadstudio.com/api/";
     String API_CHECK_NUMBER = BASE_URL + "users/check_phone";
-    String API_USER_LOGIN = BASE_URL + "users/user_login";
-    String API_USER_REGISTER = BASE_URL + "users/user_register";
-    String API_MATERIAL_TYPE = BASE_URL + "trucks/material_type";
-    String API_TRUCK_TYPE = BASE_URL + "trucks/truck_type";
+    String API_USER_LOGIN= BASE_URL + "users/user_login";
+    String API_USER_REGISTER= BASE_URL + "users/user_register";
+    String API_MATERIAL_TYPE= BASE_URL + "trucks/material_type";
+    String API_TRUCK_TYPE= BASE_URL + "trucks/truck_type";
+    String API_WEIGHT= BASE_URL + "trucks/weight";
+
+    String API_TRUCK_LOAD= BASE_URL + "trucks/load";
+    String API_TRUCK_POST= BASE_URL + "trucks/truckpost";
 
 
-    String API_WEIGHT = BASE_URL + "trucks/weight";
+
     String STATUS_SUCCESS = "RDS001";
     String MOBILE_NUMBER = "MOBILE_NUMBER";
     String USER_TYPE = "USER_TYPE";
@@ -40,8 +44,11 @@ public interface C {
     String TRUCK_OPERATOR = "truckoperator";
 
     String TRANSPORTER = "transporter";
+    String DATE_FORMAT = "dd/MMM/yyyy";
+
     String API_GET_ADDRESS = "http://postalpincode.in/api/pincode/";
     String USER = "user";
     String TAG_FRAGMENT_POST_TRUCK = "TAG_FRAGMENT_POST_TRUCK";
     String TAG_FRAGMENT_PROFILE = "TAG_FRAGMENT_PROFILE";
+    String NUMBER_FORMAT = "+91-";
 }

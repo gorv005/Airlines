@@ -13,16 +13,16 @@ public class TruckType implements Serializable{
 
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private String id;
     @SerializedName("truck_type")
     @Expose
     private String truckType;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

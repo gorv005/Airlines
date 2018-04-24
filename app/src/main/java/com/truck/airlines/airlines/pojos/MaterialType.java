@@ -11,18 +11,18 @@ import java.io.Serializable;
 
 public class MaterialType implements Serializable {
 
-    @SerializedName("id")
+    @SerializedName("material_id")
     @Expose
-    private Integer id;
+    private String id;
     @SerializedName("material_name")
     @Expose
     private String materialName;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

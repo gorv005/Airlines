@@ -79,4 +79,10 @@
     <string name="required_field">Required field</string>
     <string name="enter_valid_phone_number">Please enter valid mobile number</string>
     <string name="select">Select</string>
+    <string name="post_a_load">Post A Load</string>
+    <string name="search_load">Search Load</string>
+    <string name="post_truck">Post A Truck</string>
+    <string name="my_trucks">My Trucks</string>
+    <string name="no_pincode_found">Please enter valid pincode</string>
+    <string name="connect_to_internet">Please connect to internet</string>
 </resources>

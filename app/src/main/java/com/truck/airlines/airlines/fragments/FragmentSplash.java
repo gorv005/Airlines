@@ -50,7 +50,7 @@ public class FragmentSplash extends Fragment {
                 }
             }, C.SPLASH_LOADER_TIME);
         } else {
-            Toast.makeText(getActivity(), "Please connect to internet", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), getString(R.string.connect_to_internet), Toast.LENGTH_LONG).show();
         }
     }
 
