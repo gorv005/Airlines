@@ -14,6 +14,7 @@ import com.truck.airlines.airlines.fragments.FragmentOTP;
 import com.truck.airlines.airlines.fragments.FragmentPostTruck;
 import com.truck.airlines.airlines.fragments.FragmentProfile;
 import com.truck.airlines.airlines.fragments.FragmentSplash;
+import com.truck.airlines.airlines.fragments.FragmentTruckList;
 import com.truck.airlines.airlines.fragments.FragmentUserRegistration;
 import com.truck.airlines.airlines.fragments.FragmentUserType;
 import com.truck.airlines.airlines.utils.C;
@@ -85,6 +86,11 @@ public class ActivityContainer extends AppCompatActivity {
                 fragment = new FragmentProfile();
                 fragmentTransaction.replace(R.id.container, fragment);
                 fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_PROFILE);
+                break;
+            case C.FRAGMENT_TOTAL_TRUCK:
+                fragment = new FragmentTruckList();
+                fragmentTransaction.replace(R.id.container, fragment);
+                fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_TOTAL_TRUCK);
                 break;
         }
         fragment.setArguments(bundle);

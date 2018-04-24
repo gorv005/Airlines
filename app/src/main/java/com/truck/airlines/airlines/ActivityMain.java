@@ -6,7 +6,6 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -42,7 +41,6 @@ import com.truck.airlines.airlines.pojos.Response;
 import com.truck.airlines.airlines.pojos.SideMenuItem;
 import com.truck.airlines.airlines.pojos.TruckType;
 import com.truck.airlines.airlines.pojos.TruckTypeResponse;
-import com.truck.airlines.airlines.pojos.User;
 import com.truck.airlines.airlines.pojos.WeightResponse;
 import com.truck.airlines.airlines.pojos.WeightType;
 import com.truck.airlines.airlines.utils.C;
@@ -169,6 +167,12 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
                 else if (sideMenuItem.getNameResourse() == R.string.profile) {
                     Intent intent = new Intent(ActivityMain.this, ActivityContainer.class);
                     intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_PROFILE);
+                    startActivity(intent);
+                }
+
+                else if (sideMenuItem.getNameResourse() == R.string.search_truck) {
+                    Intent intent = new Intent(ActivityMain.this, ActivityContainer.class);
+                    intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_TOTAL_TRUCK);
                     startActivity(intent);
                 }
             }
