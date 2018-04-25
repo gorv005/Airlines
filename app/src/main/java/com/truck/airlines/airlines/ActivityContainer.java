@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.truck.airlines.airlines.fragments.FragmentKYCDocuments;
 import com.truck.airlines.airlines.fragments.FragmentLoadList;
 import com.truck.airlines.airlines.fragments.FragmentOTP;
+import com.truck.airlines.airlines.fragments.FragmentOfflineOTP;
 import com.truck.airlines.airlines.fragments.FragmentPostTruck;
 import com.truck.airlines.airlines.fragments.FragmentProfile;
 import com.truck.airlines.airlines.fragments.FragmentSplash;
@@ -103,6 +104,12 @@ public class ActivityContainer extends AppCompatActivity {
                 fragment = new FragmentKYCDocuments();
                 fragmentTransaction.replace(R.id.container, fragment);
                 fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_KYC_DOCUMENT);
+                break;
+            case C.FRAGMENT_OFFFLINE_REGISTER:
+                getSupportActionBar().hide();
+                fragment = new FragmentOfflineOTP();
+                fragmentTransaction.replace(R.id.container, fragment);
+                fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_OFFLINE_REGISTRATION);
                 break;
         }
         fragment.setArguments(bundle);

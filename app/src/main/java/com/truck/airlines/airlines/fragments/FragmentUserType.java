@@ -97,16 +97,15 @@ public class FragmentUserType extends Fragment {
                 startActivity(intent);
             }
         });
-        btnCustomer.setOnClickListener(new View.OnClickListener() {
+        btnOfflineLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent intent = new Intent(getActivity(), ActivityContainer.class);
                 Bundle bundle = new Bundle();
                 bundle.putString(C.MOBILE_NUMBER, phone);
-                bundle.putString(C.USER_TYPE, C.CUSTOMER);
                 intent.putExtra(C.BUNDLE, bundle);
-                intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_REGISTER);
+                intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_OFFFLINE_REGISTER);
                 startActivity(intent);
             }
         });
