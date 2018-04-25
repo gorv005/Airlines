@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -237,6 +236,7 @@ public class FragmentOTP extends Fragment {
                     if (responsePost.getStatus().equals(C.STATUS_SUCCESS)) {
 
                         SharedPreference.getInstance(getActivity()).setLoginUser(C.USER,responsePost);
+                        SharedPreference.getInstance(getActivity()).setBoolean(C.IS_LOGIN,true);
                         Intent intent = new Intent(getActivity(), ActivityMain.class);
                         Bundle bundle = new Bundle();
                         bundle.putString(C.MOBILE_NUMBER, etPhoneNumber.getText().toString());
@@ -247,6 +247,8 @@ public class FragmentOTP extends Fragment {
 
 
                     } else {
+                        SharedPreference.getInstance(getActivity()).setBoolean(C.IS_LOGIN,false);
+
 //                        Util.showAlert(getActivity(), getString(R.string.alert), responsePost.getMessage(), getString(R.string.ok), R.drawable.warning);
                         showDialog(responsePost.getMessage());
                     }

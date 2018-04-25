@@ -64,6 +64,7 @@
             <TextView
                 android:id="@+id/tvWeight"
                 android:layout_width="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/weight"
                 android:drawablePadding="10dp"
@@ -90,14 +91,16 @@
             android:layout_marginRight="10dp"
             android:background="@color/grey_dark" />
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
+            android:layout_weight="2"
             android:layout_height="wrap_content"
             android:layout_margin="15dp">
 
             <TextView
                 android:id="@+id/tvMaterialType"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/radio_checked"
                 android:drawablePadding="10dp"
@@ -107,12 +110,13 @@
             <TextView
                 android:id="@+id/tvTruckType"
                 android:layout_alignParentRight="true"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/truck"
                 android:drawablePadding="10dp"
                 android:text="@string/truck_type" />
-        </RelativeLayout>
+        </LinearLayout>
 
         <ImageView
             android:layout_width="match_parent"

@@ -175,6 +175,28 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
                     intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_TOTAL_TRUCK);
                     startActivity(intent);
                 }
+                else if (sideMenuItem.getNameResourse() == R.string.my_loads) {
+                    Intent intent = new Intent(ActivityMain.this, ActivityContainer.class);
+                    intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_TOTAL_LOADS);
+                    startActivity(intent);
+                }
+                else if (sideMenuItem.getNameResourse() == R.string.kyc_document) {
+                    Intent intent = new Intent(ActivityMain.this, ActivityContainer.class);
+                    intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_KYC_DOCUMENT);
+                    startActivity(intent);
+                }
+                else if (sideMenuItem.getNameResourse() == R.string.kyc_document) {
+                    Intent intent = new Intent(ActivityMain.this, ActivityContainer.class);
+                    intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_KYC_DOCUMENT);
+                    startActivity(intent);
+                }
+                else  if(sideMenuItem.getNameResourse() == R.string.logout)
+                {
+                    SharedPreference.getInstance(ActivityMain.this).clearData();
+                    Intent intent = new Intent(ActivityMain.this, ActivityContainer.class);
+                    intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_OTP);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -553,8 +575,8 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
     private void openCalender() {
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH));
       //  myCalendar.set(Calendar.YEAR, myCalendar.get(Calendar.MONTH) +1);
-        myCalendar.setTimeInMillis(System.currentTimeMillis());
-        datePickerDialog.getDatePicker().setMinDate(myCalendar.getTimeInMillis());
+       // myCalendar.setTimeInMillis(System.currentTimeMillis());
+     //   datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
         //datePickerDialog.getDatePicker().setMaxDate(myCalendar.getTimeInMillis()+1000*60*60*24*30);
 
 

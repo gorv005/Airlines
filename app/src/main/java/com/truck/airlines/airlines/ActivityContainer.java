@@ -10,6 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.truck.airlines.airlines.fragments.FragmentKYCDocuments;
+import com.truck.airlines.airlines.fragments.FragmentLoadList;
 import com.truck.airlines.airlines.fragments.FragmentOTP;
 import com.truck.airlines.airlines.fragments.FragmentPostTruck;
 import com.truck.airlines.airlines.fragments.FragmentProfile;
@@ -91,6 +93,16 @@ public class ActivityContainer extends AppCompatActivity {
                 fragment = new FragmentTruckList();
                 fragmentTransaction.replace(R.id.container, fragment);
                 fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_TOTAL_TRUCK);
+                break;
+            case C.FRAGMENT_TOTAL_LOADS:
+                fragment = new FragmentLoadList();
+                fragmentTransaction.replace(R.id.container, fragment);
+                fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_TOTAL_LOAD);
+                break;
+            case C.FRAGMENT_KYC_DOCUMENT:
+                fragment = new FragmentKYCDocuments();
+                fragmentTransaction.replace(R.id.container, fragment);
+                fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_KYC_DOCUMENT);
                 break;
         }
         fragment.setArguments(bundle);

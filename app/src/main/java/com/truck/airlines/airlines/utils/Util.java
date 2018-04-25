@@ -8,15 +8,17 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.media.ExifInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
+import android.provider.OpenableColumns;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
@@ -24,14 +26,12 @@ import android.text.format.DateFormat;
 import android.text.style.StyleSpan;
 import android.util.Base64;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
@@ -184,8 +184,7 @@ public class Util {
             sideMenuItems.add(new SideMenuItem(R.string.toll_calculator, R.drawable.truck_left));
 
 
-        }
-        else {
+        } else {
             sideMenuItems.add(new SideMenuItem(R.string.post_a_load, R.drawable.truck_left));
             sideMenuItems.add(new SideMenuItem(R.string.search_truck, R.drawable.truck_left));
             sideMenuItems.add(new SideMenuItem(R.string.profile, R.drawable.truck_left));
@@ -823,6 +822,7 @@ public class Util {
         }
         return false;
     }
+
     public static Dialog getProgressDialog(Context context, int msg) {
         Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -837,15 +837,50 @@ public class Util {
         animation.start();
         return dialog;
     }
+
     public static Map<String, String> getHeader(Context context) {
         HashMap<String, String> headers = new HashMap<String, String>();
-        if(SharedPreference.getInstance(context).getLoginUser(C.USER)!=null) {
+        if (SharedPreference.getInstance(context).getLoginUser(C.USER) != null) {
             String authToken = SharedPreference.getInstance(context).getLoginUser(C.USER).getToken();
             headers.put("authtoken", authToken);
         }
         headers.put("Accept", "application/json");
         headers.put("Content-Type", "application/json");
         return headers;
+    }
+
+
+    public static String getFileName(Uri uri, Activity activity) {
+        Cursor returnCursor = activity.getContentResolver().query(uri, null, null, null, null);
+    /*
+     * Get the column indexes of the data in the Cursor,
+     * move to the first row in the Cursor, get the data,
+     * and display it.
+     */
+        int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+        returnCursor.moveToFirst();
+        return returnCursor.getString(nameIndex);
+
+    }
+
+    public static String miliSecToDate(String s) {
+
+        try {
+
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MMM/yyyy");
+
+            long milliSeconds = Long.parseLong(s);
+            System.out.println(milliSeconds);
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(milliSeconds);
+            return formatter.format(calendar.getTime());
+
+        } catch (Exception e) {
+
+            return s;
+        }
+
     }
 /*
     public static void showAlert(Context context, String title, String msg, String btnText, int img) {

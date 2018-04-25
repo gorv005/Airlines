@@ -99,4 +99,8 @@
     <string name="visiting_card">Visiting Card</string>
     <string name="aadhar_number">Aadhaar Number</string>
     <string name="noFileChoosen">No file chosen</string>
+    <string name="file_uploaded_succesfully">File Uploaded Succesfully</string>
+    <string name="please_select_file">Please select file first</string>
+    <string name="total_Load">Total Loads</string>
+    <string name="area">Area</string>
 </resources>

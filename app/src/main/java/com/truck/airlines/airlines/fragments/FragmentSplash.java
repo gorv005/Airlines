@@ -15,8 +15,10 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.truck.airlines.airlines.ActivityContainer;
+import com.truck.airlines.airlines.ActivityMain;
 import com.truck.airlines.airlines.R;
 import com.truck.airlines.airlines.utils.C;
+import com.truck.airlines.airlines.utils.SharedPreference;
 import com.truck.airlines.airlines.utils.Util;
 
 
@@ -39,11 +41,23 @@ public class FragmentSplash extends Fragment {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
+
                     if (isStoragePermissionGranted()) {
-                        getActivity().finish();
-                        Intent intent = new Intent(getActivity(), ActivityContainer.class);
-                        intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_OTP);
-                        startActivity(intent);
+                        if (getActivity() != null)
+                            getActivity().finish();
+
+                        if (SharedPreference.getInstance(getActivity()).getBoolean(C.IS_LOGIN)) {
+                            Intent intent = new Intent(getActivity(), ActivityMain.class);
+                            startActivity(intent);
+
+
+                        } else {
+
+                            Intent intent = new Intent(getActivity(), ActivityContainer.class);
+                            intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_OTP);
+                            startActivity(intent);
+                        }
+
                     } else {
                         requestPermissionForStorage();
                     }

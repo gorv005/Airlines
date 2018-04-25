@@ -6,245 +6,254 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:fillViewport="true"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
+
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_margin="10dp"
-        android:background="@android:drawable/dialog_holo_light_frame"
-        android:elevation="20dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dp"
-            android:drawableLeft="@drawable/weight"
-            android:drawablePadding="10dp"
-            android:text="@string/pancard" />
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_margin="10dp"
+                android:background="@android:drawable/dialog_holo_light_frame"
+                android:elevation="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:drawablePadding="10dp"
+                    android:text="@string/pancard" />
 
 
-        <RelativeLayout
-            android:id="@+id/rlPanCard"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/view_back_border">
+                <RelativeLayout
+                    android:id="@+id/rlPanCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/view_back_border">
 
-            <Button
-                android:id="@+id/btnSubmitPancard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginStart="5dp"
-                android:background="@drawable/button"
-                android:minWidth="150dp"
-                android:text="@string/submit"
-                android:textColor="@color/color_selector"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                    <Button
+                        android:id="@+id/btnSubmitPancard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginStart="5dp"
+                        android:background="@drawable/button"
+                        android:minWidth="150dp"
+                        android:text="@string/submit"
+                        android:textColor="@color/color_selector"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tvPancard"
-                android:layout_toEndOf="@id/btnSubmitPancard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="10dp"
-                android:layout_centerInParent="true"
-                android:layout_centerVertical="true"
-                android:drawableLeft="@drawable/weight"
-                android:drawablePadding="10dp"
-                android:text="@string/noFileChoosen" />
-        </RelativeLayout>
-
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_margin="10dp"
-        android:background="@android:drawable/dialog_holo_light_frame"
-        android:elevation="20dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dp"
-            android:drawableLeft="@drawable/weight"
-            android:drawablePadding="10dp"
-            android:text="@string/passport_photo" />
+                    <TextView
+                        android:id="@+id/tvPancard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toEndOf="@id/btnSubmitPancard"
+                        android:drawablePadding="10dp"
+                        android:gravity="center"
+                        android:hint="@string/noFileChoosen" />
+                </RelativeLayout>
 
 
-        <RelativeLayout
-            android:id="@+id/rlPassportPhoto"
+            </LinearLayout>
 
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/view_back_border">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_margin="10dp"
+                android:background="@android:drawable/dialog_holo_light_frame"
+                android:elevation="20dp"
+                android:orientation="vertical">
 
-            <Button
-                android:id="@+id/btnPassportPhoto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginStart="5dp"
-                android:background="@drawable/button"
-                android:minWidth="150dp"
-                android:text="@string/submit"
-                android:textColor="@color/color_selector"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-            <TextView
-                android:id="@+id/tvPassportPic"
-
-                android:layout_toEndOf="@id/btnPassportPhoto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="10dp"
-                android:layout_centerInParent="true"
-                android:layout_centerVertical="true"
-                android:drawableLeft="@drawable/weight"
-                android:drawablePadding="10dp"
-                android:text="@string/noFileChoosen" />
-
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:drawableLeft="@null"
+                    android:drawablePadding="10dp"
+                    android:text="@string/passport_photo" />
 
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_margin="10dp"
-        android:background="@android:drawable/dialog_holo_light_frame"
-        android:elevation="20dp"
-        android:orientation="vertical">
+                <RelativeLayout
+                    android:id="@+id/rlPassportPhoto"
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dp"
-            android:drawableLeft="@drawable/weight"
-            android:drawablePadding="10dp"
-            android:text="@string/visiting_card" />
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/view_back_border">
 
+                    <Button
+                        android:id="@+id/btnPassportPhoto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginStart="5dp"
+                        android:background="@drawable/button"
+                        android:minWidth="150dp"
+                        android:text="@string/submit"
+                        android:textColor="@color/color_selector"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
-        <RelativeLayout
-            android:id="@+id/rlVisitingCard"
+                    <TextView
+                        android:id="@+id/tvPassportPic"
 
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/view_back_border">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toEndOf="@id/btnPassportPhoto"
+                        android:drawableLeft="@null"
+                        android:drawablePadding="10dp"
+                        android:gravity="center"
+                        android:hint="@string/noFileChoosen" />
 
-            <Button
-                android:id="@+id/btnVisitingCard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginStart="5dp"
-                android:background="@drawable/button"
-                android:minWidth="150dp"
-                android:text="@string/submit"
-                android:textColor="@color/color_selector"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvVisitingCard"
-
-                android:layout_toEndOf="@id/btnVisitingCard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="10dp"
-                android:layout_centerInParent="true"
-                android:layout_centerVertical="true"
-                android:drawableLeft="@drawable/weight"
-                android:drawablePadding="10dp"
-                android:text="@string/noFileChoosen" />
-        </RelativeLayout>
+                </RelativeLayout>
 
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_margin="10dp"
-        android:background="@android:drawable/dialog_holo_light_frame"
-        android:elevation="20dp"
-        android:orientation="vertical">
+            </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dp"
-            android:drawableLeft="@drawable/weight"
-            android:drawablePadding="10dp"
-            android:text="@string/aadhar_number" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_margin="10dp"
+                android:background="@android:drawable/dialog_holo_light_frame"
+                android:elevation="20dp"
+                android:orientation="vertical">
 
-
-        <RelativeLayout
-            android:id="@+id/rlAadharNumber"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/view_back_border">
-
-            <Button
-                android:id="@+id/btnAadharNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginStart="5dp"
-                android:background="@drawable/button"
-                android:minWidth="150dp"
-                android:text="@string/submit"
-                android:textColor="@color/color_selector"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-            <TextView
-                android:id="@+id/tvAadharCard"
-
-                android:layout_toEndOf="@id/btnAadharNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="10dp"
-                android:layout_centerInParent="true"
-                android:layout_centerVertical="true"
-                android:drawableLeft="@drawable/weight"
-                android:drawablePadding="10dp"
-                android:text="@string/noFileChoosen" />
-
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:drawableLeft="@null"
+                    android:drawablePadding="10dp"
+                    android:text="@string/visiting_card" />
 
 
-    </LinearLayout>
+                <RelativeLayout
+                    android:id="@+id/rlVisitingCard"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/view_back_border">
+
+                    <Button
+                        android:id="@+id/btnVisitingCard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginStart="5dp"
+                        android:background="@drawable/button"
+                        android:minWidth="150dp"
+                        android:text="@string/submit"
+                        android:textColor="@color/color_selector"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvVisitingCard"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toEndOf="@id/btnVisitingCard"
+                        android:drawableLeft="@null"
+                        android:drawablePadding="10dp"
+                        android:gravity="center"
+                        android:hint="@string/noFileChoosen" />
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_margin="10dp"
+                android:background="@android:drawable/dialog_holo_light_frame"
+                android:elevation="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:drawableLeft="@null"
+                    android:drawablePadding="10dp"
+                    android:text="@string/aadhar_number" />
+
+
+                <RelativeLayout
+                    android:id="@+id/rlAadharNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/view_back_border">
+
+                    <Button
+                        android:id="@+id/btnAadharNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginStart="5dp"
+                        android:background="@drawable/button"
+                        android:minWidth="150dp"
+                        android:text="@string/submit"
+                        android:textColor="@color/color_selector"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvAadharCard"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toEndOf="@id/btnAadharNumber"
+                        android:drawableLeft="@null"
+                        android:drawablePadding="10dp"
+                        android:gravity="center"
+                        android:hint="@string/noFileChoosen" />
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
         </LinearLayout>
 
     </ScrollView>

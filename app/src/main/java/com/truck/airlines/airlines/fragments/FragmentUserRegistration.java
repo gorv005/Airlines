@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,7 +20,6 @@ import android.widget.EditText;
 import com.android.volley.Request;
 import com.google.gson.Gson;
 import com.truck.airlines.airlines.ActivityContainer;
-import com.truck.airlines.airlines.BuildConfig;
 import com.truck.airlines.airlines.R;
 import com.truck.airlines.airlines.interfaces.IResult;
 import com.truck.airlines.airlines.pojos.Location;
@@ -103,21 +101,21 @@ public class FragmentUserRegistration extends Fragment {
 
         ButterKnife.bind(this, view);
 
-        if(BuildConfig.DEBUG)
-        {
-            etFirstName.setText("Aditya");
-            etLastName.setText("Singh");
-            etEmail.setText("ady@gmail.cm");
-            etTransporterName.setText("Adasf");
-            etPanNumber.setText("GHSFP3782K");
-            etAddressLineOne.setText("Sector 56");
-            etAddressLineTwo.setText("F Block");
-            etPinCode.setText("201301");
-            etArea.setText("56 Sector");
-            etCity.setText("Noida");
-            etDistrict.setText("Noida");
-            etState.setText("UP");
-        }
+//        if(BuildConfig.DEBUG)
+//        {
+//            etFirstName.setText("Aditya");
+//            etLastName.setText("Singh");
+//            etEmail.setText("ady@gmail.cm");
+//            etTransporterName.setText("Adasf");
+//            etPanNumber.setText("GHSFP3782K");
+//            etAddressLineOne.setText("Sector 56");
+//            etAddressLineTwo.setText("F Block");
+//            etPinCode.setText("201301");
+//            etArea.setText("56 Sector");
+//            etCity.setText("Noida");
+//            etDistrict.setText("Noida");
+//            etState.setText("UP");
+//        }
 
         etPinCode.addTextChangedListener(new TextWatcher() {
             @Override
@@ -373,6 +371,7 @@ public class FragmentUserRegistration extends Fragment {
                         Bundle bundle = new Bundle();
                         bundle.putString(C.MOBILE_NUMBER, phone);
                         intent.putExtra(C.BUNDLE, bundle);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_OTP);
                         startActivity(intent);
                         getActivity().finish();

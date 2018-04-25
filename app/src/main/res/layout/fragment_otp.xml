@@ -89,20 +89,20 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
                         android:gravity="center"
-                        android:text="9310274741"
+                        android:text=""
                         android:maxLength="10"
                         android:textSize="18sp" />
 
                     <EditText
                         android:id="@+id/etOTP"
                         android:visibility="gone"
-                        android:text="123431"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:gravity="center"
                         android:maxLength="10"
                         android:textSize="18sp" />
+                    <!--android:text="123431"-->
 
 
                     <Button

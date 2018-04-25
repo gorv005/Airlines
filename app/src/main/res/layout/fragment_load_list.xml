@@ -1,0 +1,31 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.truck.airlines.airlines.fragments.FragmentTruckList">
+
+    <TextView
+        android:id="@+id/tvTotalLoad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@color/grey"
+        android:gravity="center"
+        android:minHeight="50dp"
+        android:text="@string/total_Load"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <ListView
+        android:id="@+id/lvLoadList"
+        android:dividerHeight="0dp"
+        android:divider="@null"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+    </ListView>
+
+</LinearLayout>

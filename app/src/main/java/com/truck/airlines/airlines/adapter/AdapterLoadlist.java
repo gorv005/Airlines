@@ -10,21 +10,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.truck.airlines.airlines.R;
-import com.truck.airlines.airlines.pojos.Truck;
+import com.truck.airlines.airlines.pojos.Loads;
+import com.truck.airlines.airlines.utils.Util;
 
 import java.util.ArrayList;
 
 /**
  * Created by aditya.singh on 6/14/2016.
  */
-public class AdapterTrucklist extends BaseAdapter {
+public class AdapterLoadlist extends BaseAdapter {
 
 
     private final LayoutInflater mInflater;
     private Activity activity;
-    private ArrayList<Truck> sideMenuItems;
+    private ArrayList<Loads> sideMenuItems;
 
-    public AdapterTrucklist(Activity activity, ArrayList<Truck> sideMenuItems) {
+    public AdapterLoadlist(Activity activity, ArrayList<Loads> sideMenuItems) {
         this.activity = activity;
         this.sideMenuItems = sideMenuItems;
         mInflater = LayoutInflater.from(activity);
@@ -37,7 +38,7 @@ public class AdapterTrucklist extends BaseAdapter {
     }
 
     @Override
-    public Truck getItem(int position) {
+    public Loads getItem(int position) {
         return sideMenuItems.get(position);
     }
 
@@ -52,23 +53,26 @@ public class AdapterTrucklist extends BaseAdapter {
         if (convertView == null) {
 
             convertView = mInflater.inflate(
-                    R.layout.truck_item, parent, false);
+                    R.layout.load_item, parent, false);
         }
 
 
         TextView tvSource = (TextView) convertView.findViewById(R.id.tvSource);
-        tvSource.setText(getItem(position).getSourceCity().split(",")[0]);
+        tvSource.setText(getItem(position).getSourceCity().split(",")[1]);
         TextView tvDestination = (TextView) convertView.findViewById(R.id.tvDestination);
-        tvDestination.setText(getItem(position).getDestinationCity().split(",")[0]);
+        tvDestination.setText(getItem(position).getDestinationCity().split(",")[1]);
 
         TextView tvWeight = (TextView) convertView.findViewById(R.id.tvWeight);
         tvWeight.setText(getItem(position).getWeight()+"");
 
-        TextView tvTruckType = (TextView) convertView.findViewById(R.id.tvTruckType);
-        tvTruckType.setText(getItem(position).getTruckType()+"");
+        TextView tvLoadsType = (TextView) convertView.findViewById(R.id.tvTruckType);
+        tvLoadsType.setText(getItem(position).getTruckType()+"");
 
-//        TextView tvMaterialType = (TextView) convertView.findViewById(R.id.tvMaterialType);
-//        tvMaterialType.setText(getItem(position).getTruckId()+"");
+        TextView tvMaterialType = (TextView) convertView.findViewById(R.id.tvMaterialType);
+        tvMaterialType.setText(getItem(position).getMaterialName()+"");
+
+        TextView tvDate = (TextView) convertView.findViewById(R.id.tvDate);
+        tvDate.setText(Util.miliSecToDate(getItem(position).getDate()+""));
 
         Button btnGetFrightPrice = (Button) convertView.findViewById(R.id.btnGetFrightPrice);
         btnGetFrightPrice.setOnClickListener(new View.OnClickListener() {
