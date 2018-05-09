@@ -103,4 +103,11 @@
     <string name="please_select_file">Please select file first</string>
     <string name="total_Load">Total Loads</string>
     <string name="area">Area</string>
+    <string name="english">English</string>
+    <string name="hindi">Hindi</string>
+    <string name="telegu">Telegu</string>
+    <string name="tamil">Tamil</string>
+    <string name="gujrati">Gujrati</string>
+    <string name="punjabi">Punjabi</string>
+    <string name="please_choose_langunge">Choose Language</string>
 </resources>

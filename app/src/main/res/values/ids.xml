@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="gujrati" type="id">Gujrati</item>
+    <item name="tamil" type="id">Tamil</item>
+    <item name="telegu" type="id">Telegu</item>
+    <item name="hindi" type="id">Hindi</item>
+    <item name="english" type="id">English</item>
+    <item name="punjabi" type="id">Punjabi</item>
+</resources>

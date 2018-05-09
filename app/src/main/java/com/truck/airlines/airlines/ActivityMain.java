@@ -578,11 +578,7 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
        // myCalendar.setTimeInMillis(System.currentTimeMillis());
      //   datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
         //datePickerDialog.getDatePicker().setMaxDate(myCalendar.getTimeInMillis()+1000*60*60*24*30);
-
-
         datePickerDialog.show();
-
-
     }
 
     DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {

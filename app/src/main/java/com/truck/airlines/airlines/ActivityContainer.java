@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.truck.airlines.airlines.fragments.FragmentKYCDocuments;
+import com.truck.airlines.airlines.fragments.FragmentLanguageSelect;
 import com.truck.airlines.airlines.fragments.FragmentLoadList;
 import com.truck.airlines.airlines.fragments.FragmentOTP;
 import com.truck.airlines.airlines.fragments.FragmentOfflineOTP;
@@ -110,6 +111,12 @@ public class ActivityContainer extends AppCompatActivity {
                 fragment = new FragmentOfflineOTP();
                 fragmentTransaction.replace(R.id.container, fragment);
                 fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_OFFLINE_REGISTRATION);
+                break;
+            case C.FRAGMENT_LANGUAGE_SELECT:
+                getSupportActionBar().hide();
+                fragment = new FragmentLanguageSelect();
+                fragmentTransaction.replace(R.id.container, fragment);
+                fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_LANGUAGE_SELECT);
                 break;
         }
         fragment.setArguments(bundle);

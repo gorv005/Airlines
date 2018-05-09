@@ -46,7 +46,11 @@ public class FragmentSplash extends Fragment {
                         if (getActivity() != null)
                             getActivity().finish();
 
-                        if (SharedPreference.getInstance(getActivity()).getBoolean(C.IS_LOGIN)) {
+                        if (SharedPreference.getInstance(getActivity()).getBoolean(C.IS_FIRST_TIME_NOT_APP_OPEN)) {
+                            Intent intent = new Intent(getActivity(), ActivityContainer.class);
+                            intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_LANGUAGE_SELECT);
+                            startActivity(intent);
+                        } else if (SharedPreference.getInstance(getActivity()).getBoolean(C.IS_LOGIN)) {
                             Intent intent = new Intent(getActivity(), ActivityMain.class);
                             startActivity(intent);
 
