@@ -63,5 +63,4 @@ public class AdapterMainMenu extends BaseAdapter {
         return convertView;
     }
 
-
 }
