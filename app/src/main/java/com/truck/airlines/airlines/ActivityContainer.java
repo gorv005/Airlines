@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.truck.airlines.airlines.fragments.FragmentAddressSearch;
 import com.truck.airlines.airlines.fragments.FragmentKYCDocuments;
 import com.truck.airlines.airlines.fragments.FragmentLanguageSelect;
 import com.truck.airlines.airlines.fragments.FragmentLoadList;
@@ -105,6 +106,11 @@ public class ActivityContainer extends AppCompatActivity {
                 fragment = new FragmentKYCDocuments();
                 fragmentTransaction.replace(R.id.container, fragment);
                 fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_KYC_DOCUMENT);
+                break;
+            case C.FRAGMENT_ABOUT_US:
+                fragment = new FragmentAddressSearch();
+                fragmentTransaction.replace(R.id.container, fragment);
+                fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_ABOUT_US);
                 break;
             case C.FRAGMENT_OFFFLINE_REGISTER:
                 getSupportActionBar().hide();

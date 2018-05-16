@@ -1,10 +1,10 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-    </style>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar"></style>
+
     <style name="AppTheme.NoActionBar">
-       <!-- <item name="android:titleTextStyle">@style/MyTheme.ActionBar.TitleTextStyle</item>
+        <!-- <item name="android:titleTextStyle">@style/MyTheme.ActionBar.TitleTextStyle</item>
         <item name="titleTextStyle">@style/MyTheme.ActionBar.TitleTextStyle</item>
         <item name="colorControlNormal">@color/white</item>-->
         <item name="titleTextStyle">@style/MyTheme.ActionBar.TitleTextStyle</item>
@@ -31,12 +31,14 @@
         <item name="spinBars">true</item>
         <item name="color">@color/grey</item>
     </style>
+
     <style name="MyRaidoButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
         <item name="colorAccent">@color/colorbutton</item>
         <item name="android:textColorPrimaryDisableOnly">@color/grey</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat</item>
     </style>
-    <style name="MyTheme.ActionBar.TitleTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" >
+
+    <style name="MyTheme.ActionBar.TitleTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textColor">#FFFFFF</item>
     </style>
 
@@ -44,4 +46,6 @@
         <!-- Customize color of navigation drawer icon and back arrow -->
         <item name="colorControlNormal">@color/white</item>
     </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 </resources>

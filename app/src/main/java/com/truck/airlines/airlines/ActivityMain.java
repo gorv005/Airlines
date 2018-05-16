@@ -190,6 +190,11 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
                     intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_KYC_DOCUMENT);
                     startActivity(intent);
                 }
+                else if (sideMenuItem.getNameResourse() == R.string.about_us) {
+                    Intent intent = new Intent(ActivityMain.this, ActivitySearchAddress.class);
+                    intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_ABOUT_US);
+                    startActivity(intent);
+                }
                 else  if(sideMenuItem.getNameResourse() == R.string.logout)
                 {
                     SharedPreference.getInstance(ActivityMain.this).clearData();
@@ -212,6 +217,13 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
 
     void initialize(){
 
+        etSourcePincode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+            }
+        });
         etDateOfLoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
