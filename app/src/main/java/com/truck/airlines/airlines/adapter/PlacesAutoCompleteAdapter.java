@@ -1,9 +1,8 @@
 package com.truck.airlines.airlines.adapter;
 
 /**
- * Created by aditya.singh on 5/16/2018.
+ * Created by razor on 12/7/15.
  */
-
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,15 +30,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
+
 /**
  * Note that this adapter requires a valid {@link GoogleApiClient}.
  * The API client must be maintained in the encapsulating Activity, including all lifecycle and
  * connection states. The API client must be connected with the {@link Places#GEO_DATA_API} API.
  */
-public class AdapterAddress
-        extends RecyclerView.Adapter<AdapterAddress.PredictionHolder> implements Filterable {
+public class PlacesAutoCompleteAdapter
+        extends RecyclerView.Adapter<PlacesAutoCompleteAdapter.PredictionHolder> implements Filterable {
 
-    private static final String TAG = "AdapterAddress";
+    private static final String TAG = "PlacesAutoCompleteAdapter";
     private ArrayList<PlaceAutocomplete> mResultList;
     private GoogleApiClient mGoogleApiClient;
     private LatLngBounds mBounds;
@@ -47,7 +48,7 @@ public class AdapterAddress
     private Context mContext;
     private int layout;
 
-    public AdapterAddress(Context context, int resource, GoogleApiClient googleApiClient,
+    public PlacesAutoCompleteAdapter(Context context, int resource, GoogleApiClient googleApiClient,
                                      LatLngBounds bounds, AutocompleteFilter filter) {
         mContext = context;
         layout = resource;
@@ -137,7 +138,7 @@ public class AdapterAddress
                 AutocompletePrediction prediction = iterator.next();
                 // Get the details of this prediction and copy it into a new PlaceAutocomplete object.
                 resultList.add(new PlaceAutocomplete(prediction.getPlaceId(),
-                        prediction.getFullText(null)));
+                        prediction.getFullText(null).toString()));
             }
 
             // Release the buffer now that all data has been copied.
@@ -182,10 +183,12 @@ public class AdapterAddress
 
     public class PredictionHolder extends RecyclerView.ViewHolder {
         private TextView mPrediction;
+        private RelativeLayout mRow;
         public PredictionHolder(View itemView) {
 
             super(itemView);
-            mPrediction = (TextView) itemView.findViewById(R.id.tvMainAddress);
+            mPrediction = (TextView) itemView.findViewById(R.id.address);
+            mRow=(RelativeLayout)itemView.findViewById(R.id.predictedRow);
         }
 
     }

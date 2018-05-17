@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,7 +17,10 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary">
+            android:background="@color/colorPrimary"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            app:contentInsetStartWithNavigation="0dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -24,14 +28,18 @@
 
                 android:orientation="horizontal">
 
-                <AutoCompleteTextView
+                <EditText
                     android:id="@+id/autoCompleteTextView"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="44dp"
+                    android:layout_marginRight="5dp"
+                    android:textSize="12sp"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:background="@drawable/rounded_white"
-                    android:hint="Enter Place Here" />
+                    android:hint="Enter Place Here"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@color/grey" />
 
             </RelativeLayout>
         </android.support.v7.widget.Toolbar>
@@ -44,10 +52,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ListView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/lvAddress"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></ListView>
+            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 
     </RelativeLayout>
 

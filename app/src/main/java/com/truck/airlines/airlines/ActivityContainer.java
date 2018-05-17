@@ -1,6 +1,7 @@
 package com.truck.airlines.airlines;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,6 +17,7 @@ import com.truck.airlines.airlines.fragments.FragmentLanguageSelect;
 import com.truck.airlines.airlines.fragments.FragmentLoadList;
 import com.truck.airlines.airlines.fragments.FragmentOTP;
 import com.truck.airlines.airlines.fragments.FragmentOfflineOTP;
+import com.truck.airlines.airlines.fragments.FragmentPostLoad;
 import com.truck.airlines.airlines.fragments.FragmentPostTruck;
 import com.truck.airlines.airlines.fragments.FragmentProfile;
 import com.truck.airlines.airlines.fragments.FragmentSplash;
@@ -86,6 +88,11 @@ public class ActivityContainer extends AppCompatActivity {
                 fragment = new FragmentPostTruck();
                 fragmentTransaction.replace(R.id.container, fragment);
                 fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_POST_TRUCK);
+                break;
+            case C.FRAGMENT_POST_LOAD:
+                fragment = new FragmentPostLoad();
+                fragmentTransaction.replace(R.id.container, fragment);
+                fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_POST_LOAD);
                 break;
             case C.FRAGMENT_PROFILE:
                 fragment = new FragmentProfile();
@@ -185,4 +192,25 @@ public class ActivityContainer extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
 
     }
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == C.REQUEST_ADDRESS) {
+            if (resultCode == C.RESULT_ADDRESS) {
+                if (data.getStringExtra(C.ADDRESS_SOURCE) != null) {
+//                    etSourceCity.setText(data.getStringExtra(C.ADDRESS_SOURCE));
+
+                } else if (data.getStringExtra(C.ADDRESS_DESTINATION) != null) {
+//                    etDestinationCity.setText(data.getStringExtra(C.ADDRESS_DESTINATION));
+                }
+            }
+        }
+    }
+
+
+
 }
