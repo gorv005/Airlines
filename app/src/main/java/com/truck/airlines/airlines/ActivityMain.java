@@ -29,8 +29,6 @@ import butterknife.ButterKnife;
 public class ActivityMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-
-
     @BindView(R.id.lvMenuItem)
     ListView listView;
     @BindView(R.id.gvHome)
@@ -128,7 +126,7 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
 
 
 
-        adapterHomeMenu = new AdapterHomeMenu(this, Util.getSideMenuList(ActivityMain.this));
+        adapterHomeMenu = new AdapterHomeMenu(this, Util.getmainMenuList(ActivityMain.this));
         gvHome.setAdapter(adapterHomeMenu);
 
         gvHome.setOnItemClickListener(new AdapterView.OnItemClickListener() {

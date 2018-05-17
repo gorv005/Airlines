@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,12 +15,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.GridView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -62,23 +63,24 @@ public class FragmentPostLoad extends Fragment {
     @BindView(R.id.etDestinationCity)
     TextView etDestinationCity;
     @BindView(R.id.etMaterialtype)
-    EditText etMaterialtype;
+    TextView etMaterialtype;
     @BindView(R.id.etWeight)
-    EditText etWeight;
+    TextView etWeight;
     @BindView(R.id.etTruckType)
-    EditText etTruckType;
+    TextView etTruckType;
     @BindView(R.id.etDateOfLoad)
-    EditText etDateOfLoad;
-    @BindView(R.id.etNoOfTruck)
-    EditText etNoOfTruck;
-    @BindView(R.id.spinnerMaterialtype)
-    Spinner spinnerMaterialtype;
-    @BindView(R.id.spinnerWeight)
-    Spinner spinnerWeight;
-    @BindView(R.id.spinnerTruckType)
-    Spinner spinnerTruckType;
-    @BindView(R.id.spinnerNoOfTruck)
-    Spinner spinnerNoOfTruck;
+    TextView etDateOfLoad;
+    @BindView(R.id.etNumberOfTruck)
+    TextView etNoOfTruck;
+
+    //    @BindView(R.id.spinnerMaterialtype)
+//    Spinner spinnerMaterialtype;
+//    @BindView(R.id.spinnerWeight)
+//    Spinner spinnerWeight;
+//    @BindView(R.id.spinnerTruckType)
+//    Spinner spinnerTruckType;
+//    @BindView(R.id.spinnerNoOfTruck)
+//    Spinner spinnerNoOfTruck;
 
     @BindView(R.id.btnSubmit)
     Button btnSubmit;
@@ -122,9 +124,14 @@ public class FragmentPostLoad extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
+        etMaterialtype.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getMatirialType();
+            }
+        });
         initialize();
-        getMatirialType();
     }
 
     void initialize() {
@@ -135,42 +142,42 @@ public class FragmentPostLoad extends Fragment {
                 openCalender();
             }
         });
-        spinnerMaterialtype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position != 0) {
-                    etMaterialtype.setText(materialTypesList.get(position).getMaterialName());
-                    materialId = "" + materialTypesList.get(position).getId();
-                    getWeightList();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        spinnerNoOfTruck.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position != 0) {
-                    etNoOfTruck.setText(noOfTruck[position]);
-                    mNoOfTruck = "" + noOfTruck[position];
-
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        etNoOfTruck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                spinnerNoOfTruck.performClick();
-            }
-        });
+//        spinnerMaterialtype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                if (position != 0) {
+//                    etMaterialtype.setText(materialTypesList.get(position).getMaterialName());
+//                    materialId = "" + materialTypesList.get(position).getId();
+//                    getWeightList();
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+//        spinnerNoOfTruck.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                if (position != 0) {
+//                    etNoOfTruck.setText(noOfTruck[position]);
+//                    mNoOfTruck = "" + noOfTruck[position];
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+//        etNoOfTruck.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                spinnerNoOfTruck.performClick();
+//            }
+//        });
         final List<String> specialityList = new ArrayList<>(Arrays.asList(noOfTruck));
         final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
                 getActivity(), R.layout.spinner_item_new, specialityList) {
@@ -200,58 +207,58 @@ public class FragmentPostLoad extends Fragment {
             }
         };
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerNoOfTruck.setAdapter(spinnerArrayAdapter);
+//        spinnerNoOfTruck.setAdapter(spinnerArrayAdapter);
 
 
-        etTruckType.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                spinnerTruckType.performClick();
-            }
-        });
-        etWeight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                spinnerWeight.performClick();
-            }
-        });
-        etMaterialtype.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                spinnerMaterialtype.performClick();
-            }
-        });
-        spinnerTruckType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position != 0) {
-                    etTruckType.setText(truckTypesList.get(position).getTruckType());
-                    truckTypeId = "" + truckTypesList.get(position).getId();
-
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        spinnerWeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position != 0) {
-                    etWeight.setText(weightTypesList.get(position).getWeight());
-                    weightId = "" + weightTypesList.get(position).getId();
-
-                    getTruckType();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+//        etTruckType.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                spinnerTruckType.performClick();
+//            }
+//        });
+//        etWeight.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                spinnerWeight.performClick();
+//            }
+//        });
+//        etMaterialtype.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+//        spinnerTruckType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                if (position != 0) {
+//                    etTruckType.setText(truckTypesList.get(position).getTruckType());
+//                    truckTypeId = "" + truckTypesList.get(position).getId();
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+//        spinnerWeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                if (position != 0) {
+//                    etWeight.setText(weightTypesList.get(position).getWeight());
+//                    weightId = "" + weightTypesList.get(position).getId();
+//
+//                    getTruckType();
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
 
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
@@ -292,7 +299,6 @@ public class FragmentPostLoad extends Fragment {
             }
         });
     }
-
 
 
     private void doLoad(PostLoad postLoad) {
@@ -570,38 +576,43 @@ public class FragmentPostLoad extends Fragment {
 
     }
 
-    void setspinnerItemForMaterial(List<MaterialType> list) {
+    void setspinnerItemForMaterial(final List<MaterialType> list) {
 
-        etMaterialtype.setHint(getString(R.string.select));
         final ArrayAdapter<MaterialType> spinnerDisabilityArrayAdapter = new ArrayAdapter<MaterialType>(
-                getActivity(), R.layout.spinner_item_new, list) {
+                getActivity(), R.layout.spinner_item_new, list);
+
+
+        final LayoutInflater factory = LayoutInflater.from(getActivity());
+        final View deleteDialogView = factory.inflate(
+                R.layout.layout_material_type, null);
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().
+
+                setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        //   dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(deleteDialogView);
+        dialog.setCancelable(true);
+
+
+        GridView gvMaterialType = (GridView) deleteDialogView.findViewById(R.id.gvMaterialType);
+        gvMaterialType.setAdapter(spinnerDisabilityArrayAdapter);
+        gvMaterialType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public boolean isEnabled(int position) {
-                if (position == 0) {
-                    // Disable the first item from Spinner
-                    // First item will be use for hint
-                    return false;
-                } else {
-                    return true;
-                }
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                etMaterialtype.setText(list.get(position).getMaterialName());
+                materialId = "" + materialTypesList.get(position).getId();
             }
 
             @Override
-            public View getDropDownView(int position, View convertView,
-                                        ViewGroup parent) {
-                View view = super.getDropDownView(position, convertView, parent);
-                TextView tv = (TextView) view;
-                if (position == 0) {
-                    // Set the hint text color gray
-                    tv.setTextColor(Color.GRAY);
-                } else {
-                    tv.setTextColor(Color.BLACK);
-                }
-                return view;
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
-        };
-        spinnerDisabilityArrayAdapter.setDropDownViewResource(R.layout.dialog_spinner_dropdown_item);
-        spinnerMaterialtype.setAdapter(spinnerDisabilityArrayAdapter);
+        });
+
+        dialog.show();
+
+
     }
 
     public void getTruckType() {
@@ -690,7 +701,7 @@ public class FragmentPostLoad extends Fragment {
             }
         };
         spinnerDisabilityArrayAdapter.setDropDownViewResource(R.layout.dialog_spinner_dropdown_item);
-        spinnerTruckType.setAdapter(spinnerDisabilityArrayAdapter);
+//        spinnerTruckType.setAdapter(spinnerDisabilityArrayAdapter);
     }
 
     public void getWeightList() {
@@ -777,6 +788,6 @@ public class FragmentPostLoad extends Fragment {
             }
         };
         spinnerDisabilityArrayAdapter.setDropDownViewResource(R.layout.dialog_spinner_dropdown_item);
-        spinnerWeight.setAdapter(spinnerDisabilityArrayAdapter);
+//        spinnerWeight.setAdapter(spinnerDisabilityArrayAdapter);
     }
 }

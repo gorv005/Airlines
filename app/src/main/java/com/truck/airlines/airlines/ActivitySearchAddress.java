@@ -102,32 +102,35 @@ public class ActivitySearchAddress extends AppCompatActivity implements
         mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        final AdapterAddress.PlaceAutocomplete item = mAdapterAddress.getItem(position);
-                        final String placeId = String.valueOf(item.placeId);
-                        Log.d("TAG", "Autocomplete item selected: " + item.description);
+                        try {
+                            final AdapterAddress.PlaceAutocomplete item = mAdapterAddress.getItem(position);
+                            final String placeId = String.valueOf(item.placeId);
+                            Log.d("TAG", "Autocomplete item selected: " + item.description);
                         /*
                              Issue a request to the Places Geo Data API to retrieve a Place object with additional details about the place.
                          */
-
-                        PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
-                                .getPlaceById(mGoogleApiClient, placeId);
-                        placeResult.setResultCallback(new ResultCallback<PlaceBuffer>() {
-                            @Override
-                            public void onResult(PlaceBuffer places) {
-                                if (places.getCount() == 1) {
-                                    //Do the things here on Click.....
-                                    Toast.makeText(getApplicationContext(), String.valueOf(places.get(0).getLatLng()), Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "SOMETHING_WENT_WRONG", Toast.LENGTH_SHORT).show();
+                            PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
+                                    .getPlaceById(mGoogleApiClient, placeId);
+                            placeResult.setResultCallback(new ResultCallback<PlaceBuffer>() {
+                                @Override
+                                public void onResult(PlaceBuffer places) {
+                                    if (places.getCount() == 1) {
+                                        //Do the things here on Click.....
+                                        Toast.makeText(getApplicationContext(), String.valueOf(places.get(0).getLatLng()), Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "SOMETHING_WENT_WRONG", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            }
-                        });
-                        Log.d("TAG", "Clicked: " + item.description);
-                        Log.d("TAG", "Called getPlaceById to get Place details for " + item.placeId);
-                        Intent intent = new Intent();
-                        intent.putExtra(addressFor, item.description);
-                        setResult(C.RESULT_ADDRESS, intent);
-                        finish();
+                            });
+                            Log.d("TAG", "Clicked: " + item.description);
+                            Log.d("TAG", "Called getPlaceById to get Place details for " + item.placeId);
+                            Intent intent = new Intent();
+                            intent.putExtra(addressFor, item.description);
+                            setResult(C.RESULT_ADDRESS, intent);
+                            finish();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 })
         );

@@ -6,9 +6,23 @@
     android:background="@color/white"
     android:orientation="vertical">
 
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="5dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="@string/submit"
+        android:textColor="@color/colorwhite"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_above="@id/btnSubmit"
         android:fillViewport="true">
 
         <LinearLayout
@@ -95,203 +109,130 @@
                     android:theme="@style/MyRaidoButton" />
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/Source_city"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
 
             <TextView
                 android:id="@+id/etSourceCity"
-                style="@style/Widget.AppCompat.EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
                 android:editable="false"
                 android:focusable="false"
+                android:hint="@string/Source_city"
                 android:inputType="textCapWords"
                 android:maxLines="1"
+                android:padding="15dp"
                 android:textColor="@color/black" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/destination_city"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey" />
 
             <TextView
                 android:id="@+id/etDestinationCity"
-                style="@style/Widget.AppCompat.EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:editable="false"
                 android:focusable="false"
+                android:hint="@string/destination_city"
                 android:inputType="textCapWords"
                 android:maxLines="1"
+                android:padding="15dp"
                 android:textColor="@color/black" />
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey" />
+
+
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/Materialtype"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-
-            <EditText
                 android:id="@+id/etMaterialtype"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/down_arrow"
                 android:editable="false"
                 android:focusable="false"
-                android:maxLength="50"
+                android:hint="@string/Materialtype"
+                android:inputType="textCapWords"
                 android:maxLines="1"
+                android:padding="15dp"
                 android:textColor="@color/black" />
 
-            <Spinner
-                android:id="@+id/spinnerMaterialtype"
+            <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_gravity="start"
-                android:layout_marginEnd="4dp"
-                android:layout_marginStart="4dp"
-                android:gravity="start"
-                android:paddingStart="40dp"
-                android:visibility="invisible" />
+                android:layout_height="1dp"
+                android:background="@color/grey" />
+
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/weight"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-
-            <EditText
                 android:id="@+id/etWeight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/down_arrow"
                 android:editable="false"
                 android:focusable="false"
-                android:lines="1"
-                android:maxLength="50"
+                android:hint="@string/weight"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:padding="15dp"
                 android:textColor="@color/black" />
 
-            <Spinner
-                android:id="@+id/spinnerWeight"
+            <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_gravity="start"
-                android:layout_marginEnd="4dp"
-                android:layout_marginStart="4dp"
-                android:gravity="start"
-                android:paddingStart="40dp"
-                android:visibility="invisible" />
+                android:layout_height="1dp"
+                android:background="@color/grey" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/truck_type"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-
-            <EditText
                 android:id="@+id/etTruckType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/down_arrow"
                 android:editable="false"
                 android:focusable="false"
-                android:lines="1"
-                android:maxLength="50"
+                android:hint="@string/truck_type"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:padding="15dp"
                 android:textColor="@color/black" />
 
-            <Spinner
-                android:id="@+id/spinnerTruckType"
+            <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_gravity="start"
-                android:layout_marginEnd="4dp"
-                android:layout_marginStart="4dp"
-                android:gravity="start"
-                android:paddingStart="40dp"
-                android:visibility="invisible" />
+                android:layout_height="1dp"
+                android:background="@color/grey" />
+
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/date_of_load"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-
-            <EditText
                 android:id="@+id/etDateOfLoad"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/destination"
                 android:editable="false"
                 android:focusable="false"
-                android:lines="1"
-                android:maxLength="50"
+                android:hint="@string/date_of_load"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:padding="15dp"
                 android:textColor="@color/black" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/no_of_trucks"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-
-            <EditText
-                android:id="@+id/etNoOfTruck"
+                android:id="@+id/etNumberOfTruck"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/down_arrow"
                 android:editable="false"
                 android:focusable="false"
-                android:lines="1"
-                android:maxLength="50"
+                android:hint="@string/no_of_trucks"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:padding="15dp"
                 android:textColor="@color/black" />
 
-            <Spinner
-                android:id="@+id/spinnerNoOfTruck"
+            <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_gravity="start"
-                android:layout_marginEnd="4dp"
-                android:layout_marginStart="4dp"
-                android:gravity="start"
-                android:paddingStart="40dp"
-                android:visibility="invisible" />
+                android:layout_height="1dp"
+                android:background="@color/grey" />
 
-            <Button
-                android:id="@+id/btnSubmit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/bg_button"
-                android:minWidth="120dp"
-                android:text="@string/submit"
-                android:textColor="@color/color_selector"
-                android:textSize="18sp"
-                android:textStyle="bold" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

@@ -112,4 +112,6 @@
     <string name="please_choose_langunge">Choose Language</string>
     <string name="title_activity_search_address">ActivitySearchAddress</string>
     <string name="autocomplete_hint">Enter place to serach</string>
+    <string name="select_truck">Select Truck</string>
+    <string name="select_material_type">Select Material Type</string>
 </resources>

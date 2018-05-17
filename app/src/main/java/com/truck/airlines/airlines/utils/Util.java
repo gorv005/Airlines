@@ -178,10 +178,9 @@ public class Util {
             sideMenuItems.add(new SideMenuItem(R.string.about_us, R.drawable.truck_left));
             sideMenuItems.add(new SideMenuItem(R.string.policy_info, R.drawable.truck_left));
             sideMenuItems.add(new SideMenuItem(R.string.contact_us, R.drawable.truck_left));
-            sideMenuItems.add(new SideMenuItem(R.string.logout, R.drawable.truck_left));
-
             sideMenuItems.add(new SideMenuItem(R.string.Alternate_mobile_no, R.drawable.truck_left));
             sideMenuItems.add(new SideMenuItem(R.string.toll_calculator, R.drawable.truck_left));
+            sideMenuItems.add(new SideMenuItem(R.string.logout, R.drawable.truck_left));
 
 
         } else {
@@ -198,6 +197,30 @@ public class Util {
 
         return sideMenuItems;
     }
+
+    public static ArrayList<SideMenuItem> getmainMenuList(Context context) {
+        ArrayList<SideMenuItem> sideMenuItems = new ArrayList<SideMenuItem>();
+        if (SharedPreference.getInstance(context).getLoginUser(C.USER).getData().getUserGroup().equals(C.TRANSPORTER) ||
+                SharedPreference.getInstance(context).getLoginUser(C.USER).getData().getUserGroup().equals(C.TRUCK_OPERATOR)) {
+
+
+            sideMenuItems.add(new SideMenuItem(R.string.post_a_load, R.drawable.truck_left));
+            sideMenuItems.add(new SideMenuItem(R.string.search_load, R.drawable.truck_left));
+            sideMenuItems.add(new SideMenuItem(R.string.post_truck, R.drawable.truck_left));
+            sideMenuItems.add(new SideMenuItem(R.string.search_truck, R.drawable.truck_left));
+            sideMenuItems.add(new SideMenuItem(R.string.Alternate_mobile_no, R.drawable.truck_left));
+            sideMenuItems.add(new SideMenuItem(R.string.toll_calculator, R.drawable.truck_left));
+
+
+        } else {
+            sideMenuItems.add(new SideMenuItem(R.string.post_a_load, R.drawable.truck_left));
+            sideMenuItems.add(new SideMenuItem(R.string.search_truck, R.drawable.truck_left));
+            sideMenuItems.add(new SideMenuItem(R.string.my_loads, R.drawable.truck_left));
+        }
+
+        return sideMenuItems;
+    }
+
 
     public static String getMessageTimn(long mili) {
 //        SimpleDateFormat sdf;
