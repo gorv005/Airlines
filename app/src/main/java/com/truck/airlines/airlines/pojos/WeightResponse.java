@@ -8,7 +8,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.ArrayList;
 
 public class WeightResponse implements Serializable {
 
@@ -20,7 +20,7 @@ public class WeightResponse implements Serializable {
     private String message;
     @SerializedName("data")
     @Expose
-    private List<WeightType> data = null;
+    private ArrayList<WeightType> data = null;
 
     public String getStatusCode() {
         return statusCode;
@@ -38,11 +38,11 @@ public class WeightResponse implements Serializable {
         this.message = message;
     }
 
-    public List<WeightType> getData() {
+    public ArrayList<WeightType> getData() {
         return data;
     }
 
-    public void setData(List<WeightType> data) {
+    public void setData(ArrayList<WeightType> data) {
         this.data = data;
     }
 

@@ -8,7 +8,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.ArrayList;
 
 public class TruckTypeResponse implements Serializable {
 
@@ -20,7 +20,7 @@ public class TruckTypeResponse implements Serializable {
     private String message;
     @SerializedName("data")
     @Expose
-    private List<TruckType> data = null;
+    private ArrayList<TruckType> data = null;
 
     public String getStatusCode() {
         return statusCode;
@@ -38,11 +38,11 @@ public class TruckTypeResponse implements Serializable {
         this.message = message;
     }
 
-    public List<TruckType> getData() {
+    public ArrayList<TruckType> getData() {
         return data;
     }
 
-    public void setData(List<TruckType> data) {
+    public void setData(ArrayList<TruckType> data) {
         this.data = data;
     }
 

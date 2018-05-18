@@ -17,18 +17,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.GridView;
 import android.widget.TextView;
 
-import com.android.volley.Request;
 import com.google.gson.Gson;
 import com.truck.airlines.airlines.ActivitySearchAddress;
 import com.truck.airlines.airlines.R;
+import com.truck.airlines.airlines.adapter.AdapterMaterialType;
+import com.truck.airlines.airlines.adapter.AdapterNoOfTruck;
+import com.truck.airlines.airlines.adapter.AdapterTruckType;
+import com.truck.airlines.airlines.adapter.AdapterWeight;
 import com.truck.airlines.airlines.interfaces.IResult;
-import com.truck.airlines.airlines.pojos.Location;
 import com.truck.airlines.airlines.pojos.MaterialType;
 import com.truck.airlines.airlines.pojos.MaterialTypeResponse;
 import com.truck.airlines.airlines.pojos.PostLoad;
@@ -46,9 +47,7 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -87,24 +86,11 @@ public class FragmentPostLoad extends Fragment {
 
     private ArrayList truckList;
     private Dialog dialog;
-    List<TruckType> truckTypesList;
-    List<WeightType> weightTypesList;
-    List<MaterialType> materialTypesList;
+    ArrayList<TruckType> truckTypesList;
+    ArrayList<WeightType> weightTypesList;
+    ArrayList<MaterialType> materialTypesList;
     String weightId, truckTypeId, materialId, mNoOfTruck, dateOFLoad;
-    String[] noOfTruck = new String[]{
-            "Select",
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10"
-
-    };
+    ArrayList<String> noOfTruck = new ArrayList<>();
     Calendar myCalendar = Calendar.getInstance(Locale.US);
     boolean isSource = false;
 
@@ -125,16 +111,24 @@ public class FragmentPostLoad extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        etMaterialtype.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getMatirialType();
-            }
-        });
         initialize();
+
     }
 
     void initialize() {
+
+        noOfTruck.add("1");
+        noOfTruck.add("2");
+        noOfTruck.add("3");
+        noOfTruck.add("4");
+        noOfTruck.add("5");
+        noOfTruck.add("6");
+        noOfTruck.add("7");
+        noOfTruck.add("8");
+        noOfTruck.add("9");
+        noOfTruck.add("10");
+        noOfTruck.add("11");
+        noOfTruck.add("12");
 
         etDateOfLoad.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,87 +172,34 @@ public class FragmentPostLoad extends Fragment {
 //                spinnerNoOfTruck.performClick();
 //            }
 //        });
-        final List<String> specialityList = new ArrayList<>(Arrays.asList(noOfTruck));
-        final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
-                getActivity(), R.layout.spinner_item_new, specialityList) {
+
+        etMaterialtype.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean isEnabled(int position) {
-                if (position == 0) {
-                    // Disable the first item from Spinner
-                    // First item will be use for hint
-                    return false;
-                } else {
-                    return true;
-                }
-            }
+            public void onClick(View v) {
+                getMatirialType();
 
+            }
+        });
+        etWeight.setOnClickListener(new View.OnClickListener() {
             @Override
-            public View getDropDownView(int position, View convertView,
-                                        ViewGroup parent) {
-                View view = super.getDropDownView(position, convertView, parent);
-                TextView tv = (TextView) view;
-                if (position == 0) {
-                    // Set the hint text color gray
-                    tv.setTextColor(Color.GRAY);
-                } else {
-                    tv.setTextColor(Color.BLACK);
-                }
-                return view;
+            public void onClick(View v) {
+                getWeightList();
+
             }
-        };
-        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spinnerNoOfTruck.setAdapter(spinnerArrayAdapter);
+        });
 
-
-//        etTruckType.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                spinnerTruckType.performClick();
-//            }
-//        });
-//        etWeight.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                spinnerWeight.performClick();
-//            }
-//        });
-//        etMaterialtype.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-//        spinnerTruckType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                if (position != 0) {
-//                    etTruckType.setText(truckTypesList.get(position).getTruckType());
-//                    truckTypeId = "" + truckTypesList.get(position).getId();
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
-//        spinnerWeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                if (position != 0) {
-//                    etWeight.setText(weightTypesList.get(position).getWeight());
-//                    weightId = "" + weightTypesList.get(position).getId();
-//
-//                    getTruckType();
-//                }
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
+        etTruckType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getTruckType();
+            }
+        });
+        etNoOfTruck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setspinnerItemForNoOfTruck(noOfTruck);
+            }
+        });
 
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
@@ -274,6 +215,8 @@ public class FragmentPostLoad extends Fragment {
                     postLoad.setDestinationCity(etDestinationCity.getText().toString());
                     postLoad.setNoOfTruck(mNoOfTruck);
                     postLoad.setDate(dateOFLoad);
+                    postLoad.setSourcePincode("110011");
+                    postLoad.setDestinationPincode("210011");
                     doLoad(postLoad);
                 }
             }
@@ -372,64 +315,6 @@ public class FragmentPostLoad extends Fragment {
         etDateOfLoad.setText("");
     }
 
-    private void getAddress(String pincode) {
-
-        dialog = Util.getProgressDialog(getActivity(), R.string.please_wait);
-        dialog.setCancelable(false);
-        dialog.show();
-
-
-        VolleyService volleyService = new VolleyService(getActivity());
-        volleyService.getRequest(new IResult() {
-            @Override
-            public void notifySuccess(String requestType, String response) {
-                Log.e("Response :", response.toString());
-                dialog.dismiss();
-
-                try {
-                    Gson gson = new Gson();
-                    Location responsePost = gson.fromJson(response.toString(), Location.class);
-                    if (responsePost.getStatus().equals("Success")) {
-
-                        if (isSource) {
-                            etSourceCity.setText(responsePost.getPostOffice().get(0).getName() + ", " +
-                                    responsePost.getPostOffice().get(0).getDistrict() + ", " + responsePost.getPostOffice().get(0).getState());
-                        } else {
-                            etDestinationCity.setText(responsePost.getPostOffice().get(0).getName() + ", " +
-                                    responsePost.getPostOffice().get(0).getDistrict() + ", " + responsePost.getPostOffice().get(0).getState());
-
-                        }
-
-                    } else {
-                        showDialog(getString(R.string.no_pincode_found));
-
-                    }
-
-                } catch (Exception e) {
-
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void notifyError(String requestType, String error) {
-
-                Log.e("Response :", error.toString());
-                showDialog("ServerError :" + error.toString());
-
-//
-//                Intent intent = new Intent(getActivity(), ActivityContainer.class);
-//                intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_USER_TYPE);
-//                startActivity(intent);
-//
-                dialog.dismiss();
-
-            }
-        }, Request.Method.GET, C.API_GET_ADDRESS + pincode, Util.getHeader(getActivity()));
-
-
-    }
 
     private void showDialog(String msg) {
 
@@ -549,10 +434,7 @@ public class FragmentPostLoad extends Fragment {
                     MaterialTypeResponse alArrayList = gson.fromJson(response, MaterialTypeResponse.class);
 
                     if (alArrayList.getStatusCode().equals(C.STATUS_SUCCESS)) {
-                        MaterialType truckType = new MaterialType();
-                        truckType.setId("0");
-                        truckType.setMaterialName(getString(R.string.select));
-                        alArrayList.getData().set(0, truckType);
+
                         materialTypesList = alArrayList.getData();
                         setspinnerItemForMaterial(materialTypesList);
                     }
@@ -576,37 +458,30 @@ public class FragmentPostLoad extends Fragment {
 
     }
 
-    void setspinnerItemForMaterial(final List<MaterialType> list) {
-
-        final ArrayAdapter<MaterialType> spinnerDisabilityArrayAdapter = new ArrayAdapter<MaterialType>(
-                getActivity(), R.layout.spinner_item_new, list);
-
-
+    void setspinnerItemForMaterial(final ArrayList<MaterialType> list) {
+        final AdapterMaterialType spinnerDisabilityArrayAdapter = new AdapterMaterialType(getActivity(), list);
         final LayoutInflater factory = LayoutInflater.from(getActivity());
         final View deleteDialogView = factory.inflate(
                 R.layout.layout_material_type, null);
         final Dialog dialog = new Dialog(getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().
-
-                setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         //   dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setContentView(deleteDialogView);
         dialog.setCancelable(true);
 
+        TextView tvTitle = (TextView) deleteDialogView.findViewById(R.id.tvTitle);
+        tvTitle.setText(R.string.select_material_type);
 
         GridView gvMaterialType = (GridView) deleteDialogView.findViewById(R.id.gvMaterialType);
         gvMaterialType.setAdapter(spinnerDisabilityArrayAdapter);
-        gvMaterialType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        gvMaterialType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                etMaterialtype.setText(list.get(position).getMaterialName());
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 materialId = "" + materialTypesList.get(position).getId();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+                String data = materialTypesList.get(position).getMaterialName();
+                etMaterialtype.setText(data);
+                dialog.dismiss();
             }
         });
 
@@ -641,10 +516,7 @@ public class FragmentPostLoad extends Fragment {
                 try {
                     TruckTypeResponse alArrayList = gson.fromJson(response, TruckTypeResponse.class);
                     if (alArrayList.getStatusCode().equals(C.STATUS_SUCCESS)) {
-                        TruckType truckType = new TruckType();
-                        truckType.setId("0");
-                        truckType.setTruckType(getString(R.string.select));
-                        alArrayList.getData().set(0, truckType);
+
                         truckTypesList = alArrayList.getData();
                         setspinnerItemForTruck(truckTypesList);
                     }
@@ -669,40 +541,75 @@ public class FragmentPostLoad extends Fragment {
     }
 
 
-    void setspinnerItemForTruck(List<TruckType> list) {
+    void setspinnerItemForTruck(ArrayList<TruckType> list) {
 
 
-        etTruckType.setHint(getString(R.string.select));
-        final ArrayAdapter<TruckType> spinnerDisabilityArrayAdapter = new ArrayAdapter<TruckType>(
-                getActivity(), R.layout.spinner_item_new, list) {
+        final AdapterTruckType spinnerDisabilityArrayAdapter = new AdapterTruckType(getActivity(), list);
+        final LayoutInflater factory = LayoutInflater.from(getActivity());
+        final View deleteDialogView = factory.inflate(
+                R.layout.layout_material_type, null);
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        //   dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(deleteDialogView);
+        dialog.setCancelable(true);
+
+        TextView tvTitle = (TextView) deleteDialogView.findViewById(R.id.tvTitle);
+        tvTitle.setText(R.string.truck_type);
+
+        GridView gvMaterialType = (GridView) deleteDialogView.findViewById(R.id.gvMaterialType);
+        gvMaterialType.setAdapter(spinnerDisabilityArrayAdapter);
+        gvMaterialType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean isEnabled(int position) {
-                if (position == 0) {
-                    // Disable the first item from Spinner
-                    // First item will be use for hint
-                    return false;
-                } else {
-                    return true;
-                }
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                truckTypeId = "" + truckTypesList.get(position).getId();
+                String data = truckTypesList.get(position).getTruckType();
+                etTruckType.setText(data);
+                dialog.dismiss();
             }
+        });
 
-            @Override
-            public View getDropDownView(int position, View convertView,
-                                        ViewGroup parent) {
-                View view = super.getDropDownView(position, convertView, parent);
-                TextView tv = (TextView) view;
-                if (position == 0) {
-                    // Set the hint text color gray
-                    tv.setTextColor(Color.GRAY);
-                } else {
-                    tv.setTextColor(Color.BLACK);
-                }
-                return view;
-            }
-        };
-        spinnerDisabilityArrayAdapter.setDropDownViewResource(R.layout.dialog_spinner_dropdown_item);
+        dialog.show();
+
 //        spinnerTruckType.setAdapter(spinnerDisabilityArrayAdapter);
     }
+
+
+    void setspinnerItemForNoOfTruck(ArrayList<String> list) {
+
+
+        final AdapterNoOfTruck spinnerDisabilityArrayAdapter = new AdapterNoOfTruck(getActivity(), list);
+        final LayoutInflater factory = LayoutInflater.from(getActivity());
+        final View deleteDialogView = factory.inflate(
+                R.layout.layout_material_type, null);
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        //   dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(deleteDialogView);
+        dialog.setCancelable(true);
+
+        TextView tvTitle = (TextView) deleteDialogView.findViewById(R.id.tvTitle);
+        tvTitle.setText(R.string.no_of_trucks);
+
+        GridView gvMaterialType = (GridView) deleteDialogView.findViewById(R.id.gvMaterialType);
+        gvMaterialType.setAdapter(spinnerDisabilityArrayAdapter);
+        gvMaterialType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mNoOfTruck = "" + noOfTruck.get(position);
+
+                etNoOfTruck.setText(mNoOfTruck+" Trucks");
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+
+//        spinnerTruckType.setAdapter(spinnerDisabilityArrayAdapter);
+    }
+
 
     public void getWeightList() {
 
@@ -731,10 +638,7 @@ public class FragmentPostLoad extends Fragment {
                     WeightResponse alArrayList = gson.fromJson(response, WeightResponse.class);
 
                     if (alArrayList.getStatusCode().equals(C.STATUS_SUCCESS)) {
-                        WeightType truckType = new WeightType();
-                        truckType.setId("0");
-                        truckType.setWeight(getString(R.string.select));
-                        alArrayList.getData().set(0, truckType);
+
                         weightTypesList = alArrayList.getData();
                         setspinnerItemForWeight(weightTypesList);
                     }
@@ -757,37 +661,43 @@ public class FragmentPostLoad extends Fragment {
 
     }
 
-    void setspinnerItemForWeight(List<WeightType> list) {
+    void setspinnerItemForWeight(ArrayList<WeightType> list) {
 
-        etWeight.setHint(getString(R.string.select));
-        final ArrayAdapter<WeightType> spinnerDisabilityArrayAdapter = new ArrayAdapter<WeightType>(
-                getActivity(), R.layout.spinner_item_new, list) {
-            @Override
-            public boolean isEnabled(int position) {
-                if (position == 0) {
-                    // Disable the first item from Spinner
-                    // First item will be use for hint
-                    return false;
-                } else {
-                    return true;
-                }
-            }
 
+        final AdapterWeight spinnerDisabilityArrayAdapter = new AdapterWeight(getActivity(), list);
+        final LayoutInflater factory = LayoutInflater.from(getActivity());
+        final View deleteDialogView = factory.inflate(
+                R.layout.layout_material_type, null);
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        //   dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(deleteDialogView);
+        dialog.setCancelable(true);
+
+        TextView tvTitle = (TextView) deleteDialogView.findViewById(R.id.tvTitle);
+        tvTitle.setText(R.string.select_weight);
+
+        GridView gvMaterialType = (GridView) deleteDialogView.findViewById(R.id.gvMaterialType);
+        gvMaterialType.setAdapter(spinnerDisabilityArrayAdapter);
+        gvMaterialType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public View getDropDownView(int position, View convertView,
-                                        ViewGroup parent) {
-                View view = super.getDropDownView(position, convertView, parent);
-                TextView tv = (TextView) view;
-                if (position == 0) {
-                    // Set the hint text color gray
-                    tv.setTextColor(Color.GRAY);
-                } else {
-                    tv.setTextColor(Color.BLACK);
-                }
-                return view;
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                weightId = "" + weightTypesList.get(position).getId();
+                String data = weightTypesList.get(position).getWeight();
+                etWeight.setText(data);
+                dialog.dismiss();
             }
-        };
-        spinnerDisabilityArrayAdapter.setDropDownViewResource(R.layout.dialog_spinner_dropdown_item);
-//        spinnerWeight.setAdapter(spinnerDisabilityArrayAdapter);
+        });
+
+        dialog.show();
+    }
+
+    public void setSource(String stringExtra) {
+        etSourceCity.setText(stringExtra);
+    }
+
+    public void setDestination(String stringExtra) {
+        etDestinationCity.setText(stringExtra);
     }
 }

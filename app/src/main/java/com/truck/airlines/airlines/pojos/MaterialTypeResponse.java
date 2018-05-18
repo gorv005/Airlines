@@ -8,7 +8,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.ArrayList;
 
 public class MaterialTypeResponse implements Serializable {
 
@@ -20,7 +20,7 @@ public class MaterialTypeResponse implements Serializable {
     private String message;
     @SerializedName("data")
     @Expose
-    private List<MaterialType> data = null;
+    private ArrayList<MaterialType> data = null;
 
     public String getStatusCode() {
         return statusCode;
@@ -38,11 +38,11 @@ public class MaterialTypeResponse implements Serializable {
         this.message = message;
     }
 
-    public List<MaterialType> getData() {
+    public ArrayList<MaterialType> getData() {
         return data;
     }
 
-    public void setData(List<MaterialType> data) {
+    public void setData(ArrayList<MaterialType> data) {
         this.data = data;
     }
 

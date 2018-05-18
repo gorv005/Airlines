@@ -51,6 +51,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="weight">Weight (Metric Tons)</string>
+    <string name="select_weight">Select Weight</string>
     <string name="Materialtype">Material Type</string>
     <string name="please_enter_valid_pincode">Please enter valid pincode</string>
     <string name="please_enter_password">Please enter password</string>

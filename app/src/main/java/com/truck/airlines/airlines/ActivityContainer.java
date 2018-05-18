@@ -194,23 +194,28 @@ public class ActivityContainer extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == C.REQUEST_ADDRESS) {
+        Fragment fragment = getVisibleFragment();
+
+        if (fragment instanceof FragmentPostLoad) {
+
             if (resultCode == C.RESULT_ADDRESS) {
                 if (data.getStringExtra(C.ADDRESS_SOURCE) != null) {
-//                    etSourceCity.setText(data.getStringExtra(C.ADDRESS_SOURCE));
+
+                    ((FragmentPostLoad) fragment).setSource(data.getStringExtra(C.ADDRESS_SOURCE));
+
 
                 } else if (data.getStringExtra(C.ADDRESS_DESTINATION) != null) {
-//                    etDestinationCity.setText(data.getStringExtra(C.ADDRESS_DESTINATION));
+                    ((FragmentPostLoad) fragment).setDestination(data.getStringExtra(C.ADDRESS_DESTINATION));
+
                 }
             }
+
         }
     }
-
 
 
 }

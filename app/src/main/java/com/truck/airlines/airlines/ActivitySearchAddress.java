@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -137,7 +138,16 @@ public class ActivitySearchAddress extends AppCompatActivity implements
 
     }
 
-//    private AdapterView.OnItemClickListener mAutocompleteClickListener
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home)
+        {
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    //    private AdapterView.OnItemClickListener mAutocompleteClickListener
 //            = new AdapterView.OnItemClickListener() {
 //        @Override
 //        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
