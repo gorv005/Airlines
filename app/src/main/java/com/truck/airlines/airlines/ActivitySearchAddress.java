@@ -90,6 +90,7 @@ public class ActivitySearchAddress extends AppCompatActivity implements
         AutocompleteFilter autocompleteFilter = new AutocompleteFilter.Builder()
                 .setTypeFilter(Place.TYPE_COUNTRY)
                 .setCountry("IND")
+                .setTypeFilter(AutocompleteFilter.TYPE_FILTER_CITIES)
                 .build();
         mAdapterAddress = new AdapterAddress(this, R.layout.layout_item_address,
                 mGoogleApiClient, null, autocompleteFilter);
@@ -140,8 +141,7 @@ public class ActivitySearchAddress extends AppCompatActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home)
-        {
+        if (item.getItemId() == android.R.id.home) {
             onBackPressed();
         }
         return super.onOptionsItemSelected(item);
