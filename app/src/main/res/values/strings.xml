@@ -115,4 +115,7 @@
     <string name="autocomplete_hint">Enter place to serach</string>
     <string name="select_truck">Select Truck</string>
     <string name="select_material_type">Select Material Type</string>
+    <string name="enter_material_name">Enter material name</string>
+    <string name="material_name">Material Name</string>
+    <string name="select_truck_type">Select Truck Type</string>
 </resources>

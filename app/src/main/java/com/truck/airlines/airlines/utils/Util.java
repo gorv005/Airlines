@@ -40,6 +40,7 @@ import android.widget.TextView;
 
 import com.truck.airlines.airlines.R;
 import com.truck.airlines.airlines.pojos.SideMenuItem;
+import com.truck.airlines.airlines.pojos.TruckType;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -904,6 +905,34 @@ public class Util {
             return s;
         }
 
+    }
+
+    public static ArrayList<TruckType> getTruckSize() {
+        ArrayList<TruckType> truckSize =new ArrayList<>();
+        truckSize.add(new TruckType("16 feet"));
+        truckSize.add(new TruckType("18 feet"));
+        truckSize.add(new TruckType("20 feet"));
+        truckSize.add(new TruckType("22 feet"));
+        truckSize.add(new TruckType("24 feet"));
+        truckSize.add(new TruckType("26 feet"));
+        truckSize.add(new TruckType("28 feet"));
+        truckSize.add(new TruckType("30 feet"));
+        truckSize.add(new TruckType("32 feet"));
+
+        return truckSize;
+    }
+
+
+    public static ArrayList<TruckType> getTruckCapacity() {
+        ArrayList<TruckType> truckSize =new ArrayList<>();
+        truckSize.add(new TruckType("3 MT"));
+        truckSize.add(new TruckType("6 MT"));
+        truckSize.add(new TruckType("8 MT"));
+        truckSize.add(new TruckType("10 MT"));
+        truckSize.add(new TruckType("12 MT"));
+        truckSize.add(new TruckType("14 MT"));
+
+        return truckSize;
     }
 /*
     public static void showAlert(Context context, String title, String msg, String btnText, int img) {

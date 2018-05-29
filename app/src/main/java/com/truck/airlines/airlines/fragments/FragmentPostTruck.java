@@ -6,7 +6,6 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -31,8 +30,6 @@ import com.google.gson.Gson;
 import com.truck.airlines.airlines.R;
 import com.truck.airlines.airlines.interfaces.IResult;
 import com.truck.airlines.airlines.pojos.Location;
-import com.truck.airlines.airlines.pojos.MaterialType;
-import com.truck.airlines.airlines.pojos.PostLoad;
 import com.truck.airlines.airlines.pojos.PostTruck;
 import com.truck.airlines.airlines.pojos.Response;
 import com.truck.airlines.airlines.pojos.TruckType;
@@ -96,10 +93,10 @@ public class FragmentPostTruck extends Fragment {
     @BindView(R.id.btnSubmit)
     Button btnSubmit;
     private Dialog dialog;
-    boolean isSource=false;
+    boolean isSource = false;
     List<TruckType> truckTypesList;
     List<WeightType> weightTypesList;
-    String weightId,truckTypeId,mNoOfTruck,dateOFLoad;
+    String weightId, truckTypeId, mNoOfTruck, dateOFLoad;
 
     String[] noOfTruck = new String[]{
             "Select",
@@ -138,7 +135,7 @@ public class FragmentPostTruck extends Fragment {
         getWeightList();
     }
 
-    void initialize(){
+    void initialize() {
         etMobileNumber.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -210,9 +207,9 @@ public class FragmentPostTruck extends Fragment {
         spinnerNoOfTruck.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position!=0){
+                if (position != 0) {
                     etNoOfTruck.setText(noOfTruck[position]);
-                    mNoOfTruck=""+noOfTruck[position];
+                    mNoOfTruck = "" + noOfTruck[position];
                 }
             }
 
@@ -229,30 +226,27 @@ public class FragmentPostTruck extends Fragment {
         });
         final List<String> specialityList = new ArrayList<>(Arrays.asList(noOfTruck));
         final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
-                getActivity(),R.layout.spinner_item_new,specialityList){
+                getActivity(), R.layout.spinner_item_new, specialityList) {
             @Override
-            public boolean isEnabled(int position){
-                if(position == 0)
-                {
+            public boolean isEnabled(int position) {
+                if (position == 0) {
                     // Disable the first item from Spinner
                     // First item will be use for hint
                     return false;
-                }
-                else
-                {
+                } else {
                     return true;
                 }
             }
+
             @Override
             public View getDropDownView(int position, View convertView,
                                         ViewGroup parent) {
                 View view = super.getDropDownView(position, convertView, parent);
                 TextView tv = (TextView) view;
-                if(position == 0){
+                if (position == 0) {
                     // Set the hint text color gray
                     tv.setTextColor(Color.GRAY);
-                }
-                else {
+                } else {
                     tv.setTextColor(Color.BLACK);
                 }
                 return view;
@@ -263,9 +257,9 @@ public class FragmentPostTruck extends Fragment {
         spinnerTruckType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position!=0){
+                if (position != 0) {
                     etTruckType.setText(truckTypesList.get(position).getTruckType());
-                    truckTypeId=truckTypesList.get(position).getId();
+                    truckTypeId = truckTypesList.get(position).getId();
                 }
             }
 
@@ -277,9 +271,9 @@ public class FragmentPostTruck extends Fragment {
         spinnerWeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position!=0){
+                if (position != 0) {
                     etWeight.setText(weightTypesList.get(position).getWeight());
-                    weightId=weightTypesList.get(position).getId();
+                    weightId = weightTypesList.get(position).getId();
 
                     getTruckType();
                 }
@@ -306,13 +300,10 @@ public class FragmentPostTruck extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
 
-                if(etSourcePincode.getText().toString().length()==6)
-                {
-                    isSource=true;
+                if (etSourcePincode.getText().toString().length() == 6) {
+                    isSource = true;
                     getAddress(etSourcePincode.getText().toString());
-                }
-                else
-                {
+                } else {
                     etSourceCity.setText("");
 
                 }
@@ -332,13 +323,11 @@ public class FragmentPostTruck extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
 
-                if(etDestinationPincode.getText().toString().length()==6)
-                {                    isSource=false;
+                if (etDestinationPincode.getText().toString().length() == 6) {
+                    isSource = false;
 
                     getAddress(etDestinationPincode.getText().toString());
-                }
-                else
-                {
+                } else {
                     etDestinationCity.setText("");
 
                 }
@@ -348,12 +337,12 @@ public class FragmentPostTruck extends Fragment {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isAllValid()){
-                    PostTruck postTruck=new PostTruck();
+                if (isAllValid()) {
+                    PostTruck postTruck = new PostTruck();
                     postTruck.setWeightId(weightId);
                     postTruck.setTruckTypeId(truckTypeId);
-                    postTruck.setTruckNumber(etVehiclePart1.getText().toString()+ " "+
-                            etVehiclePart2.getText().toString()+" "+etVehiclePart3.getText().toString());
+                    postTruck.setTruckNumber(etVehiclePart1.getText().toString() + " " +
+                            etVehiclePart2.getText().toString() + " " + etVehiclePart3.getText().toString());
                     postTruck.setDriverName(etDriverName.getText().toString());
                     postTruck.setDriverNumber(etMobileNumber.getText().toString().split("-")[1]);
                     postTruck.setSourcePincode(etSourcePincode.getText().toString());
@@ -366,13 +355,15 @@ public class FragmentPostTruck extends Fragment {
             }
         });
 
-    }    private void doPost(PostTruck postTruck) {
+    }
+
+    private void doPost(PostTruck postTruck) {
 
         dialog = Util.getProgressDialog(getActivity(), R.string.please_wait);
         dialog.setCancelable(false);
         dialog.show();
 
-        final Gson gson = new Gson();
+         final Gson gson = new Gson();
         String json = gson.toJson(postTruck);
         JSONObject obj = null;
         try {
@@ -389,13 +380,11 @@ public class FragmentPostTruck extends Fragment {
                 dialog.dismiss();
 
                 try {
-                    Gson gson = new Gson();
                     Response responsePost = gson.fromJson(response.toString(), Response.class);
                     if (responsePost.getStatus().equals(C.STATUS_SUCCESS)) {
-                       emptyFields();
+                        emptyFields();
 
                         showDialog(responsePost.getMessage());
-
 
 
                     } else {
@@ -415,7 +404,7 @@ public class FragmentPostTruck extends Fragment {
                 dialog.dismiss();
 
                 Log.e("Response :", error.toString());
-                showDialog("ServerError :"+error.toString());
+                showDialog("ServerError :" + error.toString());
 
 //
 //                Intent intent = new Intent(getActivity(), ActivityContainer.class);
@@ -430,7 +419,7 @@ public class FragmentPostTruck extends Fragment {
     }
 
 
-    void emptyFields(){
+    void emptyFields() {
         etWeight.setText("");
         etTruckType.setText("");
         etVehiclePart1.setText("");
@@ -444,6 +433,7 @@ public class FragmentPostTruck extends Fragment {
         etDestinationCity.setText("");
         etDateOfPost.setText("");
     }
+
     private void getAddress(String pincode) {
 
         dialog = Util.getProgressDialog(getActivity(), R.string.please_wait);
@@ -463,19 +453,16 @@ public class FragmentPostTruck extends Fragment {
                     Location responsePost = gson.fromJson(response.toString(), Location.class);
                     if (responsePost.getStatus().equals("Success")) {
 
-                        if(isSource) {
+                        if (isSource) {
                             etSourceCity.setText(responsePost.getPostOffice().get(0).getName() + ", " + responsePost.getPostOffice().get(0).getTaluk() + ", " +
                                     responsePost.getPostOffice().get(0).getDistrict() + ", " + responsePost.getPostOffice().get(0).getState());
-                        }
-                        else {
+                        } else {
                             etDestinationCity.setText(responsePost.getPostOffice().get(0).getName() + ", " + responsePost.getPostOffice().get(0).getTaluk() + ", " +
                                     responsePost.getPostOffice().get(0).getDistrict() + ", " + responsePost.getPostOffice().get(0).getState());
 
                         }
 
-                    }
-                    else
-                    {
+                    } else {
                         showDialog(getString(R.string.no_pincode_found));
 
                     }
@@ -491,7 +478,7 @@ public class FragmentPostTruck extends Fragment {
             public void notifyError(String requestType, String error) {
 
                 Log.e("Response :", error.toString());
-                showDialog("ServerError :"+error.toString());
+                showDialog("ServerError :" + error.toString());
 
 //
 //                Intent intent = new Intent(getActivity(), ActivityContainer.class);
@@ -501,10 +488,11 @@ public class FragmentPostTruck extends Fragment {
                 dialog.dismiss();
 
             }
-        }, Request.Method.GET, C.API_GET_ADDRESS+pincode, Util.getHeader(getActivity()));
+        }, Request.Method.GET, C.API_GET_ADDRESS + pincode, Util.getHeader(getActivity()));
 
 
     }
+
     private void showDialog(String msg) {
 
         AlertDialog.Builder builder;
@@ -526,6 +514,7 @@ public class FragmentPostTruck extends Fragment {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
+
     private void openCalender() {
         DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH));
         //  myCalendar.set(Calendar.YEAR, myCalendar.get(Calendar.MONTH) +1);
@@ -558,62 +547,57 @@ public class FragmentPostTruck extends Fragment {
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ENGLISH);
 
         etDateOfPost.setText(sdf.format(myCalendar.getTime()));
-        dateOFLoad=""+myCalendar.getTimeInMillis();
+        dateOFLoad = "" + myCalendar.getTimeInMillis();
 
     }
+
     public boolean isAllValid() {
 
         if (etSourcePincode.getText().toString().length() == 0) {
             etSourcePincode.setError(this.getResources().getString(R.string.required_field));
             etSourcePincode.requestFocus();
             return false;
-        } else  if (etDestinationPincode.getText().toString().length() == 0) {
+        } else if (etDestinationPincode.getText().toString().length() == 0) {
             etDestinationPincode.setError(this.getResources().getString(R.string.required_field));
             etDestinationPincode.requestFocus();
             return false;
-        } else  if (etWeight.getText().toString().length() == 0) {
+        } else if (etWeight.getText().toString().length() == 0) {
             etWeight.setError(this.getResources().getString(R.string.required_field));
             etWeight.requestFocus();
             return false;
-        } else  if (etTruckType.getText().toString().length() == 0) {
+        } else if (etTruckType.getText().toString().length() == 0) {
             etTruckType.setError(this.getResources().getString(R.string.required_field));
             etTruckType.requestFocus();
             return false;
-        } else  if (etVehiclePart1.getText().toString().length() == 0) {
+        } else if (etVehiclePart1.getText().toString().length() == 0) {
             etVehiclePart1.setError(this.getResources().getString(R.string.required_field));
             etVehiclePart1.requestFocus();
             return false;
-        } else  if (etVehiclePart2.getText().toString().length() == 0) {
+        } else if (etVehiclePart2.getText().toString().length() == 0) {
             etVehiclePart2.setError(this.getResources().getString(R.string.required_field));
             etVehiclePart2.requestFocus();
             return false;
-        }
-        else  if (etVehiclePart3.getText().toString().length() == 0) {
+        } else if (etVehiclePart3.getText().toString().length() == 0) {
             etVehiclePart3.setError(this.getResources().getString(R.string.required_field));
             etVehiclePart3.requestFocus();
             return false;
-        }
-        else  if (etDriverName.getText().toString().length() == 0) {
+        } else if (etDriverName.getText().toString().length() == 0) {
             etDriverName.setError(this.getResources().getString(R.string.required_field));
             etDriverName.requestFocus();
             return false;
-        }
-        else  if (etMobileNumber.getText().toString().length() == 0) {
+        } else if (etMobileNumber.getText().toString().length() == 0) {
             etMobileNumber.setError(this.getResources().getString(R.string.required_field));
             etMobileNumber.requestFocus();
             return false;
-        }
-        else  if (etMobileNumber.getText().toString().length() <14) {
+        } else if (etMobileNumber.getText().toString().length() < 14) {
             etMobileNumber.setError(this.getResources().getString(R.string.enter_valid_phone_number));
             etMobileNumber.requestFocus();
             return false;
-        }
-        else  if (etSourcePincode.getText().toString().length() < 6) {
+        } else if (etSourcePincode.getText().toString().length() < 6) {
             etSourcePincode.setError(this.getResources().getString(R.string.please_enter_valid_pincode));
             etSourcePincode.requestFocus();
             return false;
-        }
-        else  if (etDestinationPincode.getText().toString().length() < 6) {
+        } else if (etDestinationPincode.getText().toString().length() < 6) {
             etDestinationPincode.setError(this.getResources().getString(R.string.please_enter_valid_pincode));
             etDestinationPincode.requestFocus();
             return false;
@@ -646,12 +630,9 @@ public class FragmentPostTruck extends Fragment {
                 Gson gson = new Gson();
                 try {
                     TruckTypeResponse alArrayList = gson.fromJson(response, TruckTypeResponse.class);
-                    if(alArrayList.getStatusCode().equals(C.STATUS_SUCCESS)) {
-                        TruckType truckType=new TruckType();
-                        truckType.setId("0");
-                        truckType.setTruckType(getString(R.string.select));
-                        alArrayList.getData().set(0,truckType);
-                        truckTypesList=alArrayList.getData();
+                    if (alArrayList.getStatusCode().equals(C.STATUS_SUCCESS)) {
+
+                        truckTypesList = alArrayList.getData();
                         setspinnerItemForTruck(truckTypesList);
                     }
 
@@ -675,8 +656,7 @@ public class FragmentPostTruck extends Fragment {
     }
 
 
-    void setspinnerItemForTruck(List<TruckType> list){
-
+    void setspinnerItemForTruck(List<TruckType> list) {
 
 
         etTruckType.setHint(getString(R.string.select));
@@ -737,12 +717,12 @@ public class FragmentPostTruck extends Fragment {
                 try {
                     WeightResponse alArrayList = gson.fromJson(response, WeightResponse.class);
 
-                    if(alArrayList.getStatusCode().equals(C.STATUS_SUCCESS)) {
-                        WeightType truckType=new WeightType();
+                    if (alArrayList.getStatusCode().equals(C.STATUS_SUCCESS)) {
+                        WeightType truckType = new WeightType();
                         truckType.setId("0");
                         truckType.setWeight(getString(R.string.select));
-                        alArrayList.getData().set(0,truckType);
-                        weightTypesList=alArrayList.getData();
+                        alArrayList.getData().set(0, truckType);
+                        weightTypesList = alArrayList.getData();
                         setspinnerItemForWeight(weightTypesList);
                     }
                 } catch (Exception e) {
@@ -764,7 +744,7 @@ public class FragmentPostTruck extends Fragment {
 
     }
 
-    void setspinnerItemForWeight(List<WeightType> list){
+    void setspinnerItemForWeight(List<WeightType> list) {
 
         etWeight.setHint(getString(R.string.select));
         final ArrayAdapter<WeightType> spinnerDisabilityArrayAdapter = new ArrayAdapter<WeightType>(

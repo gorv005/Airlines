@@ -18,6 +18,10 @@ public class TruckType implements Serializable{
     @Expose
     private String truckType;
 
+    public TruckType(String truckType) {
+        this.truckType = truckType;
+    }
+
     public String getId() {
         return id;
     }

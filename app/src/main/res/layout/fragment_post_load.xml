@@ -169,6 +169,25 @@
                 android:layout_height="1dp"
                 android:background="@color/grey" />
 
+            <TextView
+                android:id="@+id/etMaterialName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:editable="false"
+                android:focusable="false"
+                android:hint="@string/material_name"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:paddingBottom="20dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="20dp"
+                android:textColor="@color/black" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey" />
+
 
             <TextView
                 android:id="@+id/etWeight"

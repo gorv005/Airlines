@@ -19,7 +19,9 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -35,7 +37,6 @@ import com.truck.airlines.airlines.pojos.MaterialTypeResponse;
 import com.truck.airlines.airlines.pojos.PostLoad;
 import com.truck.airlines.airlines.pojos.Response;
 import com.truck.airlines.airlines.pojos.TruckType;
-import com.truck.airlines.airlines.pojos.TruckTypeResponse;
 import com.truck.airlines.airlines.pojos.WeightResponse;
 import com.truck.airlines.airlines.pojos.WeightType;
 import com.truck.airlines.airlines.utils.C;
@@ -63,6 +64,8 @@ public class FragmentPostLoad extends Fragment {
     TextView etDestinationCity;
     @BindView(R.id.etMaterialtype)
     TextView etMaterialtype;
+    @BindView(R.id.etMaterialName)
+    TextView etMaterialName;
     @BindView(R.id.etWeight)
     TextView etWeight;
     @BindView(R.id.etTruckType)
@@ -71,16 +74,6 @@ public class FragmentPostLoad extends Fragment {
     TextView etDateOfLoad;
     @BindView(R.id.etNumberOfTruck)
     TextView etNoOfTruck;
-
-    //    @BindView(R.id.spinnerMaterialtype)
-//    Spinner spinnerMaterialtype;
-//    @BindView(R.id.spinnerWeight)
-//    Spinner spinnerWeight;
-//    @BindView(R.id.spinnerTruckType)
-//    Spinner spinnerTruckType;
-//    @BindView(R.id.spinnerNoOfTruck)
-//    Spinner spinnerNoOfTruck;
-
     @BindView(R.id.btnSubmit)
     Button btnSubmit;
 
@@ -93,7 +86,6 @@ public class FragmentPostLoad extends Fragment {
     ArrayList<String> noOfTruck = new ArrayList<>();
     Calendar myCalendar = Calendar.getInstance(Locale.US);
     boolean isSource = false;
-
 
     public FragmentPostLoad() {
         // Required empty public constructor
@@ -112,7 +104,6 @@ public class FragmentPostLoad extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         initialize();
-
     }
 
     void initialize() {
@@ -136,42 +127,7 @@ public class FragmentPostLoad extends Fragment {
                 openCalender();
             }
         });
-//        spinnerMaterialtype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                if (position != 0) {
-//                    etMaterialtype.setText(materialTypesList.get(position).getMaterialName());
-//                    materialId = "" + materialTypesList.get(position).getId();
-//                    getWeightList();
-//                }
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
-//        spinnerNoOfTruck.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                if (position != 0) {
-//                    etNoOfTruck.setText(noOfTruck[position]);
-//                    mNoOfTruck = "" + noOfTruck[position];
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
-//        etNoOfTruck.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                spinnerNoOfTruck.performClick();
-//            }
-//        });
+
 
         etMaterialtype.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -211,6 +167,7 @@ public class FragmentPostLoad extends Fragment {
                     postLoad.setWeightId(weightId);
                     postLoad.setTruckTypeId(truckTypeId);
                     postLoad.setMaterialTypeId(materialId);
+                    postLoad.setMaterialName(etMaterialName.getText().toString());
                     postLoad.setSourceCity(etSourceCity.getText().toString());
                     postLoad.setDestinationCity(etDestinationCity.getText().toString());
                     postLoad.setNoOfTruck(mNoOfTruck);
@@ -241,6 +198,37 @@ public class FragmentPostLoad extends Fragment {
                 startActivityForResult(intent, C.REQUEST_ADDRESS);
             }
         });
+
+        etMaterialName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openPopUpforMaterialName();
+            }
+        });
+    }
+
+    private void openPopUpforMaterialName() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle(R.string.material_name);
+        View viewInflated = LayoutInflater.from(getContext()).inflate(R.layout.layout_enter_material_name, (ViewGroup) getView(), false);
+        final EditText input = (EditText) viewInflated.findViewById(R.id.input);
+        builder.setView(viewInflated);
+
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                etMaterialName.setText(input.getText().toString());
+            }
+        });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
 
 
@@ -293,13 +281,10 @@ public class FragmentPostLoad extends Fragment {
                 Log.e("Response :", error.toString());
                 showDialog("ServerError :" + error.toString());
 
-//
 //                Intent intent = new Intent(getActivity(), ActivityContainer.class);
 //                intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_USER_TYPE);
 //                startActivity(intent);
-//
 //                dialog.dismiss();
-
             }
         }, "otp", C.API_TRUCK_LOAD, Util.getHeader(getActivity()), obj);
 
@@ -309,6 +294,7 @@ public class FragmentPostLoad extends Fragment {
         etWeight.setText("");
         etTruckType.setText("");
         etMaterialtype.setText("");
+        etMaterialName.setText("");
         etNoOfTruck.setText("");
         etSourceCity.setText("");
         etDestinationCity.setText("");
@@ -384,6 +370,10 @@ public class FragmentPostLoad extends Fragment {
         } else if (etMaterialtype.getText().toString().length() == 0) {
             etMaterialtype.setError(this.getResources().getString(R.string.required_field));
             etMaterialtype.requestFocus();
+            return false;
+        } else if (etMaterialName.getText().toString().length() == 0) {
+            etMaterialName.setError(this.getResources().getString(R.string.required_field));
+            etMaterialName.requestFocus();
             return false;
         } else if (etWeight.getText().toString().length() == 0) {
             etWeight.setError(this.getResources().getString(R.string.required_field));
@@ -493,55 +483,59 @@ public class FragmentPostLoad extends Fragment {
     public void getTruckType() {
 
 
-        dialog = Util.getProgressDialog(getActivity(), R.string.please_wait);
-        dialog.setCancelable(false);
+        final LayoutInflater factory = LayoutInflater.from(getActivity());
+        final View deleteDialogView = factory.inflate(
+                R.layout.layout_select_truck_type, null);
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        //   dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(deleteDialogView);
+        dialog.setCancelable(true);
+
+        TextView tvTitle = (TextView) deleteDialogView.findViewById(R.id.tvTitle);
+        tvTitle.setText(R.string.truck_type);
+
+        LinearLayout llOpen = (LinearLayout) deleteDialogView.findViewById(R.id.llOpen);
+        LinearLayout llContainer = (LinearLayout) deleteDialogView.findViewById(R.id.llContainer);
+        LinearLayout llTrailer = (LinearLayout) deleteDialogView.findViewById(R.id.llTrailer);
+
+        llOpen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                truckTypeId = "Open";
+                selectTruckSize(Util.getTruckSize());
+                dialog.dismiss();
+
+            }
+        });
+
+        llTrailer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                truckTypeId = "Trailer";
+                selectTruckSize(Util.getTruckSize());
+                dialog.dismiss();
+
+            }
+        });
+
+        llContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                truckTypeId = "Container";
+                selectTruckSize(Util.getTruckSize());
+                dialog.dismiss();
+
+            }
+        });
+
+
         dialog.show();
-
-
-        JSONObject obj = null;
-        try {
-            obj = new JSONObject("{\"ff\":\"ff\"}");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        VolleyService volleyService = new VolleyService(getActivity());
-        volleyService.postDataVolley(new IResult() {
-            @Override
-            public void notifySuccess(String requestType, String response) {
-                Log.e("Response :", response.toString());
-                dialog.dismiss();
-
-                Gson gson = new Gson();
-                try {
-                    TruckTypeResponse alArrayList = gson.fromJson(response, TruckTypeResponse.class);
-                    if (alArrayList.getStatusCode().equals(C.STATUS_SUCCESS)) {
-
-                        truckTypesList = alArrayList.getData();
-                        setspinnerItemForTruck(truckTypesList);
-                    }
-
-                } catch (Exception e) {
-
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void notifyError(String requestType, String error) {
-
-                Log.e("Response :", error.toString());
-                dialog.dismiss();
-
-
-            }
-        }, "truckType", C.API_TRUCK_TYPE, Util.getHeader(getActivity()), obj);
-
     }
 
 
-    void setspinnerItemForTruck(ArrayList<TruckType> list) {
+    void selectTruckSize(ArrayList<TruckType> list) {
 
 
         final AdapterTruckType spinnerDisabilityArrayAdapter = new AdapterTruckType(getActivity(), list);
@@ -563,9 +557,8 @@ public class FragmentPostLoad extends Fragment {
         gvMaterialType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                truckTypeId = "" + truckTypesList.get(position).getId();
-                String data = truckTypesList.get(position).getTruckType();
-                etTruckType.setText(data);
+                truckTypeId = truckTypeId + " . " + spinnerDisabilityArrayAdapter.getItem(position).getTruckType();
+                selectTruckCapacity(Util.getTruckCapacity());
                 dialog.dismiss();
             }
         });
@@ -574,6 +567,44 @@ public class FragmentPostLoad extends Fragment {
 
 //        spinnerTruckType.setAdapter(spinnerDisabilityArrayAdapter);
     }
+
+
+
+    void selectTruckCapacity(ArrayList<TruckType> list) {
+
+
+        final AdapterTruckType spinnerDisabilityArrayAdapter = new AdapterTruckType(getActivity(), list);
+        final LayoutInflater factory = LayoutInflater.from(getActivity());
+        final View deleteDialogView = factory.inflate(
+                R.layout.layout_material_type, null);
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        //   dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(deleteDialogView);
+        dialog.setCancelable(true);
+
+        TextView tvTitle = (TextView) deleteDialogView.findViewById(R.id.tvTitle);
+        tvTitle.setText(R.string.truck_type);
+
+        GridView gvMaterialType = (GridView) deleteDialogView.findViewById(R.id.gvMaterialType);
+        gvMaterialType.setAdapter(spinnerDisabilityArrayAdapter);
+        gvMaterialType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                truckTypeId = truckTypeId + " . " + spinnerDisabilityArrayAdapter.getItem(position).getTruckType();
+                etTruckType.setText(truckTypeId);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+
+//        spinnerTruckType.setAdapter(spinnerDisabilityArrayAdapter);
+    }
+
+
+
 
 
     void setspinnerItemForNoOfTruck(ArrayList<String> list) {
@@ -600,7 +631,7 @@ public class FragmentPostLoad extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 mNoOfTruck = "" + noOfTruck.get(position);
 
-                etNoOfTruck.setText(mNoOfTruck+" Trucks");
+                etNoOfTruck.setText(mNoOfTruck + " Trucks");
                 dialog.dismiss();
             }
         });

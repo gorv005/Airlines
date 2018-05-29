@@ -17,6 +17,9 @@ public class PostLoad {
     @SerializedName("material_type_id")
     @Expose
     private String materialTypeId;
+    @SerializedName("material_name")
+    @Expose
+    private String materialName;
     @SerializedName("source_pincode")
     @Expose
     private String sourcePincode;
@@ -58,6 +61,14 @@ public class PostLoad {
 
     public void setMaterialTypeId(String materialTypeId) {
         this.materialTypeId = materialTypeId;
+    }
+
+    public void setMaterialName(String materialName) {
+        this.materialName = materialName;
+    }
+
+    public String getMaterialName() {
+        return materialName;
     }
 
     public String getSourcePincode() {
