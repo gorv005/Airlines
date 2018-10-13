@@ -131,6 +131,7 @@ public class ActivityContainer extends AppCompatActivity {
                 fragmentTransaction.replace(R.id.container, fragment);
                 fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_LANGUAGE_SELECT);
                 break;
+
         }
         fragment.setArguments(bundle);
         fragmentTransaction.commit();
@@ -183,6 +184,7 @@ public class ActivityContainer extends AppCompatActivity {
         } else {
             finish();
         }
+
     }
 
     @Override
@@ -192,7 +194,6 @@ public class ActivityContainer extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
 
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

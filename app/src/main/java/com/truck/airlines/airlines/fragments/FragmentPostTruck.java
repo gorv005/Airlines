@@ -58,12 +58,12 @@ import butterknife.ButterKnife;
  */
 public class FragmentPostTruck extends Fragment {
 
-    @BindView(R.id.etSourcePincode)
-    EditText etSourcePincode;
+//    @BindView(R.id.etSourcePincode)
+//    EditText etSourcePincode;
     @BindView(R.id.etSourceCity)
     EditText etSourceCity;
-    @BindView(R.id.etDestinationPincode)
-    EditText etDestinationPincode;
+//    @BindView(R.id.etDestinationPincode)
+//    EditText etDestinationPincode;
     @BindView(R.id.etDestinationCity)
     EditText etDestinationCity;
     @BindView(R.id.etWeight)
@@ -84,9 +84,9 @@ public class FragmentPostTruck extends Fragment {
     EditText etMobileNumber;
     @BindView(R.id.etNoOfTruck)
     EditText etNoOfTruck;
-    @BindView(R.id.spinnerWeight)
-    Spinner spinnerWeight;
-    @BindView(R.id.spinnerTruckType)
+//    @BindView(R.id.spinnerWeight)
+//    Spinner spinnerWeight;
+//    @BindView(R.id.spinnerTruckType)
     Spinner spinnerTruckType;
     @BindView(R.id.spinnerNoOfTruck)
     Spinner spinnerNoOfTruck;
@@ -197,12 +197,12 @@ public class FragmentPostTruck extends Fragment {
                 spinnerTruckType.performClick();
             }
         });
-        etWeight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                spinnerWeight.performClick();
-            }
-        });
+//        etWeight.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                spinnerWeight.performClick();
+//            }
+//        });
 
         spinnerNoOfTruck.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -268,71 +268,71 @@ public class FragmentPostTruck extends Fragment {
 
             }
         });
-        spinnerWeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position != 0) {
-                    etWeight.setText(weightTypesList.get(position).getWeight());
-                    weightId = weightTypesList.get(position).getId();
+//        spinnerWeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                if (position != 0) {
+//                    etWeight.setText(weightTypesList.get(position).getWeight());
+//                    weightId = weightTypesList.get(position).getId();
+//
+//                    getTruckType();
+//                }
+//            }
 
-                    getTruckType();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
 
 
-        etSourcePincode.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-                if (etSourcePincode.getText().toString().length() == 6) {
-                    isSource = true;
-                    getAddress(etSourcePincode.getText().toString());
-                } else {
-                    etSourceCity.setText("");
-
-                }
-            }
-        });
-        etDestinationPincode.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-                if (etDestinationPincode.getText().toString().length() == 6) {
-                    isSource = false;
-
-                    getAddress(etDestinationPincode.getText().toString());
-                } else {
-                    etDestinationCity.setText("");
-
-                }
-            }
-        });
+//        etSourcePincode.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//                if (etSourcePincode.getText().toString().length() == 6) {
+//                    isSource = true;
+//                    getAddress(etSourcePincode.getText().toString());
+//                } else {
+//                    etSourceCity.setText("");
+//
+//                }
+//            }
+//        });
+//        etDestinationPincode.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//                if (etDestinationPincode.getText().toString().length() == 6) {
+//                    isSource = false;
+//
+//                    getAddress(etDestinationPincode.getText().toString());
+//                } else {
+//                    etDestinationCity.setText("");
+//
+//                }
+//            }
+//        });
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -345,9 +345,9 @@ public class FragmentPostTruck extends Fragment {
                             etVehiclePart2.getText().toString() + " " + etVehiclePart3.getText().toString());
                     postTruck.setDriverName(etDriverName.getText().toString());
                     postTruck.setDriverNumber(etMobileNumber.getText().toString().split("-")[1]);
-                    postTruck.setSourcePincode(etSourcePincode.getText().toString());
+//                    postTruck.setSourcePincode(etSourcePincode.getText().toString());
                     postTruck.setSourceCity(etSourceCity.getText().toString());
-                    postTruck.setDestinationPincode(etDestinationPincode.getText().toString());
+//                    postTruck.setDestinationPincode(etDestinationPincode.getText().toString());
                     postTruck.setDestinationCity(etDestinationCity.getText().toString());
                     postTruck.setDate(dateOFLoad);
                     doPost(postTruck);
@@ -427,9 +427,9 @@ public class FragmentPostTruck extends Fragment {
         etVehiclePart3.setText("");
         etDriverName.setText("");
         etMobileNumber.setText("");
-        etSourcePincode.setText("");
+//        etSourcePincode.setText("");
         etSourceCity.setText("");
-        etDestinationPincode.setText("");
+//        etDestinationPincode.setText("");
         etDestinationCity.setText("");
         etDateOfPost.setText("");
     }
@@ -553,15 +553,16 @@ public class FragmentPostTruck extends Fragment {
 
     public boolean isAllValid() {
 
-        if (etSourcePincode.getText().toString().length() == 0) {
-            etSourcePincode.setError(this.getResources().getString(R.string.required_field));
-            etSourcePincode.requestFocus();
-            return false;
-        } else if (etDestinationPincode.getText().toString().length() == 0) {
-            etDestinationPincode.setError(this.getResources().getString(R.string.required_field));
-            etDestinationPincode.requestFocus();
-            return false;
-        } else if (etWeight.getText().toString().length() == 0) {
+//        if (etSourcePincode.getText().toString().length() == 0) {
+//            etSourcePincode.setError(this.getResources().getString(R.string.required_field));
+//            etSourcePincode.requestFocus();
+//            return false;
+//        } else if (etDestinationPincode.getText().toString().length() == 0) {
+//            etDestinationPincode.setError(this.getResources().getString(R.string.required_field));
+//            etDestinationPincode.requestFocus();
+//            return false;
+//        } else
+            if (etWeight.getText().toString().length() == 0) {
             etWeight.setError(this.getResources().getString(R.string.required_field));
             etWeight.requestFocus();
             return false;
@@ -593,15 +594,16 @@ public class FragmentPostTruck extends Fragment {
             etMobileNumber.setError(this.getResources().getString(R.string.enter_valid_phone_number));
             etMobileNumber.requestFocus();
             return false;
-        } else if (etSourcePincode.getText().toString().length() < 6) {
-            etSourcePincode.setError(this.getResources().getString(R.string.please_enter_valid_pincode));
-            etSourcePincode.requestFocus();
-            return false;
-        } else if (etDestinationPincode.getText().toString().length() < 6) {
-            etDestinationPincode.setError(this.getResources().getString(R.string.please_enter_valid_pincode));
-            etDestinationPincode.requestFocus();
-            return false;
         }
+//        else if (etSourcePincode.getText().toString().length() < 6) {
+//            etSourcePincode.setError(this.getResources().getString(R.string.please_enter_valid_pincode));
+//            etSourcePincode.requestFocus();
+//            return false;
+//        } else if (etDestinationPincode.getText().toString().length() < 6) {
+//            etDestinationPincode.setError(this.getResources().getString(R.string.please_enter_valid_pincode));
+//            etDestinationPincode.requestFocus();
+//            return false;
+//        }
         return true;
     }
 
@@ -775,7 +777,7 @@ public class FragmentPostTruck extends Fragment {
             }
         };
         spinnerDisabilityArrayAdapter.setDropDownViewResource(R.layout.dialog_spinner_dropdown_item);
-        spinnerWeight.setAdapter(spinnerDisabilityArrayAdapter);
+//        spinnerWeight.setAdapter(spinnerDisabilityArrayAdapter);
     }
 
 }

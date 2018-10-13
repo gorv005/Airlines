@@ -179,7 +179,7 @@ public class Util {
             sideMenuItems.add(new SideMenuItem(R.string.about_us, R.drawable.truck_left));
             sideMenuItems.add(new SideMenuItem(R.string.policy_info, R.drawable.truck_left));
             sideMenuItems.add(new SideMenuItem(R.string.contact_us, R.drawable.truck_left));
-            sideMenuItems.add(new SideMenuItem(R.string.Alternate_mobile_no, R.drawable.truck_left));
+            sideMenuItems.add(new SideMenuItem(R.string.alternate_mobile_no, R.drawable.truck_left));
             sideMenuItems.add(new SideMenuItem(R.string.toll_calculator, R.drawable.truck_left));
             sideMenuItems.add(new SideMenuItem(R.string.logout, R.drawable.truck_left));
 
@@ -209,7 +209,7 @@ public class Util {
             sideMenuItems.add(new SideMenuItem(R.string.search_load, R.drawable.truck_left));
             sideMenuItems.add(new SideMenuItem(R.string.post_truck, R.drawable.truck_left));
             sideMenuItems.add(new SideMenuItem(R.string.search_truck, R.drawable.truck_left));
-            sideMenuItems.add(new SideMenuItem(R.string.Alternate_mobile_no, R.drawable.truck_left));
+            sideMenuItems.add(new SideMenuItem(R.string.alternate_mobile_no, R.drawable.truck_left));
             sideMenuItems.add(new SideMenuItem(R.string.toll_calculator, R.drawable.truck_left));
 
 
@@ -864,12 +864,15 @@ public class Util {
 
     public static Map<String, String> getHeader(Context context) {
         HashMap<String, String> headers = new HashMap<String, String>();
-        if (SharedPreference.getInstance(context).getLoginUser(C.USER) != null) {
-            String authToken = SharedPreference.getInstance(context).getLoginUser(C.USER).getToken();
-            headers.put("authtoken", authToken);
-        }
+//        if (SharedPreference.getInstance(context).getLoginUser(C.USER) != null) {
+//            String authToken = SharedPreference.getInstance(context).getLoginUser(C.USER).getToken();
+//            headers.put("authtoken", authToken);
+//        }
+        headers.put("Authorization", "Basic YWRtaW46MTIzNDU2");
+        headers.put("X-API-KEY", "VMSFORNEEDPLUS@2018");
         headers.put("Accept", "application/json");
         headers.put("Content-Type", "application/json");
+        System.out.println("Headers : "+headers.toString());
         return headers;
     }
 

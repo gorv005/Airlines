@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content_activity_home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -33,91 +34,16 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <TextView
-                android:id="@+id/tvLoadType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Load_Type"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:visibility="gone" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:visibility="gone">
-
-                <RadioButton
-                    android:id="@+id/rbFullLoad"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/full_truck_load"
-                    android:theme="@style/MyRaidoButton" />
-
-
-                <RadioButton
-                    android:id="@+id/rbPartLoad"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/part_truck_load"
-                    android:theme="@style/MyRaidoButton" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-
-                android:layout_height="wrap_content"
-                android:text="@string/scheduling_type"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:visibility="gone" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:visibility="gone">
-
-                <RadioButton
-                    android:id="@+id/rbOneTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/one_time"
-                    android:theme="@style/MyRaidoButton" />
-
-                <RadioButton
-                    android:id="@+id/rbDaily"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/daily"
-                    android:theme="@style/MyRaidoButton" />
-
-
-                <RadioButton
-                    android:id="@+id/rbWeekly"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/weekly"
-                    android:theme="@style/MyRaidoButton" />
-            </LinearLayout>
 
 
             <TextView
                 android:id="@+id/etSourceCity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:hint="@string/source_city"
                 android:editable="false"
                 android:focusable="false"
-                android:hint="@string/Source_city"
                 android:inputType="textCapWords"
                 android:maxLines="1"
                 android:paddingBottom="20dp"
@@ -136,11 +62,11 @@
                 android:layout_height="wrap_content"
                 android:editable="false"
                 android:focusable="false"
-                android:hint="@string/destination_city"
                 android:inputType="textCapWords"
                 android:maxLines="1"
                 android:paddingBottom="20dp"
                 android:paddingLeft="10dp"
+                android:hint="@string/destination_city"
                 android:paddingTop="20dp"
                 android:textColor="@color/black" />
 
@@ -253,6 +179,24 @@
                 android:editable="false"
                 android:focusable="false"
                 android:hint="@string/no_of_trucks"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:paddingBottom="20dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="20dp"
+                android:textColor="@color/black" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey" />
+            <TextView
+                android:id="@+id/etFrightType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:editable="false"
+                android:focusable="false"
+                android:hint="@string/fright_type"
                 android:inputType="textCapWords"
                 android:maxLines="1"
                 android:paddingBottom="20dp"

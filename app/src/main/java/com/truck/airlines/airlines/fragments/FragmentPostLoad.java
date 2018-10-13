@@ -22,6 +22,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -74,6 +75,8 @@ public class FragmentPostLoad extends Fragment {
     TextView etDateOfLoad;
     @BindView(R.id.etNumberOfTruck)
     TextView etNoOfTruck;
+    @BindView(R.id.etFrightType)
+    TextView etFrightType;
     @BindView(R.id.btnSubmit)
     Button btnSubmit;
 
@@ -205,12 +208,18 @@ public class FragmentPostLoad extends Fragment {
                 openPopUpforMaterialName();
             }
         });
+        etFrightType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openPopUpForFrightType();
+            }
+        });
     }
 
     private void openPopUpforMaterialName() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle(R.string.material_name);
-        View viewInflated = LayoutInflater.from(getContext()).inflate(R.layout.layout_enter_material_name, (ViewGroup) getView(), false);
+        View viewInflated = LayoutInflater.from(getContext()).inflate(R.layout.layout_material_name, (ViewGroup) getView(), false);
         final EditText input = (EditText) viewInflated.findViewById(R.id.input);
         builder.setView(viewInflated);
 
@@ -231,6 +240,37 @@ public class FragmentPostLoad extends Fragment {
         builder.show();
     }
 
+
+    void openPopUpForFrightType() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle(R.string.fright_type);
+        View viewInflated = LayoutInflater.from(getContext()).inflate(R.layout.layout_frieght_type, (ViewGroup) getView(), false);
+        final EditText input = (EditText) viewInflated.findViewById(R.id.input);
+        final RadioButton btnPerMt = (RadioButton) viewInflated.findViewById(R.id.rbPerMt);
+        final RadioButton btnFixed = (RadioButton) viewInflated.findViewById(R.id.rbFixed);
+
+        builder.setView(viewInflated);
+
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                if (btnFixed.isChecked())
+                    etFrightType.setText("Fixed . " + input.getText().toString());
+                else if (btnPerMt.isChecked()) {
+                    etFrightType.setText("Per Mt . " + input.getText().toString());
+                }
+            }
+        });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
 
     private void doLoad(PostLoad postLoad) {
 
@@ -390,6 +430,10 @@ public class FragmentPostLoad extends Fragment {
         } else if (etNoOfTruck.getText().toString().length() == 0) {
             etNoOfTruck.setError(this.getResources().getString(R.string.required_field));
             etNoOfTruck.requestFocus();
+            return false;
+        } else if (etFrightType.getText().toString().length() == 0) {
+            etFrightType.setError(this.getResources().getString(R.string.required_field));
+            etFrightType.requestFocus();
             return false;
         }
 
@@ -569,7 +613,6 @@ public class FragmentPostLoad extends Fragment {
     }
 
 
-
     void selectTruckCapacity(ArrayList<TruckType> list) {
 
 
@@ -597,18 +640,12 @@ public class FragmentPostLoad extends Fragment {
                 dialog.dismiss();
             }
         });
-
         dialog.show();
-
 //        spinnerTruckType.setAdapter(spinnerDisabilityArrayAdapter);
     }
 
 
-
-
-
     void setspinnerItemForNoOfTruck(ArrayList<String> list) {
-
 
         final AdapterNoOfTruck spinnerDisabilityArrayAdapter = new AdapterNoOfTruck(getActivity(), list);
         final LayoutInflater factory = LayoutInflater.from(getActivity());

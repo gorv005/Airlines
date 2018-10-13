@@ -261,11 +261,11 @@ public class FragmentUserRegistration extends Fragment {
             etPanNumber.requestFocus();
             return false;
         } else if (etAddressLineOne.getText().toString().length() <= 3) {//||etConfirmPassword.getText().toString().length() == 0
-            etAddressLineOne.setError(getActivity().getResources().getString(R.string.address_line_one));
+            etAddressLineOne.setError(getActivity().getResources().getString(R.string.address_line1));
             etAddressLineOne.requestFocus();
             return false;
         } else if (etAddressLineTwo.getText().toString().length() == 0) {//||etConfirmPassword.getText().toString().length() == 0
-            etAddressLineTwo.setError(getActivity().getResources().getString(R.string.address_line_one));
+            etAddressLineTwo.setError(getActivity().getResources().getString(R.string.address_line2));
             etAddressLineTwo.requestFocus();
             return false;
         }

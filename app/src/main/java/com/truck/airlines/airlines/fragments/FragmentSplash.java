@@ -42,6 +42,8 @@ public class FragmentSplash extends Fragment {
                 @Override
                 public void run() {
 
+
+
                     if (isStoragePermissionGranted()) {
                         if (getActivity() != null)
                             getActivity().finish();

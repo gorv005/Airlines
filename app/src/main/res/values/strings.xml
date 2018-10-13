@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">TTS</string>
-
     <string name="total_transport_system">Total Transport System</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -9,10 +8,12 @@
     <string name="transporter">Transporter</string>
     <string name="select_user_type">Select User Type</string>
     <string name="driver">Driver</string>
-    <string name="Customer">Customer</string>
+    <string name="customer">Customer</string>
     <string name="personal_details">Personal Details</string>
     <string name="first_name">First name</string>
     <string name="transporter_name">Transporter Name</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open">Open navigation dr required</string>
     <string name="pan_number">Pan number</string>
     <string name="email">Email</string>
     <string name="last_name">Last name</string>
@@ -37,19 +38,15 @@
     <string name="email_is_required">Email is required</string>
     <string name="please_enter_valid_email">Please enter valid email</string>
     <string name="transporter_required">Transporter name required</string>
-    <string name="pan_number_required">Pan number required</string>
+    <string name="pan_number_required">Pan number</string>
     <string name="address_line_one">Please enter valid address</string>
-    <string name="Load_Type">Load Type</string>
+    <string name="load_type">Load Type</string>
     <string name="full_truck_load">Full truck Load</string>
     <string name="part_truck_load">Part Truck Load</string>
     <string name="scheduling_type">Scheduling Type</string>
     <string name="one_time">One Time</string>
     <string name="daily">Daily</string>
     <string name="weekly">Weekly</string>
-    <string name="Source_city">Source City</string>
-    <string name="destination_city">Destination City</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="weight">Weight (Metric Tons)</string>
     <string name="select_weight">Select Weight</string>
     <string name="Materialtype">Material Type</string>
@@ -61,7 +58,7 @@
     <string name="search_truck">Search Truck</string>
     <string name="profile">Profile</string>
     <string name="kyc_document">KYC Documents</string>
-    <string name="Alternate_mobile_no">Alternate Mobile No</string>
+    <string name="alternate_mobile_no">Alternate Mobile No</string>
     <string name="my_loads">My Loads</string>
     <string name="my_part_loads">My Part Loads</string>
     <string name="about_us">About Us</string>
@@ -75,7 +72,7 @@
     <string name="driverName">Driver Name</string>
     <string name="mobileNumber">Mobile Number</string>
     <string name="date_of_post">Post Date</string>
-    <string name="Source_pincode">Source Pincode</string>
+    <string name="source_pincode">Source Pincode</string>
     <string name="destination_pincode">Destination Pincode</string>
     <string name="required_field">Required field</string>
     <string name="enter_valid_phone_number">Please enter valid mobile number</string>
@@ -118,4 +115,10 @@
     <string name="enter_material_name">Enter material name</string>
     <string name="material_name">Material Name</string>
     <string name="select_truck_type">Select Truck Type</string>
+    <string name="rate">Rate</string>
+    <string name="perMt">Per MT</string>
+    <string name="fixed_rate">Fixed Rate</string>
+    <string name="fright_type">Frieght Type</string>
+    <string name="destination_city">Destination City</string>
+    <string name="source_city">Source City</string>
 </resources>

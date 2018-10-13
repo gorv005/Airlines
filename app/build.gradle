@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "26.0.0"
+    buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "com.truck.airlines.airlines"
         minSdkVersion 19
@@ -25,7 +25,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
 
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:support-v4:25.4.0'
@@ -34,8 +33,11 @@ dependencies {
     compile 'com.google.code.gson:gson:2.4'
     compile 'com.mcxiaoke.volley:library:1.0.19'
     compile 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     compile 'de.hdodenhof:circleimageview:2.2.0'
-    compile 'com.weigan:loopView:0.1.2'
+//    compile 'com.weigan:loopView:0.1.2'
+    implementation 'com.android.support:support-dynamic-animation:25.4.0'
     compile 'com.google.android.gms:play-services-location:9.6.1'
     compile 'com.google.android.gms:play-services-places:9.6.1'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
 }

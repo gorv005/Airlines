@@ -22,7 +22,8 @@ import com.truck.airlines.airlines.ActivityMain;
 import com.truck.airlines.airlines.R;
 import com.truck.airlines.airlines.interfaces.IResult;
 import com.truck.airlines.airlines.pojos.LoginUser;
-import com.truck.airlines.airlines.pojos.Response;
+import com.truck.airlines.airlines.pojos.ResponseOTP;
+import com.truck.airlines.airlines.pojos.Vmsdata;
 import com.truck.airlines.airlines.utils.C;
 import com.truck.airlines.airlines.utils.SharedPreference;
 import com.truck.airlines.airlines.utils.Util;
@@ -77,6 +78,7 @@ public class FragmentOTP extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         ButterKnife.bind(this, view);
+        etPhoneNumber.setText("9560889628");
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,8 +132,11 @@ public class FragmentOTP extends Fragment {
         dialog = Util.getProgressDialog(getActivity(), R.string.please_wait);
         dialog.setCancelable(false);
         dialog.show();
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("phone", mobile);
+        Vmsdata vmsdata=new Vmsdata();
+        vmsdata.setAction("login");
+        vmsdata.setMobile(mobile);
+        HashMap<String, Vmsdata> hashMap = new HashMap<>();
+        hashMap.put("vmsdata",vmsdata);
 
         final Gson gson = new Gson();
         String json = gson.toJson(hashMap);
@@ -151,10 +156,10 @@ public class FragmentOTP extends Fragment {
 
                 try {
                     Gson gson = new Gson();
-                    Response responsePost = gson.fromJson(response.toString(), Response.class);
+                    ResponseOTP responsePost = gson.fromJson(response.toString(), ResponseOTP.class);
                     if (responsePost.getStatus().equals(C.STATUS_SUCCESS)) {
 
-                        if (responsePost.getIsRegister()) {
+                        if (responsePost.getStatus()) {
 //                            showDialog(responsePost.getMessage());
                             showScreenOTP();
                         } else {
@@ -181,10 +186,18 @@ public class FragmentOTP extends Fragment {
 
             @Override
             public void notifyError(String requestType, String error) {
+                dialog.dismiss();
 
                 Log.e("Response :", error.toString());
-                showDialog("ServerError :" + error.toString());
+//                showDialog("ServerError :" + error.toString());
 
+
+                Intent intent = new Intent(getActivity(), ActivityContainer.class);
+                Bundle bundle = new Bundle();
+                bundle.putString(C.MOBILE_NUMBER, etPhoneNumber.getText().toString());
+                intent.putExtra(C.BUNDLE, bundle);
+                intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_USER_TYPE);
+                startActivity(intent);
 //
 //                Intent intent = new Intent(getActivity(), ActivityContainer.class);
 //                intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_USER_TYPE);
