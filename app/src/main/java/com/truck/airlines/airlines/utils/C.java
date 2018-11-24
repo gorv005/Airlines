@@ -51,7 +51,7 @@ public interface C {
     String API_CHECK_NUMBER = BASE_URL + "otp/generate";
 
     String API_USER_LOGIN = BASE_URL + "users/user_login";
-    String API_USER_REGISTER = BASE_URL + "users/user_register";
+    String API_USER_REGISTER = BASE_URL + "user/create";
     String API_MATERIAL_TYPE = BASE_URL + "trucks/material_type";
 
     String API_TRUCK_TYPE = BASE_URL + "trucks/truck_type";
@@ -64,9 +64,9 @@ public interface C {
     String STATUS_SUCCESS = "RDS001";
     String MOBILE_NUMBER = "MOBILE_NUMBER";
     String USER_TYPE = "USER_TYPE";
-    String CUSTOMER = "customer";
-    String TRUCK_OPERATOR = "truckoperator";
-    String TRANSPORTER = "transporter";
+    String TRANSPORTER = "1";
+    String TRUCK_OPERATOR = "2";
+    String CUSTOMER = "3";
     String DATE_FORMAT = "dd/MMM/yyyy";
     String API_GET_ADDRESS = "http://postalpincode.in/api/pincode/";
     String USER = "user";

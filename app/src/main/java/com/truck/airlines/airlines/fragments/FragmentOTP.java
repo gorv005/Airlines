@@ -99,7 +99,6 @@ public class FragmentOTP extends Fragment {
             }
         });
 
-
         if (phone != null) {
             etPhoneNumber.setText(phone + "");
         }
@@ -108,20 +107,12 @@ public class FragmentOTP extends Fragment {
     private void showDialog(String msg) {
 
         AlertDialog.Builder builder;
-    /*    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder = new AlertDialog.Builder(getActivity(), android.R.style.Theme_Material_Dialog_Alert);
-        } else {
-            builder = new AlertDialog.Builder(getActivity());
-        }*/
         builder = new AlertDialog.Builder(getActivity());
-
-        builder.setTitle(getString(R.string.alert))
-                .setMessage(msg)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
+        builder.setTitle(getString(R.string.alert)).setMessage(msg).setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
@@ -132,11 +123,11 @@ public class FragmentOTP extends Fragment {
         dialog = Util.getProgressDialog(getActivity(), R.string.please_wait);
         dialog.setCancelable(false);
         dialog.show();
-        Vmsdata vmsdata=new Vmsdata();
+        Vmsdata vmsdata = new Vmsdata();
         vmsdata.setAction("login");
         vmsdata.setMobile(mobile);
         HashMap<String, Vmsdata> hashMap = new HashMap<>();
-        hashMap.put("vmsdata",vmsdata);
+        hashMap.put("vmsdata", vmsdata);
 
         final Gson gson = new Gson();
         String json = gson.toJson(hashMap);
@@ -157,29 +148,22 @@ public class FragmentOTP extends Fragment {
                 try {
                     Gson gson = new Gson();
                     ResponseOTP responsePost = gson.fromJson(response.toString(), ResponseOTP.class);
-                    if (responsePost.getStatus().equals(C.STATUS_SUCCESS)) {
-
-                        if (responsePost.getStatus()) {
-//                            showDialog(responsePost.getMessage());
-                            showScreenOTP();
-                        } else {
-
-                            Intent intent = new Intent(getActivity(), ActivityContainer.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putString(C.MOBILE_NUMBER, etPhoneNumber.getText().toString());
-                            intent.putExtra(C.BUNDLE, bundle);
-                            intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_USER_TYPE);
-                            startActivity(intent);
-                        }
-
+                    if (responsePost.getStatus()) {
+                        showScreenOTP();
                     } else {
-//                        Util.showAlert(getActivity(), getString(R.string.alert), responsePost.getMessage(), getString(R.string.ok), R.drawable.warning);
-                        showDialog(responsePost.getMessage());
+
+                        Intent intent = new Intent(getActivity(), ActivityContainer.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString(C.MOBILE_NUMBER, etPhoneNumber.getText().toString());
+                        intent.putExtra(C.BUNDLE, bundle);
+                        intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_USER_TYPE);
+                        startActivity(intent);
                     }
 
                 } catch (Exception e) {
 
                     e.printStackTrace();
+                    showDialog(getActivity().getString(R.string.something_went_wrong));
                 }
 
             }
@@ -189,21 +173,11 @@ public class FragmentOTP extends Fragment {
                 dialog.dismiss();
 
                 Log.e("Response :", error.toString());
-//                showDialog("ServerError :" + error.toString());
+                showDialog("ServerError :" + error.toString());
 
+//                showDialog(getActivity().getString(R.string.something_went_wrong));
 
-                Intent intent = new Intent(getActivity(), ActivityContainer.class);
-                Bundle bundle = new Bundle();
-                bundle.putString(C.MOBILE_NUMBER, etPhoneNumber.getText().toString());
-                intent.putExtra(C.BUNDLE, bundle);
-                intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_USER_TYPE);
-                startActivity(intent);
-//
-//                Intent intent = new Intent(getActivity(), ActivityContainer.class);
-//                intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_USER_TYPE);
-//                startActivity(intent);
-//
-//                dialog.dismiss();
+                dialog.dismiss();
 
             }
         }, "otp", C.API_CHECK_NUMBER, Util.getHeader(getActivity()), obj);
@@ -248,8 +222,8 @@ public class FragmentOTP extends Fragment {
                     LoginUser responsePost = gson.fromJson(response.toString(), LoginUser.class);
                     if (responsePost.getStatus().equals(C.STATUS_SUCCESS)) {
 
-                        SharedPreference.getInstance(getActivity()).setLoginUser(C.USER,responsePost);
-                        SharedPreference.getInstance(getActivity()).setBoolean(C.IS_LOGIN,true);
+                        SharedPreference.getInstance(getActivity()).setLoginUser(C.USER, responsePost);
+                        SharedPreference.getInstance(getActivity()).setBoolean(C.IS_LOGIN, true);
                         Intent intent = new Intent(getActivity(), ActivityMain.class);
                         Bundle bundle = new Bundle();
                         bundle.putString(C.MOBILE_NUMBER, etPhoneNumber.getText().toString());
@@ -260,7 +234,7 @@ public class FragmentOTP extends Fragment {
 
 
                     } else {
-                        SharedPreference.getInstance(getActivity()).setBoolean(C.IS_LOGIN,false);
+                        SharedPreference.getInstance(getActivity()).setBoolean(C.IS_LOGIN, false);
 
 //                        Util.showAlert(getActivity(), getString(R.string.alert), responsePost.getMessage(), getString(R.string.ok), R.drawable.warning);
                         showDialog(responsePost.getMessage());

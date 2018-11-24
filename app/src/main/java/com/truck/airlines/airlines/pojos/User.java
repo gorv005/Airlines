@@ -12,13 +12,13 @@ public class User {
     @SerializedName("transport_name")
     @Expose
     private String transportName;
-    @SerializedName("first_name")
+    @SerializedName("fname")
     @Expose
     private String firstName;
     @SerializedName("last_name")
     @Expose
     private String lastName;
-    @SerializedName("phone")
+    @SerializedName("phone1")
     @Expose
     private String phone;
     @SerializedName("email")
@@ -48,9 +48,9 @@ public class User {
     @SerializedName("privacy")
     @Expose
     private String privacy;
-    @SerializedName("group")
+    @SerializedName("usertype")
     @Expose
-    private String group;
+    private String userType;
     @SerializedName("pincode")
     @Expose
     private String pincode;
@@ -159,12 +159,12 @@ public class User {
         this.privacy = privacy;
     }
 
-    public String getGroup() {
-        return group;
+    public String getUserType() {
+        return userType;
     }
 
-    public void setGroup(String group) {
-        this.group = group;
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 
     public void setPincode(String pincode) {

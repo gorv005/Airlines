@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">TTS</string>
-    <string name="total_transport_system">Total Transport System</string>
+    <string name="app_name">Need Plus</string>
+    <string name="total_transport_system">Need Plus</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="enter_phone_number">Enter your phone number</string>
@@ -121,4 +121,5 @@
     <string name="fright_type">Frieght Type</string>
     <string name="destination_city">Destination City</string>
     <string name="source_city">Source City</string>
+    <string name="something_went_wrong">Something Went Worng.</string>
 </resources>

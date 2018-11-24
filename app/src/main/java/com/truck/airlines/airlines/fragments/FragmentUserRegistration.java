@@ -20,6 +20,7 @@ import android.widget.EditText;
 import com.android.volley.Request;
 import com.google.gson.Gson;
 import com.truck.airlines.airlines.ActivityContainer;
+import com.truck.airlines.airlines.BuildConfig;
 import com.truck.airlines.airlines.R;
 import com.truck.airlines.airlines.interfaces.IResult;
 import com.truck.airlines.airlines.pojos.Location;
@@ -101,21 +102,21 @@ public class FragmentUserRegistration extends Fragment {
 
         ButterKnife.bind(this, view);
 
-//        if(BuildConfig.DEBUG)
-//        {
-//            etFirstName.setText("Aditya");
-//            etLastName.setText("Singh");
-//            etEmail.setText("ady@gmail.cm");
-//            etTransporterName.setText("Adasf");
-//            etPanNumber.setText("GHSFP3782K");
-//            etAddressLineOne.setText("Sector 56");
-//            etAddressLineTwo.setText("F Block");
-//            etPinCode.setText("201301");
-//            etArea.setText("56 Sector");
-//            etCity.setText("Noida");
-//            etDistrict.setText("Noida");
-//            etState.setText("UP");
-//        }
+        if(BuildConfig.DEBUG)
+        {
+            etFirstName.setText("Aditya");
+            etLastName.setText("Singh");
+            etEmail.setText("ady@gmail.cm");
+            etTransporterName.setText("Adasf");
+            etPanNumber.setText("GHSFP3782K");
+            etAddressLineOne.setText("Sector 56");
+            etAddressLineTwo.setText("F Block");
+            etPinCode.setText("201301");
+            etArea.setText("56 Sector");
+            etCity.setText("Noida");
+            etDistrict.setText("Noida");
+            etState.setText("UP");
+        }
 
         etPinCode.addTextChangedListener(new TextWatcher() {
             @Override
@@ -288,7 +289,7 @@ public class FragmentUserRegistration extends Fragment {
         user.setDistric(etDistrict.getText().toString());
         user.setState(etState.getText().toString());
         user.setPhone(phone);
-        user.setGroup(userType);
+        user.setUserType(userType);
         user.setPrivacy("false");
 
         return true;
