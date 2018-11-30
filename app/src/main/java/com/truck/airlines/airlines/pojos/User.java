@@ -49,6 +49,10 @@ public class User {
     @SerializedName("pincode")
     @Expose
     private String pincode;
+    @SerializedName("license_number")
+    @Expose
+    private String licenseNumber;
+
 
     public String getTransportName() {
         return transportName;
@@ -154,5 +158,13 @@ public class User {
 
     public String getPincode() {
         return pincode;
+    }
+
+    public String getLicenseNumber() {
+        return licenseNumber;
+    }
+
+    public void setLicenseNumber(String licenseNumber) {
+        this.licenseNumber = licenseNumber;
     }
 }

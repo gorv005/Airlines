@@ -16,6 +16,7 @@ import com.truck.airlines.airlines.utils.C;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,11 +26,14 @@ public class FragmentUserType extends Fragment {
     @BindView(R.id.btnTransporter)
     Button btnTransporter;
     @BindView(R.id.btnDrive)
-    Button btnDrive;
+    Button btnDriver;
     @BindView(R.id.btnCustomer)
-    Button btnCustomer;
+    Button btnSupplier;
     @BindView(R.id.btnOfflineLogin)
     Button btnOfflineLogin;
+    @BindView(R.id.btnTruckOwner)
+    Button btnTruckOwner;
+    Unbinder unbinder;
     private String phone;
 
     public FragmentUserType() {
@@ -48,7 +52,9 @@ public class FragmentUserType extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_choose_user_type, container, false);
+        View view = inflater.inflate(R.layout.fragment_choose_user_type, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        return view;
     }
 
     @Override
@@ -71,27 +77,40 @@ public class FragmentUserType extends Fragment {
             }
         });
 
-        btnDrive.setOnClickListener(new View.OnClickListener() {
+        btnDriver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent intent = new Intent(getActivity(), ActivityContainer.class);
                 Bundle bundle = new Bundle();
                 bundle.putString(C.MOBILE_NUMBER, phone);
-                bundle.putString(C.USER_TYPE, C.TRUCK_OPERATOR);
+                bundle.putString(C.USER_TYPE, C.DRIVER);
                 intent.putExtra(C.BUNDLE, bundle);
                 intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_REGISTER);
                 startActivity(intent);
             }
         });
-        btnCustomer.setOnClickListener(new View.OnClickListener() {
+        btnSupplier.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent intent = new Intent(getActivity(), ActivityContainer.class);
                 Bundle bundle = new Bundle();
                 bundle.putString(C.MOBILE_NUMBER, phone);
-                bundle.putString(C.USER_TYPE, C.CUSTOMER);
+                bundle.putString(C.USER_TYPE, C.SUPPLIER);
+                intent.putExtra(C.BUNDLE, bundle);
+                intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_REGISTER);
+                startActivity(intent);
+            }
+        });
+        btnTruckOwner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getActivity(), ActivityContainer.class);
+                Bundle bundle = new Bundle();
+                bundle.putString(C.MOBILE_NUMBER, phone);
+                bundle.putString(C.USER_TYPE, C.TRUCK_OWENER);
                 intent.putExtra(C.BUNDLE, bundle);
                 intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_REGISTER);
                 startActivity(intent);
@@ -109,5 +128,11 @@ public class FragmentUserType extends Fragment {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

@@ -68,9 +68,11 @@ public interface C {
     String STATUS_SUCCESS = "RDS001";
     String MOBILE_NUMBER = "MOBILE_NUMBER";
     String USER_TYPE = "USER_TYPE";
-    String TRANSPORTER = "4";
-    String TRUCK_OPERATOR = "5";
-    String CUSTOMER = "3";
+    String SUPPLIER = "3";
+    String TRUCK_OWENER = "4";
+    String TRANSPORTER = "5";
+    String DRIVER = "6";
+
     String DATE_FORMAT = "dd/MMM/yyyy";
     String API_GET_ADDRESS = "http://postalpincode.in/api/pincode/";
     String USER = "user";

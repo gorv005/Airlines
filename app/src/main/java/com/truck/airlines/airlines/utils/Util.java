@@ -165,7 +165,7 @@ public class Util {
     public static ArrayList<SideMenuItem> getSideMenuList(Context context) {
         ArrayList<SideMenuItem> sideMenuItems = new ArrayList<SideMenuItem>();
 //        if (SharedPreference.getInstance(context).getLoginUser(C.USER).getData().getUserGroup().equals(C.TRANSPORTER) ||
-//                SharedPreference.getInstance(context).getLoginUser(C.USER).getData().getUserGroup().equals(C.TRUCK_OPERATOR)) {
+//                SharedPreference.getInstance(context).getLoginUser(C.USER).getData().getUserGroup().equals(C.TRUCK_OWENER)) {
 
 
             sideMenuItems.add(new SideMenuItem(R.string.post_a_load, R.drawable.truck_left));
@@ -202,7 +202,7 @@ public class Util {
     public static ArrayList<SideMenuItem> getmainMenuList(Context context) {
         ArrayList<SideMenuItem> sideMenuItems = new ArrayList<SideMenuItem>();
 //        if (SharedPreference.getInstance(context).getLoginUser(C.USER).getData().getUserGroup().equals(C.TRANSPORTER) ||
-//                SharedPreference.getInstance(context).getLoginUser(C.USER).getData().getUserGroup().equals(C.TRUCK_OPERATOR)) {
+//                SharedPreference.getInstance(context).getLoginUser(C.USER).getData().getUserGroup().equals(C.TRUCK_OWENER)) {
 
 
             sideMenuItems.add(new SideMenuItem(R.string.post_a_load, R.drawable.truck_left));

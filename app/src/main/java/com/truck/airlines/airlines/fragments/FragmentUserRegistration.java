@@ -61,8 +61,7 @@ public class FragmentUserRegistration extends Fragment {
     EditText etEmail;
     //    @BindView(R.id.etTransporterName)
 //    EditText etTransporterName;
-    @BindView(R.id.etPanNumber)
-    EditText etPanNumber;
+
     @BindView(R.id.etAddress)
     EditText etAddress;
     @BindView(R.id.etPinCode)
@@ -84,6 +83,10 @@ public class FragmentUserRegistration extends Fragment {
     @BindView(R.id.spinerTown)
     Spinner spinerTown;
     Unbinder unbinder;
+    @BindView(R.id.etPanNumber)
+    EditText etPanNumber;
+    @BindView(R.id.etLicenseNumber)
+    EditText etLicenseNumber;
 
     private Bundle bundle;
     private String phone;
@@ -101,6 +104,7 @@ public class FragmentUserRegistration extends Fragment {
 
     public FragmentUserRegistration() {
         // Required empty public constructor
+
     }
 
 
@@ -110,6 +114,7 @@ public class FragmentUserRegistration extends Fragment {
         bundle = getArguments();
         userType = bundle.getString(C.USER_TYPE);
         phone = bundle.getString(C.MOBILE_NUMBER);
+
     }
 
     @Override
@@ -139,6 +144,10 @@ public class FragmentUserRegistration extends Fragment {
 
             tvDistrict.setText("Noida");
             tvState.setText("UP");
+        }
+
+        if (!userType.equals(C.DRIVER)) {
+            etLicenseNumber.setVisibility(View.GONE);
         }
 
         btnContinue.setOnClickListener(new View.OnClickListener() {
@@ -546,6 +555,10 @@ public class FragmentUserRegistration extends Fragment {
             etPanNumber.setError(getActivity().getResources().getString(R.string.pan_number_required));
             etPanNumber.requestFocus();
             return false;
+        } else if (userType.equals(C.DRIVER) && etLicenseNumber.getText().toString().length() == 0) {
+            etLicenseNumber.setError(getActivity().getResources().getString(R.string.license_number_required));
+            etLicenseNumber.requestFocus();
+            return false;
         } else if (tvState.getText().toString().length() <= 0) {
             tvState.setError(getActivity().getResources().getString(R.string.select_state));
             tvState.requestFocus();
@@ -582,7 +595,7 @@ public class FragmentUserRegistration extends Fragment {
         user.setAddress1(etAddress.getText().toString());
 //        user.setAddress2(etAddressLineTwo.getText().toString());
         user.setPincode(etPinCode.getText().toString());
-//        user.setArea(etArea.getText().toString());
+        user.setLicenseNumber(etLicenseNumber.getText().toString());
         user.setTown(townId);
         user.setDistric(districtId);
         user.setState(stateId);
