@@ -21,7 +21,7 @@ import com.truck.airlines.airlines.ActivityContainer;
 import com.truck.airlines.airlines.ActivityMain;
 import com.truck.airlines.airlines.R;
 import com.truck.airlines.airlines.interfaces.IResult;
-import com.truck.airlines.airlines.pojos.LoginUser;
+import com.truck.airlines.airlines.pojos.ResponseLogin;
 import com.truck.airlines.airlines.pojos.ResponseOTP;
 import com.truck.airlines.airlines.pojos.Vmsdata;
 import com.truck.airlines.airlines.utils.C;
@@ -78,7 +78,7 @@ public class FragmentOTP extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         ButterKnife.bind(this, view);
-        etPhoneNumber.setText("9560889628");
+        etPhoneNumber.setText("8527800062");
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,7 +159,6 @@ public class FragmentOTP extends Fragment {
                         intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_USER_TYPE);
                         startActivity(intent);
                     }
-
                 } catch (Exception e) {
 
                     e.printStackTrace();
@@ -199,10 +198,13 @@ public class FragmentOTP extends Fragment {
         dialog.setCancelable(false);
         dialog.show();
         HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("phone", phone);
-        hashMap.put("password", password);
+        hashMap.put("mobile", phone);
+        hashMap.put("otp", password);
+
+        HashMap<String, HashMap<String,String>> map =new HashMap<>();
+        map.put("vmsdata",hashMap);
         final Gson gson = new Gson();
-        String json = gson.toJson(hashMap);
+        String json = gson.toJson(map);
         JSONObject obj = null;
         try {
             obj = new JSONObject(json);
@@ -219,10 +221,10 @@ public class FragmentOTP extends Fragment {
 
                 try {
                     Gson gson = new Gson();
-                    LoginUser responsePost = gson.fromJson(response.toString(), LoginUser.class);
-                    if (responsePost.getStatus().equals(C.STATUS_SUCCESS)) {
+                    ResponseLogin responsePost = gson.fromJson(response.toString(), ResponseLogin.class);
+                    if (responsePost.getStatus()) {
 
-                        SharedPreference.getInstance(getActivity()).setLoginUser(C.USER, responsePost);
+                        SharedPreference.getInstance(getActivity()).setLoginUser(C.USER, responsePost.getLoginUser());
                         SharedPreference.getInstance(getActivity()).setBoolean(C.IS_LOGIN, true);
                         Intent intent = new Intent(getActivity(), ActivityMain.class);
                         Bundle bundle = new Bundle();
@@ -251,14 +253,14 @@ public class FragmentOTP extends Fragment {
             public void notifyError(String requestType, String error) {
 
                 Log.e("Response :", error.toString());
-                showDialog("ServerError :" + error.toString());
+//                showDialog("ServerError :" + error.toString());
 
 //
 //                Intent intent = new Intent(getActivity(), ActivityContainer.class);
 //                intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_USER_TYPE);
 //                startActivity(intent);
 //
-//                dialog.dismiss();
+                dialog.dismiss();
 
             }
         }, "otp", C.API_USER_LOGIN, Util.getHeader(getActivity()), obj);

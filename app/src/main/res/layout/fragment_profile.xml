@@ -258,7 +258,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".35"
                     android:paddingLeft="10dp"
-                    android:text="@string/address_line1"
+                    android:text="@string/address"
                     android:textColor="@android:color/secondary_text_light"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -281,6 +281,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:visibility="gone"
                 android:layout_weight="1">
 
                 <TextView

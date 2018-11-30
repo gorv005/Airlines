@@ -121,8 +121,8 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
 
 
 
-        tvName.setText(SharedPreference.getInstance(this).getLoginUser(C.USER).getData().getFirstName() + " " + SharedPreference.getInstance(this).getLoginUser(C.USER).getData().getLastName());
-        tvMobile.setText(SharedPreference.getInstance(this).getLoginUser(C.USER).getData().getPhone());
+        tvName.setText(SharedPreference.getInstance(this).getLoginUser(C.USER).getName() );
+        tvMobile.setText(SharedPreference.getInstance(this).getLoginUser(C.USER).getPan());
 
 
 

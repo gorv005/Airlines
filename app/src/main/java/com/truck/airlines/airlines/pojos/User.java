@@ -24,16 +24,14 @@ public class User {
     @SerializedName("email")
     @Expose
     private String email;
-    @SerializedName("address_1")
+    @SerializedName("address")
     @Expose
     private String address1;
-    @SerializedName("address_2")
-    @Expose
-    private String address2;
+
     @SerializedName("state")
     @Expose
     private String state;
-    @SerializedName("distric")
+    @SerializedName("district")
     @Expose
     private String distric;
     @SerializedName("city")
@@ -42,12 +40,9 @@ public class User {
     @SerializedName("area")
     @Expose
     private String area;
-    @SerializedName("pan_no")
+    @SerializedName("pan")
     @Expose
     private String panNo;
-    @SerializedName("privacy")
-    @Expose
-    private String privacy;
     @SerializedName("usertype")
     @Expose
     private String userType;
@@ -103,13 +98,6 @@ public class User {
         this.address1 = address1;
     }
 
-    public String getAddress2() {
-        return address2;
-    }
-
-    public void setAddress2(String address2) {
-        this.address2 = address2;
-    }
 
     public String getState() {
         return state;
@@ -131,7 +119,7 @@ public class User {
         return city;
     }
 
-    public void setCity(String city) {
+    public void setTown(String city) {
         this.city = city;
     }
 
@@ -151,13 +139,6 @@ public class User {
         this.panNo = panNo;
     }
 
-    public String getPrivacy() {
-        return privacy;
-    }
-
-    public void setPrivacy(String privacy) {
-        this.privacy = privacy;
-    }
 
     public String getUserType() {
         return userType;

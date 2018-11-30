@@ -20,6 +20,7 @@ public class Vmsdata {
     private String otp;
 
 
+
     public String getMobile() {
         return mobile;
     }

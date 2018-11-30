@@ -68,19 +68,19 @@ public class FragmentProfile extends Fragment {
         ButterKnife.bind(this,view);
 
         LoginUser loginUser = SharedPreference.getInstance(getActivity()).getLoginUser(C.USER);
-        tvName.setText(loginUser.getData().getFirstName()+" "+loginUser.getData().getLastName());
-        tvNumber.setText(loginUser.getData().getPhone());
-        tvFirstName.setText(loginUser.getData().getFirstName());
-        tvLastName.setText(loginUser.getData().getLastName());
-        tvMobile.setText(loginUser.getData().getPhone());
-        tvEmail.setText(loginUser.getData().getEmail());
-        tvPanNumber.setText(loginUser.getData().getPanNumber());
-        tvAddressLine1.setText(loginUser.getData().getAddressLine1());
-        tvAddressLine2.setText(loginUser.getData().getAddressLine2());
-        tvPincode.setText(loginUser.getData().getPincode());
-        tvState.setText(loginUser.getData().getState());
-        tvDistrict.setText(loginUser.getData().getDistric());
-        tvCity.setText(loginUser.getData().getCity());
+//        tvName.setText(loginUser.getData().getFirstName()+" "+loginUser.getData().getLastName());
+//        tvNumber.setText(loginUser.getData().getPhone());
+//        tvFirstName.setText(loginUser.getData().getFirstName());
+//        tvLastName.setText(loginUser.getData().getLastName());
+//        tvMobile.setText(loginUser.getData().getPhone());
+//        tvEmail.setText(loginUser.getData().getEmail());
+//        tvPanNumber.setText(loginUser.getData().getPanNumber());
+//        tvAddressLine1.setText(loginUser.getData().getAddressLine1());
+//        tvAddressLine2.setText(loginUser.getData().getAddressLine2());
+//        tvPincode.setText(loginUser.getData().getPincode());
+//        tvState.setText(loginUser.getData().getState());
+//        tvDistrict.setText(loginUser.getData().getDistric());
+//        tvCity.setText(loginUser.getData().getCity());
 
 
     }

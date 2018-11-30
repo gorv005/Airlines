@@ -58,7 +58,7 @@
                         android:id="@+id/etFirstName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/first_name"
+                        android:hint="@string/name"
                         android:imeOptions="actionNext"
                         android:inputType="textCapWords"
                         android:lines="1"
@@ -70,7 +70,8 @@
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
 
                     <EditText
                         android:id="@+id/etLastName"
@@ -106,7 +107,8 @@
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
 
                     <EditText
                         android:id="@+id/etTransporterName"
@@ -163,32 +165,96 @@
                 android:orientation="vertical"
                 android:padding="20dp">
 
-                <android.support.design.widget.TextInputLayout
+
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/square_gray_box">
 
-
-                    <EditText
-                        android:id="@+id/etAddressLineOne"
+                    <TextView
+                        android:id="@+id/tvState"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/address_line1"
-                        android:imeOptions="actionNext"
-                        android:lines="1"
-                        android:maxLines="1"
-                        android:textColor="@color/colortext" />
+                        android:drawableRight="@drawable/arrow"
+                        android:hint="@string/select_state"
+                        android:padding="10dp"
+                        android:text=""
+                        android:textSize="16sp" />
 
-                </android.support.design.widget.TextInputLayout>
+                    <Spinner
+                        android:id="@+id/spinerState"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_below="@id/tvState">
+
+                    </Spinner>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/square_gray_box">
+
+                    <TextView
+                        android:id="@+id/tvDistrict"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@drawable/arrow"
+                        android:hint="@string/district"
+                        android:padding="10dp"
+                        android:text=""
+                        android:textSize="16sp" />
+
+                    <Spinner
+                        android:id="@+id/spinerDistrict"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_below="@id/tvDistrict">
+
+                    </Spinner>
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/square_gray_box">
+
+                    <TextView
+                        android:id="@+id/tvTown"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@drawable/arrow"
+                        android:hint="@string/select_town"
+                        android:padding="10dp"
+                        android:text=""
+                        android:textSize="16sp" />
+
+                    <Spinner
+                        android:id="@+id/spinerTown"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_below="@id/tvTown">
+
+                    </Spinner>
+
+                </RelativeLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
                     android:layout_height="wrap_content">
 
                     <EditText
-                        android:id="@+id/etAddressLineTwo"
+                        android:id="@+id/etAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/address_line2"
+                        android:hint="@string/address"
                         android:imeOptions="actionNext"
                         android:lines="1"
                         android:maxLines="1"
@@ -213,67 +279,6 @@
                         android:textColor="@color/colortext" />
 
                 </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:id="@+id/etArea"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/area"
-                        android:lines="1"
-                        android:maxLines="1"
-                        android:textColor="@color/colortext" />
-
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:id="@+id/etCity"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/city"
-                        android:lines="1"
-                        android:maxLines="1"
-                        android:textColor="@color/colortext" />
-
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:id="@+id/etDistrict"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/district"
-                        android:lines="1"
-                        android:maxLines="1"
-                        android:textColor="@color/colortext" />
-
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:id="@+id/etState"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/state"
-                        android:lines="1"
-                        android:maxLines="1"
-                        android:textColor="@color/colortext" />
-
-                </android.support.design.widget.TextInputLayout>
-
 
             </LinearLayout>
 

@@ -9,60 +9,128 @@ import com.google.gson.annotations.SerializedName;
 
 public class LoginUser {
 
-    @SerializedName("data")
+
+
+    @SerializedName("confirmed")
     @Expose
-    private Data data;
-    @SerializedName("message")
+    private String confirmed;
+    @SerializedName("ut_id")
     @Expose
-    private String message;
-    @SerializedName("is_login")
+    private String utId;
+    @SerializedName("name")
     @Expose
-    private Boolean isLogin;
-    @SerializedName("token")
+    private String name;
+    @SerializedName("ut_name")
     @Expose
-    private String token;
-    @SerializedName("status")
+    private String utName;
+    @SerializedName("isauthentication")
     @Expose
-    private String status;
+    private String isauthentication;
+    @SerializedName("available")
+    @Expose
+    private String available;
+    @SerializedName("u_id")
+    @Expose
+    private String uId;
+    @SerializedName("deleted")
+    @Expose
+    private String deleted;
+    @SerializedName("suspended")
+    @Expose
+    private String suspended;
+    @SerializedName("truck_id")
+    @Expose
+    private String truckId;
+    @SerializedName("pan")
+    @Expose
+    private String pan;
 
-    public Data getData() {
-        return data;
+    public String getConfirmed() {
+        return confirmed;
     }
 
-    public void setData(Data data) {
-        this.data = data;
+    public void setConfirmed(String confirmed) {
+        this.confirmed = confirmed;
     }
 
-    public String getMessage() {
-        return message;
+    public String getUtId() {
+        return utId;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setUtId(String utId) {
+        this.utId = utId;
     }
 
-    public Boolean getIsLogin() {
-        return isLogin;
+    public String getName() {
+        return name;
     }
 
-    public void setIsLogin(Boolean isLogin) {
-        this.isLogin = isLogin;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getToken() {
-        return token;
+    public String getUtName() {
+        return utName;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setUtName(String utName) {
+        this.utName = utName;
     }
 
-    public String getStatus() {
-        return status;
+    public String getIsauthentication() {
+        return isauthentication;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setIsauthentication(String isauthentication) {
+        this.isauthentication = isauthentication;
+    }
+
+    public String getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(String available) {
+        this.available = available;
+    }
+
+    public String getUId() {
+        return uId;
+    }
+
+    public void setUId(String uId) {
+        this.uId = uId;
+    }
+
+    public String getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(String deleted) {
+        this.deleted = deleted;
+    }
+
+    public String getSuspended() {
+        return suspended;
+    }
+
+    public void setSuspended(String suspended) {
+        this.suspended = suspended;
+    }
+
+    public String getTruckId() {
+        return truckId;
+    }
+
+    public void setTruckId(String truckId) {
+        this.truckId = truckId;
+    }
+
+    public String getPan() {
+        return pan;
+    }
+
+    public void setPan(String pan) {
+        this.pan = pan;
     }
 
 }
