@@ -49,7 +49,7 @@ public class User {
     @SerializedName("pincode")
     @Expose
     private String pincode;
-    @SerializedName("license_number")
+    @SerializedName("license")
     @Expose
     private String licenseNumber;
 
