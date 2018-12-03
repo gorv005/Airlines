@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/fragment_loads_summary">
+
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/no_load_found"
+            android:id="@+id/tvNoLoad"
+            android:gravity="center"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            android:layout_alignParentLeft="true"
+            />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvLoads"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

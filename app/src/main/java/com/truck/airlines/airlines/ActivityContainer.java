@@ -15,6 +15,7 @@ import com.truck.airlines.airlines.fragments.FragmentAddressSearch;
 import com.truck.airlines.airlines.fragments.FragmentKYCDocuments;
 import com.truck.airlines.airlines.fragments.FragmentLanguageSelect;
 import com.truck.airlines.airlines.fragments.FragmentLoadList;
+import com.truck.airlines.airlines.fragments.FragmentLoadsSummary;
 import com.truck.airlines.airlines.fragments.FragmentOTP;
 import com.truck.airlines.airlines.fragments.FragmentOfflineOTP;
 import com.truck.airlines.airlines.fragments.FragmentPostLoad;
@@ -103,6 +104,11 @@ public class ActivityContainer extends AppCompatActivity {
                 fragment = new FragmentTruckList();
                 fragmentTransaction.replace(R.id.container, fragment);
                 fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_TOTAL_TRUCK);
+                break;
+            case C.FRAGMENT_LOADS_SUMMARY:
+                fragment = new FragmentLoadsSummary();
+                fragmentTransaction.replace(R.id.container, fragment);
+                fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_TOTAL_LOAD);
                 break;
             case C.FRAGMENT_TOTAL_LOADS:
                 fragment = new FragmentLoadList();

@@ -95,7 +95,7 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
                     startActivity(intent);
                 } else if (sideMenuItem.getNameResourse() == R.string.my_loads) {
                     Intent intent = new Intent(ActivityMain.this, ActivityContainer.class);
-                    intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_TOTAL_LOADS);
+                    intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_LOADS_SUMMARY);
                     startActivity(intent);
                 } else if (sideMenuItem.getNameResourse() == R.string.kyc_document) {
                     Intent intent = new Intent(ActivityMain.this, ActivityContainer.class);

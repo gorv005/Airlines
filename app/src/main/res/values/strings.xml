@@ -74,7 +74,7 @@
     <string name="no_of_trucks">No Of Trucks</string>
     <string name="vehicle_no">Vehicle No.</string>
     <string name="driverName">Driver Name</string>
-    <string name="mobileNumber">Mobile Number</string>
+    <string name="mobileNumber">Mobile</string>
     <string name="date_of_post">Post Date</string>
     <string name="source_pincode">Source Pincode</string>
     <string name="destination_pincode">Destination Pincode</string>
@@ -133,5 +133,6 @@
     <string name="truck_owner">Truck Owner</string>
     <string name="license_number">License Number</string>
     <string name="license_number_required">License Number Required</string>
+    <string name="no_load_found">No load found</string>
 
 </resources>

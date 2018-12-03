@@ -55,6 +55,8 @@ public interface C {
     String API_STATE_LIST = BASE_URL + "master/states";
     String API_DISTRICT_LIST = BASE_URL + "master/districts";
     String API_TOWN_LIST = BASE_URL + "master/towns";
+    String API_LOAD_SUMMARY = BASE_URL + "load/data";
+    String API_USER_PROFILE = BASE_URL + "user/data";
 
 
     String API_MATERIAL_TYPE = BASE_URL + "trucks/material_type";
@@ -92,4 +94,5 @@ public interface C {
     String ADDRESS_DESTINATION = "ADDRESS_DESTINATION";
     String ADDRESS_SOURCE = "ADDRESS_SOURCE";
     String ADDRESS_FOR = "ADDRESS_FOR";
+    int FRAGMENT_LOADS_SUMMARY = 50;
 }
