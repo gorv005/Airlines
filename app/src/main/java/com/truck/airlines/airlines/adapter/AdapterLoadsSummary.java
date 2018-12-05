@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.truck.airlines.airlines.R;
 import com.truck.airlines.airlines.pojos.LoadSummaryData;
+import com.truck.airlines.airlines.utils.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,7 @@ public class AdapterLoadsSummary extends RecyclerView.Adapter<AdapterLoadsSummar
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         //BIND DATA
-        holder.tvDate.setText(data.get(position).getDate().split(" ")[0]);
+        holder.tvDate.setText(Util.getDateFromUnixTime(data.get(position).getDate().split(" ")[0]));
         holder.tvPrice.setText(data.get(position).getPrice());
         holder.tvCatName.setText(data.get(position).getCategoryName());
         holder.tvMaterialType.setText(data.get(position).getMaterialTypeName());

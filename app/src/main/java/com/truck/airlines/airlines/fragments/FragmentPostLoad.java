@@ -22,25 +22,32 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.truck.airlines.airlines.ActivitySearchAddress;
 import com.truck.airlines.airlines.R;
+import com.truck.airlines.airlines.adapter.AdapterMaterialName;
 import com.truck.airlines.airlines.adapter.AdapterMaterialType;
 import com.truck.airlines.airlines.adapter.AdapterNoOfTruck;
 import com.truck.airlines.airlines.adapter.AdapterTruckType;
+import com.truck.airlines.airlines.adapter.AdapterVehicleType;
 import com.truck.airlines.airlines.adapter.AdapterWeight;
 import com.truck.airlines.airlines.interfaces.IResult;
+import com.truck.airlines.airlines.pojos.Material;
+import com.truck.airlines.airlines.pojos.MaterialNameRequest;
+import com.truck.airlines.airlines.pojos.MaterialNameResponse;
 import com.truck.airlines.airlines.pojos.MaterialType;
 import com.truck.airlines.airlines.pojos.MaterialTypeResponse;
+import com.truck.airlines.airlines.pojos.VehicleTypeResponse;
 import com.truck.airlines.airlines.pojos.PostLoad;
-import com.truck.airlines.airlines.pojos.Response;
+import com.truck.airlines.airlines.pojos.ResponseApi;
 import com.truck.airlines.airlines.pojos.TruckType;
+import com.truck.airlines.airlines.pojos.Vehicletype;
 import com.truck.airlines.airlines.pojos.WeightResponse;
 import com.truck.airlines.airlines.pojos.WeightType;
 import com.truck.airlines.airlines.utils.C;
+import com.truck.airlines.airlines.utils.SharedPreference;
 import com.truck.airlines.airlines.utils.Util;
 import com.truck.airlines.airlines.webservice.VolleyService;
 
@@ -50,10 +57,13 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -77,20 +87,28 @@ public class FragmentPostLoad extends Fragment {
     TextView etDateOfLoad;
     @BindView(R.id.etNumberOfTruck)
     TextView etNoOfTruck;
-    @BindView(R.id.etFrightType)
-    TextView etFrightType;
+    @BindView(R.id.etPrice)
+    TextView etPrice;
     @BindView(R.id.btnSubmit)
     Button btnSubmit;
+    @BindView(R.id.etTotalPrice)
+    TextView etTotalPrice;
+    Unbinder unbinder;
 
     private ArrayList truckList;
     private Dialog dialog;
     ArrayList<TruckType> truckTypesList;
     ArrayList<WeightType> weightTypesList;
-    ArrayList<MaterialType> materialTypesList;
-    String weightId, truckTypeId, materialId, mNoOfTruck, dateOFLoad;
+    List<MaterialType> materialTypesList;
+    List<Vehicletype> vehicletypeList;
+    List<Material> materialList;
+    Material material;
+    Vehicletype vehicletype;
+    String weightId, truckTypeId, vehicleId, materialId, mNoOfTruck, dateOFLoad,mTotalPrice;
     ArrayList<String> noOfTruck = new ArrayList<>();
     Calendar myCalendar = Calendar.getInstance(Locale.US);
     boolean isSource = false;
+    String sLat,sLong,dLat,dLong;
 
     public FragmentPostLoad() {
         // Required empty public constructor
@@ -100,7 +118,9 @@ public class FragmentPostLoad extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_post_load, container, false);
+        View view = inflater.inflate(R.layout.fragment_post_load, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        return view;
     }
 
     @Override
@@ -151,7 +171,8 @@ public class FragmentPostLoad extends Fragment {
         etTruckType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getTruckType();
+                //  getTruckType();
+                getTruckTypes();
             }
         });
         etNoOfTruck.setOnClickListener(new View.OnClickListener() {
@@ -168,16 +189,23 @@ public class FragmentPostLoad extends Fragment {
                 if (isAllValid()) {
 
                     PostLoad postLoad = new PostLoad();
-                    postLoad.setWeightId(weightId);
-                    postLoad.setTruckTypeId(truckTypeId);
+                    postLoad.setUId(SharedPreference.getInstance(getActivity()).getLoginUser(C.USER).getUId());
+                    postLoad.setCategoryTypeId(vehicletype.getId());
                     postLoad.setMaterialTypeId(materialId);
-                    postLoad.setMaterialName(etMaterialName.getText().toString());
-                    postLoad.setSourceCity(etSourceCity.getText().toString());
-                    postLoad.setDestinationCity(etDestinationCity.getText().toString());
-                    postLoad.setNoOfTruck(mNoOfTruck);
+                    postLoad.setMaterialId(material.getId());
+                    postLoad.setSourceAddress(etSourceCity.getText().toString());
+                    postLoad.setDestinationAddress(etDestinationCity.getText().toString());
+                    postLoad.setLatS(sLat);
+                    postLoad.setLngS(sLong);
+                    postLoad.setLatD(dLat);
+                    postLoad.setLngD(dLong);
+                    postLoad.setNumberOfVehicles(mNoOfTruck);
+                    postLoad.setMobile(SharedPreference.getInstance(getActivity()).getString(C.MOBILE_NUMBER));
+                    postLoad.setPrice(etPrice.getText().toString());
+                    postLoad.setTotalPrice(mTotalPrice);
+                    postLoad.setPriceApproved("0");
                     postLoad.setDate(dateOFLoad);
-                    postLoad.setSourcePincode("110011");
-                    postLoad.setDestinationPincode("210011");
+
                     doLoad(postLoad);
                 }
             }
@@ -206,15 +234,46 @@ public class FragmentPostLoad extends Fragment {
         etMaterialName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openPopUpforMaterialName();
+                getMaterialName();
             }
         });
-        etFrightType.setOnClickListener(new View.OnClickListener() {
+        etPrice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openPopUpForFrightType();
+                openPopUpforPrice();
             }
         });
+    }
+
+
+    private void openPopUpforPrice() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle(R.string.price);
+        View viewInflated = LayoutInflater.from(getContext()).inflate(R.layout.layout_price, (ViewGroup) getView(), false);
+        final EditText input = (EditText) viewInflated.findViewById(R.id.input);
+        builder.setView(viewInflated);
+
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (input.getText().toString().length() > 0) {
+                    dialog.dismiss();
+                    etPrice.setText(input.getText().toString());
+                    if(vehicletype!=null){
+                        mTotalPrice=""+Double.parseDouble(etPrice.getText().toString()) * Double.parseDouble(vehicletype.getValue());
+                        etTotalPrice.setText(getString(R.string.total_price)+" : "+mTotalPrice);
+                    }
+                }
+            }
+        });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
 
     private void openPopUpforMaterialName() {
@@ -242,6 +301,7 @@ public class FragmentPostLoad extends Fragment {
     }
 
 
+/*
     void openPopUpForFrightType() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle(R.string.fright_type);
@@ -272,6 +332,7 @@ public class FragmentPostLoad extends Fragment {
 
         builder.show();
     }
+*/
 
     private void doLoad(PostLoad postLoad) {
 
@@ -279,14 +340,17 @@ public class FragmentPostLoad extends Fragment {
         dialog.setCancelable(false);
         dialog.show();
 
+        HashMap<String, PostLoad> stringUserHashMap = new HashMap<>();
+        stringUserHashMap.put("vmsdata", postLoad);
         final Gson gson = new Gson();
-        String json = gson.toJson(postLoad);
+        String json = gson.toJson(stringUserHashMap);
         JSONObject obj = null;
         try {
             obj = new JSONObject(json);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
 
         VolleyService volleyService = new VolleyService(getActivity());
         volleyService.postDataVolley(new IResult() {
@@ -297,8 +361,8 @@ public class FragmentPostLoad extends Fragment {
 
                 try {
                     Gson gson = new Gson();
-                    Response responsePost = gson.fromJson(response.toString(), Response.class);
-                    if (responsePost.getStatus().equals(C.STATUS_SUCCESS)) {
+                    ResponseApi responsePost = gson.fromJson(response.toString(), ResponseApi.class);
+                    if (responsePost.getStatus()) {
                         emptyFields();
                         showDialog(responsePost.getMessage());
 
@@ -340,6 +404,8 @@ public class FragmentPostLoad extends Fragment {
         etSourceCity.setText("");
         etDestinationCity.setText("");
         etDateOfLoad.setText("");
+        etPrice.setText("");
+        etTotalPrice.setText("");
     }
 
 
@@ -394,8 +460,7 @@ public class FragmentPostLoad extends Fragment {
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ENGLISH);
 
         etDateOfLoad.setText(sdf.format(myCalendar.getTime()));
-        dateOFLoad = "" + myCalendar.getTimeInMillis();
-
+        dateOFLoad = "" + myCalendar.getTimeInMillis()/1000L;
     }
 
     public boolean isAllValid() {
@@ -416,11 +481,11 @@ public class FragmentPostLoad extends Fragment {
             etMaterialName.setError(this.getResources().getString(R.string.required_field));
             etMaterialName.requestFocus();
             return false;
-        } else if (etWeight.getText().toString().length() == 0) {
+        } /*else if (etWeight.getText().toString().length() == 0) {
             etWeight.setError(this.getResources().getString(R.string.required_field));
             etWeight.requestFocus();
             return false;
-        } else if (etTruckType.getText().toString().length() == 0) {
+        }*/ else if (etTruckType.getText().toString().length() == 0) {
             etTruckType.setError(this.getResources().getString(R.string.required_field));
             etTruckType.requestFocus();
             return false;
@@ -432,14 +497,123 @@ public class FragmentPostLoad extends Fragment {
             etNoOfTruck.setError(this.getResources().getString(R.string.required_field));
             etNoOfTruck.requestFocus();
             return false;
-        } else if (etFrightType.getText().toString().length() == 0) {
-            etFrightType.setError(this.getResources().getString(R.string.required_field));
-            etFrightType.requestFocus();
+        } else if (etPrice.getText().toString().length() == 0) {
+            etPrice.setError(this.getResources().getString(R.string.required_field));
+            etPrice.requestFocus();
             return false;
         }
 
 
         return true;
+    }
+
+
+    public void getMaterialName() {
+
+
+        dialog = Util.getProgressDialog(getActivity(), R.string.please_wait);
+        dialog.setCancelable(false);
+        dialog.show();
+
+        MaterialNameRequest materialNameRequest=new MaterialNameRequest();
+        materialNameRequest.setMaterialTypeId(materialId);
+        HashMap<String, MaterialNameRequest> stringUserHashMap = new HashMap<>();
+        stringUserHashMap.put("vmsdata", materialNameRequest);
+        final Gson gson = new Gson();
+        String json = gson.toJson(stringUserHashMap);
+        JSONObject obj = null;
+        try {
+            obj = new JSONObject(json);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        VolleyService volleyService = new VolleyService(getActivity());
+        volleyService.postDataVolley(new IResult() {
+            @Override
+            public void notifySuccess(String requestType, String response) {
+                Log.e("Response :", response.toString());
+                dialog.dismiss();
+
+                Gson gson = new Gson();
+                try {
+                    MaterialNameResponse alArrayList = gson.fromJson(response, MaterialNameResponse.class);
+
+                    if (alArrayList.getStatus()) {
+
+                        materialList = alArrayList.getMaterials();
+                        setspinnerItemForMetetailName(materialList);
+                    }
+
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void notifyError(String requestType, String error) {
+
+                Log.e("Response :", error.toString());
+                dialog.dismiss();
+
+
+            }
+        }, "truckType", C.API_MATERIAL_NAME, Util.getHeader(getActivity()), obj);
+
+    }
+
+    public void getTruckTypes() {
+
+
+        dialog = Util.getProgressDialog(getActivity(), R.string.please_wait);
+        dialog.setCancelable(false);
+        dialog.show();
+
+
+        JSONObject obj = null;
+        try {
+            obj = new JSONObject("{\"ff\":\"ff\"}");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        VolleyService volleyService = new VolleyService(getActivity());
+        volleyService.postDataVolley(new IResult() {
+            @Override
+            public void notifySuccess(String requestType, String response) {
+                Log.e("Response :", response.toString());
+                dialog.dismiss();
+
+                Gson gson = new Gson();
+                try {
+                    VehicleTypeResponse alArrayList = gson.fromJson(response, VehicleTypeResponse.class);
+
+                    if (alArrayList.getStatus()) {
+
+                        vehicletypeList = alArrayList.getVehicletypes();
+                        setspinnerItemForVehicleType(vehicletypeList);
+                    }
+
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void notifyError(String requestType, String error) {
+
+                Log.e("Response :", error.toString());
+                dialog.dismiss();
+
+
+            }
+        }, "truckType", C.API_TRUCK_TYPE, Util.getHeader(getActivity()), obj);
+
     }
 
     public void getMatirialType() {
@@ -468,7 +642,7 @@ public class FragmentPostLoad extends Fragment {
                 try {
                     MaterialTypeResponse alArrayList = gson.fromJson(response, MaterialTypeResponse.class);
 
-                    if (alArrayList.getStatusCode().equals(C.STATUS_SUCCESS)) {
+                    if (alArrayList.getStatusCode()) {
 
                         materialTypesList = alArrayList.getData();
                         setspinnerItemForMaterial(materialTypesList);
@@ -493,7 +667,79 @@ public class FragmentPostLoad extends Fragment {
 
     }
 
-    void setspinnerItemForMaterial(final ArrayList<MaterialType> list) {
+
+    void setspinnerItemForMetetailName(final List<Material> list) {
+        final AdapterMaterialName spinnerDisabilityArrayAdapter = new AdapterMaterialName(getActivity(), list);
+        final LayoutInflater factory = LayoutInflater.from(getActivity());
+        final View deleteDialogView = factory.inflate(
+                R.layout.layout_material_type, null);
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        //   dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(deleteDialogView);
+        dialog.setCancelable(true);
+
+        TextView tvTitle = (TextView) deleteDialogView.findViewById(R.id.tvTitle);
+        tvTitle.setText(R.string.select_material_type);
+
+        GridView gvMaterialType = (GridView) deleteDialogView.findViewById(R.id.gvMaterialType);
+        gvMaterialType.setAdapter(spinnerDisabilityArrayAdapter);
+        gvMaterialType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                /* vehicleId = "" + vehicletypeList.get(position).getId();*/
+                material = materialList.get(position);
+                String data = materialList.get(position).getName();
+                etMaterialName.setText(data);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+
+
+    }
+
+    void setspinnerItemForVehicleType(final List<Vehicletype> list) {
+        final AdapterVehicleType spinnerDisabilityArrayAdapter = new AdapterVehicleType(getActivity(), list);
+        final LayoutInflater factory = LayoutInflater.from(getActivity());
+        final View deleteDialogView = factory.inflate(
+                R.layout.layout_material_type, null);
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        //   dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(deleteDialogView);
+        dialog.setCancelable(true);
+
+        TextView tvTitle = (TextView) deleteDialogView.findViewById(R.id.tvTitle);
+        tvTitle.setText(R.string.select_material_type);
+
+        GridView gvMaterialType = (GridView) deleteDialogView.findViewById(R.id.gvMaterialType);
+        gvMaterialType.setAdapter(spinnerDisabilityArrayAdapter);
+        gvMaterialType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                /* vehicleId = "" + vehicletypeList.get(position).getId();*/
+                vehicletype = vehicletypeList.get(position);
+                String data = vehicletypeList.get(position).getCategoryType();
+                etTruckType.setText(data);
+                if(etPrice.getText().toString().length()>0 &&vehicletype!=null){
+                    mTotalPrice=""+Double.parseDouble(etPrice.getText().toString()) * Double.parseDouble(vehicletype.getValue());
+
+                    etTotalPrice.setText(getString(R.string.total_price)+" : "+mTotalPrice);
+                }
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+
+
+    }
+
+    void setspinnerItemForMaterial(final List<MaterialType> list) {
         final AdapterMaterialType spinnerDisabilityArrayAdapter = new AdapterMaterialType(getActivity(), list);
         final LayoutInflater factory = LayoutInflater.from(getActivity());
         final View deleteDialogView = factory.inflate(
@@ -762,11 +1008,21 @@ public class FragmentPostLoad extends Fragment {
         dialog.show();
     }
 
-    public void setSource(String stringExtra) {
+    public void setSource(String stringExtra,String slat,String sLong) {
         etSourceCity.setText(stringExtra);
+        this.sLat=slat;
+        this.sLong=sLong;
     }
 
-    public void setDestination(String stringExtra) {
+    public void setDestination(String stringExtra,String dlat,String dLong) {
         etDestinationCity.setText(stringExtra);
+        this.dLat=dlat;
+        this.dLong=dLong;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

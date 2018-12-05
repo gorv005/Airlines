@@ -112,10 +112,12 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:visibility="gone"
                 android:background="@color/grey" />
 
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/etWeight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -190,13 +192,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/grey" />
+
             <TextView
-                android:id="@+id/etFrightType"
+                android:id="@+id/etPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:editable="false"
                 android:focusable="false"
-                android:hint="@string/fright_type"
+                android:hint="@string/price"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:paddingBottom="20dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="20dp"
+                android:textColor="@color/black" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey" />
+
+            <TextView
+                android:id="@+id/etTotalPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:editable="false"
+                android:focusable="false"
+                android:hint="@string/total_price"
                 android:inputType="textCapWords"
                 android:maxLines="1"
                 android:paddingBottom="20dp"

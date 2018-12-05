@@ -220,11 +220,11 @@ public class ActivityContainer extends AppCompatActivity {
             if (resultCode == C.RESULT_ADDRESS) {
                 if (data.getStringExtra(C.ADDRESS_SOURCE) != null) {
 
-                    ((FragmentPostLoad) fragment).setSource(data.getStringExtra(C.ADDRESS_SOURCE));
+                    ((FragmentPostLoad) fragment).setSource(data.getStringExtra(C.ADDRESS_SOURCE),data.getStringExtra(C.LATITUDE),data.getStringExtra(C.LONGITUDE));
 
 
                 } else if (data.getStringExtra(C.ADDRESS_DESTINATION) != null) {
-                    ((FragmentPostLoad) fragment).setDestination(data.getStringExtra(C.ADDRESS_DESTINATION));
+                    ((FragmentPostLoad) fragment).setDestination(data.getStringExtra(C.ADDRESS_DESTINATION),data.getStringExtra(C.LATITUDE),data.getStringExtra(C.LONGITUDE));
 
                 }
             }

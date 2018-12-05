@@ -119,6 +119,14 @@ public class ActivitySearchAddress extends AppCompatActivity implements
                                     if (places.getCount() == 1) {
                                         //Do the things here on Click.....
                                         Toast.makeText(getApplicationContext(), String.valueOf(places.get(0).getLatLng()), Toast.LENGTH_SHORT).show();
+
+                                        Intent intent = new Intent();
+                                        intent.putExtra(addressFor, item.description);
+                                        intent.putExtra(C.LATITUDE, String.valueOf(places.get(0).getLatLng().latitude));
+                                        intent.putExtra(C.LONGITUDE, String.valueOf(places.get(0).getLatLng().longitude));
+
+                                        setResult(C.RESULT_ADDRESS, intent);
+                                        finish();
                                     } else {
                                         Toast.makeText(getApplicationContext(), "SOMETHING_WENT_WRONG", Toast.LENGTH_SHORT).show();
                                     }
@@ -126,10 +134,7 @@ public class ActivitySearchAddress extends AppCompatActivity implements
                             });
                             Log.d("TAG", "Clicked: " + item.description);
                             Log.d("TAG", "Called getPlaceById to get Place details for " + item.placeId);
-                            Intent intent = new Intent();
-                            intent.putExtra(addressFor, item.description);
-                            setResult(C.RESULT_ADDRESS, intent);
-                            finish();
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

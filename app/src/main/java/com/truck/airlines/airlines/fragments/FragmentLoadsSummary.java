@@ -24,6 +24,7 @@ import com.truck.airlines.airlines.interfaces.IResult;
 import com.truck.airlines.airlines.pojos.LoadSummaryReq;
 import com.truck.airlines.airlines.pojos.LoadSummaryResponse;
 import com.truck.airlines.airlines.utils.C;
+import com.truck.airlines.airlines.utils.SharedPreference;
 import com.truck.airlines.airlines.utils.Util;
 import com.truck.airlines.airlines.webservice.VolleyService;
 
@@ -75,7 +76,7 @@ public class FragmentLoadsSummary extends Fragment {
         rvLoads.setLayoutManager(layoutManager);
         rvLoads.setHasFixedSize(true);
         LoadSummaryReq loadSummaryReq = new LoadSummaryReq();
-        loadSummaryReq.setId("1");
+        loadSummaryReq.setUId(SharedPreference.getInstance(getActivity()).getLoginUser(C.USER).getUId());
         getLoadList(loadSummaryReq);
     }
 

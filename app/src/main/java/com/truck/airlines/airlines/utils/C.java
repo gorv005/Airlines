@@ -64,11 +64,12 @@ public interface C {
     String API_USER_PROFILE = BASE_URL + "user/data";
 
 
-    String API_MATERIAL_TYPE = BASE_URL + "trucks/material_type";
-    String API_TRUCK_TYPE = BASE_URL + "trucks/truck_type";
+    String API_MATERIAL_TYPE = BASE_URL + "master/materialtypes";
+    String API_TRUCK_TYPE = BASE_URL + "master/vehicletypes";
+    String API_MATERIAL_NAME = BASE_URL + "master/materials";
 
     String API_WEIGHT = BASE_URL + "trucks/weight";
-    String API_TRUCK_LOAD = BASE_URL + "trucks/load";
+    String API_TRUCK_LOAD = BASE_URL + "load/create";
     String API_TRUCK_POST = BASE_URL + "trucks/truckpost";
     String API_TRUCK_LIST = BASE_URL + "trucks/get_trucks";
     String API_LOAD_LIST = BASE_URL + "trucks/get_loads";
@@ -82,7 +83,7 @@ public interface C {
     String TRANSPORTER = "5";
     String DRIVER = "6";
 
-    String DATE_FORMAT = "dd/MMM/yyyy";
+    String DATE_FORMAT = "yyyy-mm-dd";
     String API_GET_ADDRESS = "http://postalpincode.in/api/pincode/";
     String USER = "user";
     String NUMBER_FORMAT = "+91-";
@@ -102,4 +103,6 @@ public interface C {
     String ADDRESS_SOURCE = "ADDRESS_SOURCE";
     String ADDRESS_FOR = "ADDRESS_FOR";
     int FRAGMENT_LOADS_SUMMARY = 50;
+    String LATITUDE = "Lat";
+    String LONGITUDE ="Long" ;
 }

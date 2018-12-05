@@ -226,6 +226,8 @@ public class FragmentOTP extends Fragment {
 
                         SharedPreference.getInstance(getActivity()).setLoginUser(C.USER, responsePost.getLoginUser());
                         SharedPreference.getInstance(getActivity()).setBoolean(C.IS_LOGIN, true);
+                        SharedPreference.getInstance(getActivity()).setString(C.MOBILE_NUMBER, etPhoneNumber.getText().toString());
+
                         Intent intent = new Intent(getActivity(), ActivityMain.class);
                         Bundle bundle = new Bundle();
                         bundle.putString(C.MOBILE_NUMBER, etPhoneNumber.getText().toString());

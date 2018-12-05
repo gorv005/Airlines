@@ -356,18 +356,19 @@
                 android:maxLines="1"
                 android:textColor="@color/black" />
 
-
+            <Button
+                android:id="@+id/btnSubmitf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:inputType="textCapWords"
+                android:maxLength="50"
+                android:maxLines="1"
+                android:text="@string/submit"
+                android:textColor="@color/white" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btnSubmitf"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:inputType="textCapWords"
-            android:maxLength="50"
-            android:maxLines="1"
-            android:textColor="@color/white" />
+
 
 
     </ScrollView>

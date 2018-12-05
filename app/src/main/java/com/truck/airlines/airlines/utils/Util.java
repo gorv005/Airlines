@@ -190,6 +190,14 @@ public class Util {
             case 2:
                 break;
             case 3:
+                sideMenuItems.add(new SideMenuItem(R.string.post_a_load, R.drawable.truck_left));
+                sideMenuItems.add(new SideMenuItem(R.string.my_loads, R.drawable.truck_left));
+                sideMenuItems.add(new SideMenuItem(R.string.profile, R.drawable.truck_left));
+                sideMenuItems.add(new SideMenuItem(R.string.about_us, R.drawable.truck_left));
+                sideMenuItems.add(new SideMenuItem(R.string.policy_info, R.drawable.truck_left));
+                sideMenuItems.add(new SideMenuItem(R.string.contact_us, R.drawable.truck_left));
+                sideMenuItems.add(new SideMenuItem(R.string.logout, R.drawable.truck_left));
+
                 break;
             case 4:
                 sideMenuItems.add(new SideMenuItem(R.string.add_truck, R.drawable.truck_left));
@@ -222,6 +230,16 @@ public class Util {
         return sideMenuItems;
     }
 
+
+   public static String getDateFromUnixTime(String unixSeconds){
+        Date date = new java.util.Date(Long.parseLong(unixSeconds)*1000L);
+// the format of your date
+        SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd-MM-yyyy");
+// give a timezone reference for formatting (see comment at the bottom)
+        sdf.setTimeZone(java.util.TimeZone.getTimeZone("GMT-4"));
+        String formattedDate = sdf.format(date);
+        return formattedDate;
+    }
     public static ArrayList<SideMenuItem> getmainMenuList(Context context) {
         ArrayList<SideMenuItem> sideMenuItems = new ArrayList<SideMenuItem>();
 //        if (SharedPreference.getInstance(context).getLoginUser(C.USER).getData().getUserGroup().equals(C.TRANSPORTER) ||
@@ -236,6 +254,8 @@ public class Util {
             case 2:
                 break;
             case 3:
+                sideMenuItems.add(new SideMenuItem(R.string.post_a_load, R.drawable.truck_left));
+                sideMenuItems.add(new SideMenuItem(R.string.my_loads, R.drawable.truck_left));
                 break;
             case 4:
                 sideMenuItems.add(new SideMenuItem(R.string.add_truck, R.drawable.truck_left));

@@ -8,22 +8,22 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.truck.airlines.airlines.R;
-import com.truck.airlines.airlines.pojos.MaterialType;
+import com.truck.airlines.airlines.pojos.Material;
+import com.truck.airlines.airlines.pojos.Vehicletype;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by aditya.singh on 6/14/2016.
  */
-public class AdapterMaterialType extends BaseAdapter {
+public class AdapterMaterialName extends BaseAdapter {
 
 
     private final LayoutInflater mInflater;
     private Activity activity;
-    private List<MaterialType> materialTypes;
+    private List<Material> materialTypes;
 
-    public AdapterMaterialType(Activity activity, List<MaterialType> MaterialTypes) {
+    public AdapterMaterialName(Activity activity, List<Material> MaterialTypes) {
         this.activity = activity;
         this.materialTypes = MaterialTypes;
         mInflater = LayoutInflater.from(activity);
@@ -36,7 +36,7 @@ public class AdapterMaterialType extends BaseAdapter {
     }
 
     @Override
-    public MaterialType getItem(int position) {
+    public Material getItem(int position) {
         return materialTypes.get(position);
     }
 
@@ -56,7 +56,7 @@ public class AdapterMaterialType extends BaseAdapter {
 
 
         TextView tvMenuName = (TextView) convertView.findViewById(R.id.tvMenuName);
-        tvMenuName.setText(getItem(position).getMaterialName());
+        tvMenuName.setText(getItem(position).getName());
 
 
         return convertView;

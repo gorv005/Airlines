@@ -9,24 +9,25 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MaterialTypeResponse implements Serializable {
 
-    @SerializedName("status_code")
+    @SerializedName("status")
     @Expose
-    private String statusCode;
+    private Boolean statusCode;
     @SerializedName("message")
     @Expose
     private String message;
-    @SerializedName("data")
+    @SerializedName("materialtypes")
     @Expose
-    private ArrayList<MaterialType> data = null;
+    private List<MaterialType> data = null;
 
-    public String getStatusCode() {
+    public Boolean getStatusCode() {
         return statusCode;
     }
 
-    public void setStatusCode(String statusCode) {
+    public void setStatusCode(Boolean statusCode) {
         this.statusCode = statusCode;
     }
 
@@ -38,7 +39,7 @@ public class MaterialTypeResponse implements Serializable {
         this.message = message;
     }
 
-    public ArrayList<MaterialType> getData() {
+    public List<MaterialType> getData() {
         return data;
     }
 

@@ -11,10 +11,10 @@ import java.io.Serializable;
 
 public class MaterialType implements Serializable {
 
-    @SerializedName("material_id")
+    @SerializedName("id")
     @Expose
     private String id;
-    @SerializedName("material_name")
+    @SerializedName("name")
     @Expose
     private String materialName;
 

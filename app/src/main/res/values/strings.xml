@@ -117,6 +117,8 @@
     <string name="select_truck">Select Truck</string>
     <string name="select_material_type">Select Material Type</string>
     <string name="enter_material_name">Enter material name</string>
+    <string name="enter_price">Enter Price</string>
+
     <string name="material_name">Material Name</string>
     <string name="select_truck_type">Select Truck Type</string>
     <string name="rate">Rate</string>
@@ -153,5 +155,7 @@
     <string name="selectDate">Select Date</string>
     <string name="FuelType">Fuel Type</string>
     <string name="no_load_found">No load found</string>
+    <string name="price">Price</string>
+    <string name="total_price">Total Price</string>
 
 </resources>
