@@ -133,6 +133,25 @@
     <string name="truck_owner">Truck Owner</string>
     <string name="license_number">License Number</string>
     <string name="license_number_required">License Number Required</string>
+    <string name="add_truck">Add Truck</string>
+    <string name="RegistrationNumber">Registration Number</string>
+    <string name="RegistrationCertificate">Registration Certificate</string>
+    <string name="Chassis_Img">Chassis Image</string>
+    <string name="ChassisNum">Chassis Number</string>
+    <string name="Engine_number">Engine Number</string>
+    <string name="Engine_Image">Engine Image</string>
+    <string name="Vehical_class">Vehical Class</string>
+    <string name="Model">Model</string>
+    <string name="FitnessUpto">Fitness Upto</string>
+    <string name="InsuranceUpto">Insurance Upto</string>
+    <string name="FuelNorms">Fuel Norms</string>
+    <string name="RoadTaxPaidUpto">Road Tax Paid Upto</string>
+    <string name="FrontImage">Front Image</string>
+    <string name="BackImage">BackImage</string>
+    <string name="RegistrationDate">Registration Date</string>
+    <string name="ClickImage">Click Image</string>
+    <string name="selectDate">Select Date</string>
+    <string name="FuelType">Fuel Type</string>
     <string name="no_load_found">No load found</string>
 
 </resources>

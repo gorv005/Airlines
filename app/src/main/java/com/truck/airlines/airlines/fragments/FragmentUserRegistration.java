@@ -281,10 +281,13 @@ public class FragmentUserRegistration extends Fragment {
         dialog.setCancelable(false);
         dialog.show();
 
+
         HashMap<String, String> stringUserHashMap = new HashMap<>();
         stringUserHashMap.put("state_id", stateId);
+        HashMap<String, HashMap<String,String>> map = new HashMap<>();
+        map.put("vmsdata", stringUserHashMap);
         final Gson gson = new Gson();
-        String json = gson.toJson(stringUserHashMap);
+        String json = gson.toJson(map);
         JSONObject obj = null;
         try {
             obj = new JSONObject(json);
@@ -369,14 +372,15 @@ public class FragmentUserRegistration extends Fragment {
 
 
         HashMap<String, String> stringUserHashMap = new HashMap<>();
-        stringUserHashMap.put("district_id", districtId);
+        stringUserHashMap.put("state_id", districtId);
 
         HashMap<String, HashMap<String, String>> hashMap = new HashMap<>();
         hashMap.put("vmsdata", stringUserHashMap);
 
         final Gson gson = new Gson();
-        String json = gson.toJson(stringUserHashMap);
+        String json = gson.toJson(hashMap);
         JSONObject obj = null;
+
         try {
             obj = new JSONObject(json);
         } catch (JSONException e) {

@@ -80,8 +80,7 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
                     Intent intent = new Intent(ActivityMain.this, ActivityContainer.class);
                     intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_POST_LOAD);
                     startActivity(intent);
-                }
-                else if (sideMenuItem.getNameResourse() == R.string.post_truck) {
+                } else if (sideMenuItem.getNameResourse() == R.string.post_truck) {
                     Intent intent = new Intent(ActivityMain.this, ActivityContainer.class);
                     intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_POST_TRUCK);
                     startActivity(intent);
@@ -114,16 +113,19 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
                     Intent intent = new Intent(ActivityMain.this, ActivityContainer.class);
                     intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_OTP);
                     startActivity(intent);
+                }else if (sideMenuItem.getNameResourse() == R.string.my_trucks) {
+
+                } else if (sideMenuItem.getNameResourse() == R.string.add_truck) {
+                    Intent intent = new Intent(ActivityMain.this, ActivityContainer.class);
+                    intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_ADD_TRUCK);
+                    startActivity(intent);
                 }
             }
         });
 
 
-
-
-        tvName.setText(SharedPreference.getInstance(this).getLoginUser(C.USER).getName() );
+        tvName.setText(SharedPreference.getInstance(this).getLoginUser(C.USER).getName());
         tvMobile.setText(SharedPreference.getInstance(this).getLoginUser(C.USER).getPan());
-
 
 
         adapterHomeMenu = new AdapterHomeMenu(this, Util.getmainMenuList(ActivityMain.this));
@@ -141,8 +143,7 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
                     Intent intent = new Intent(ActivityMain.this, ActivityContainer.class);
                     intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_POST_LOAD);
                     startActivity(intent);
-                }
-                else  if (sideMenuItem.getNameResourse() == R.string.post_truck) {
+                } else if (sideMenuItem.getNameResourse() == R.string.post_truck) {
                     Intent intent = new Intent(ActivityMain.this, ActivityContainer.class);
                     intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_POST_TRUCK);
                     startActivity(intent);
@@ -175,10 +176,15 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
                     Intent intent = new Intent(ActivityMain.this, ActivityContainer.class);
                     intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_OTP);
                     startActivity(intent);
+                } else if (sideMenuItem.getNameResourse() == R.string.my_trucks) {
+
+                } else if (sideMenuItem.getNameResourse() == R.string.add_truck) {
+                    Intent intent = new Intent(ActivityMain.this, ActivityContainer.class);
+                    intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_ADD_TRUCK);
+                    startActivity(intent);
                 }
             }
         });
-
 
 
     }

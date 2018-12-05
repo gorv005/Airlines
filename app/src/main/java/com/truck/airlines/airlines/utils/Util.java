@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -167,22 +168,44 @@ public class Util {
 //        if (SharedPreference.getInstance(context).getLoginUser(C.USER).getData().getUserGroup().equals(C.TRANSPORTER) ||
 //                SharedPreference.getInstance(context).getLoginUser(C.USER).getData().getUserGroup().equals(C.TRUCK_OWENER)) {
 
+        int id = Integer.parseInt(SharedPreference.getInstance(context).getLoginUser(C.USER).getUtId());
 
-            sideMenuItems.add(new SideMenuItem(R.string.post_a_load, R.drawable.truck_left));
-            sideMenuItems.add(new SideMenuItem(R.string.search_load, R.drawable.truck_left));
-            sideMenuItems.add(new SideMenuItem(R.string.post_truck, R.drawable.truck_left));
-            sideMenuItems.add(new SideMenuItem(R.string.search_truck, R.drawable.truck_left));
-            sideMenuItems.add(new SideMenuItem(R.string.profile, R.drawable.truck_left));
-            sideMenuItems.add(new SideMenuItem(R.string.my_loads, R.drawable.truck_left));
-            sideMenuItems.add(new SideMenuItem(R.string.my_trucks, R.drawable.truck_left));
-            sideMenuItems.add(new SideMenuItem(R.string.kyc_document, R.drawable.truck_left));
-            sideMenuItems.add(new SideMenuItem(R.string.about_us, R.drawable.truck_left));
-            sideMenuItems.add(new SideMenuItem(R.string.policy_info, R.drawable.truck_left));
-            sideMenuItems.add(new SideMenuItem(R.string.contact_us, R.drawable.truck_left));
-            sideMenuItems.add(new SideMenuItem(R.string.alternate_mobile_no, R.drawable.truck_left));
-            sideMenuItems.add(new SideMenuItem(R.string.toll_calculator, R.drawable.truck_left));
-            sideMenuItems.add(new SideMenuItem(R.string.logout, R.drawable.truck_left));
+        switch (id) {
+            case 1:
+                sideMenuItems.add(new SideMenuItem(R.string.post_a_load, R.drawable.truck_left));
+                sideMenuItems.add(new SideMenuItem(R.string.search_load, R.drawable.truck_left));
+                sideMenuItems.add(new SideMenuItem(R.string.post_truck, R.drawable.truck_left));
+                sideMenuItems.add(new SideMenuItem(R.string.search_truck, R.drawable.truck_left));
+                sideMenuItems.add(new SideMenuItem(R.string.profile, R.drawable.truck_left));
+                sideMenuItems.add(new SideMenuItem(R.string.my_loads, R.drawable.truck_left));
+                sideMenuItems.add(new SideMenuItem(R.string.my_trucks, R.drawable.truck_left));
+                sideMenuItems.add(new SideMenuItem(R.string.kyc_document, R.drawable.truck_left));
+                sideMenuItems.add(new SideMenuItem(R.string.about_us, R.drawable.truck_left));
+                sideMenuItems.add(new SideMenuItem(R.string.policy_info, R.drawable.truck_left));
+                sideMenuItems.add(new SideMenuItem(R.string.contact_us, R.drawable.truck_left));
+                sideMenuItems.add(new SideMenuItem(R.string.alternate_mobile_no, R.drawable.truck_left));
+                sideMenuItems.add(new SideMenuItem(R.string.toll_calculator, R.drawable.truck_left));
+                sideMenuItems.add(new SideMenuItem(R.string.logout, R.drawable.truck_left));
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                sideMenuItems.add(new SideMenuItem(R.string.add_truck, R.drawable.truck_left));
+                sideMenuItems.add(new SideMenuItem(R.string.my_trucks, R.drawable.truck_left));
+                sideMenuItems.add(new SideMenuItem(R.string.about_us, R.drawable.truck_left));
+                sideMenuItems.add(new SideMenuItem(R.string.policy_info, R.drawable.truck_left));
+                sideMenuItems.add(new SideMenuItem(R.string.contact_us, R.drawable.truck_left));
+                sideMenuItems.add(new SideMenuItem(R.string.logout, R.drawable.truck_left));
+                break;
+            case 5:
+                break;
+            case 6:
 
+
+                break;
+        }
 
 //        } else {
 //            sideMenuItems.add(new SideMenuItem(R.string.post_a_load, R.drawable.truck_left));
@@ -204,15 +227,25 @@ public class Util {
 //        if (SharedPreference.getInstance(context).getLoginUser(C.USER).getData().getUserGroup().equals(C.TRANSPORTER) ||
 //                SharedPreference.getInstance(context).getLoginUser(C.USER).getData().getUserGroup().equals(C.TRUCK_OWENER)) {
 
+        int id = Integer.parseInt(SharedPreference.getInstance(context).getLoginUser(C.USER).getUtId());
 
-            sideMenuItems.add(new SideMenuItem(R.string.post_a_load, R.drawable.truck_left));
-            sideMenuItems.add(new SideMenuItem(R.string.search_load, R.drawable.truck_left));
-            sideMenuItems.add(new SideMenuItem(R.string.post_truck, R.drawable.truck_left));
-            sideMenuItems.add(new SideMenuItem(R.string.search_truck, R.drawable.truck_left));
-            sideMenuItems.add(new SideMenuItem(R.string.alternate_mobile_no, R.drawable.truck_left));
-            sideMenuItems.add(new SideMenuItem(R.string.toll_calculator, R.drawable.truck_left));
+        switch (id) {
+            case 1:
 
-
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                sideMenuItems.add(new SideMenuItem(R.string.add_truck, R.drawable.truck_left));
+                sideMenuItems.add(new SideMenuItem(R.string.my_trucks, R.drawable.truck_left));
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+        }
 //        } else {
 //            sideMenuItems.add(new SideMenuItem(R.string.post_a_load, R.drawable.truck_left));
 //            sideMenuItems.add(new SideMenuItem(R.string.search_truck, R.drawable.truck_left));
@@ -872,18 +905,18 @@ public class Util {
         headers.put("X-API-KEY", "VMSFORNEEDPLUS@2018");
         headers.put("Accept", "application/json");
         headers.put("Content-Type", "application/json");
-        System.out.println("Headers : "+headers.toString());
+        System.out.println("Headers : " + headers.toString());
         return headers;
     }
 
 
     public static String getFileName(Uri uri, Activity activity) {
         Cursor returnCursor = activity.getContentResolver().query(uri, null, null, null, null);
-    /*
-     * Get the column indexes of the data in the Cursor,
-     * move to the first row in the Cursor, get the data,
-     * and display it.
-     */
+        /*
+         * Get the column indexes of the data in the Cursor,
+         * move to the first row in the Cursor, get the data,
+         * and display it.
+         */
         int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
         returnCursor.moveToFirst();
         return returnCursor.getString(nameIndex);
@@ -911,7 +944,7 @@ public class Util {
     }
 
     public static ArrayList<TruckType> getTruckSize() {
-        ArrayList<TruckType> truckSize =new ArrayList<>();
+        ArrayList<TruckType> truckSize = new ArrayList<>();
         truckSize.add(new TruckType("16 feet"));
         truckSize.add(new TruckType("18 feet"));
         truckSize.add(new TruckType("20 feet"));
@@ -927,7 +960,7 @@ public class Util {
 
 
     public static ArrayList<TruckType> getTruckCapacity() {
-        ArrayList<TruckType> truckSize =new ArrayList<>();
+        ArrayList<TruckType> truckSize = new ArrayList<>();
         truckSize.add(new TruckType("3 MT"));
         truckSize.add(new TruckType("6 MT"));
         truckSize.add(new TruckType("8 MT"));

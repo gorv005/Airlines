@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.truck.airlines.airlines.fragments.FragmentAddTruck;
 import com.truck.airlines.airlines.fragments.FragmentAddressSearch;
 import com.truck.airlines.airlines.fragments.FragmentKYCDocuments;
 import com.truck.airlines.airlines.fragments.FragmentLanguageSelect;
@@ -136,6 +137,13 @@ public class ActivityContainer extends AppCompatActivity {
                 fragment = new FragmentLanguageSelect();
                 fragmentTransaction.replace(R.id.container, fragment);
                 fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_LANGUAGE_SELECT);
+                break;
+
+            case C.FRAGMENT_ADD_TRUCK:
+                getSupportActionBar().show();
+                fragment = new FragmentAddTruck();
+                fragmentTransaction.replace(R.id.container, fragment);
+                fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_ADD_TRUCK);
                 break;
 
         }

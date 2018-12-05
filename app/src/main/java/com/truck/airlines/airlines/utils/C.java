@@ -21,6 +21,7 @@ public interface C {
     int FRAGMENT_OFFFLINE_REGISTER = 9;
     int FRAGMENT_LANGUAGE_SELECT = 10;
     int FRAGMENT_ABOUT_US = 11;
+    int FRAGMENT_ADD_TRUCK = 15;
 
     int FRAGMENT_POST_LOAD = 12;
     int FRAGMENT_SEARCH_LOAD = 13;
@@ -42,6 +43,10 @@ public interface C {
 
     String TAG_FRAGMENT_LANGUAGE_SELECT = "FRAGMENT_LANGUAGE_SELECT";
     String TAG_FRAGMENT_ABOUT_US = "TAG_FRAGMENT_ABOUT_US";
+
+    String TAG_FRAGMENT_ADD_TRUCK = "TAG_FRAGMENT_ADD_TRUCK";
+
+
     long SPLASH_LOADER_TIME = 100;
 
 
@@ -67,6 +72,8 @@ public interface C {
     String API_TRUCK_POST = BASE_URL + "trucks/truckpost";
     String API_TRUCK_LIST = BASE_URL + "trucks/get_trucks";
     String API_LOAD_LIST = BASE_URL + "trucks/get_loads";
+    String API_ADD_TRUCK = BASE_URL + "vehicle/create";
+
     String STATUS_SUCCESS = "RDS001";
     String MOBILE_NUMBER = "MOBILE_NUMBER";
     String USER_TYPE = "USER_TYPE";

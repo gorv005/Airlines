@@ -14,6 +14,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:layout_marginTop="5dp"
             android:orientation="vertical"
             android:paddingLeft="20dp"
@@ -102,9 +103,9 @@
                 android:id="@+id/etMobileNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/mobileNumber"
                 android:inputType="number"
                 android:maxLength="14"
-                android:hint="@string/mobileNumber"
                 android:maxLines="1"
                 android:textColor="@color/black" />
 
@@ -122,8 +123,8 @@
                 style="@style/Base.Widget.AppCompat.EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLength="6"
                 android:hint="@string/source_city"
+                android:maxLength="6"
                 android:maxLines="1"
                 android:textColor="@color/black" />
 
@@ -182,14 +183,14 @@
 
             <TextView
                 android:id="@+id/etWeight"
+                style="@style/Base.Widget.AppCompat.EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/down_arrow"
                 android:editable="false"
-                style="@style/Base.Widget.AppCompat.EditText"
                 android:focusable="false"
-                android:lines="1"
                 android:hint="@string/weight"
+                android:lines="1"
                 android:maxLength="50"
                 android:textColor="@color/black" />
 
@@ -206,13 +207,13 @@
 
             <TextView
                 android:id="@+id/etTruckType"
+                style="@style/Base.Widget.AppCompat.EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/down_arrow"
                 android:editable="false"
-                android:hint="@string/truck_type"
                 android:focusable="false"
-                style="@style/Base.Widget.AppCompat.EditText"
+                android:hint="@string/truck_type"
                 android:lines="1"
                 android:maxLength="50"
                 android:textColor="@color/black" />
@@ -257,12 +258,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="20dp"
                 android:layout_marginTop="15dp"
-                android:background="@drawable/bg_button"
-                android:minWidth="120dp"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
                 android:text="@string/submit"
-                android:textColor="@color/color_selector"
+                android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />
         </LinearLayout>

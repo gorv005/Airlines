@@ -66,6 +66,8 @@ public class FragmentPostLoad extends Fragment {
     @BindView(R.id.etMaterialtype)
     TextView etMaterialtype;
     @BindView(R.id.etMaterialName)
+
+
     TextView etMaterialName;
     @BindView(R.id.etWeight)
     TextView etWeight;
@@ -93,7 +95,6 @@ public class FragmentPostLoad extends Fragment {
     public FragmentPostLoad() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
