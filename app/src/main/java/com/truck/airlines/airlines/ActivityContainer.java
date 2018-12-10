@@ -27,7 +27,6 @@ import com.truck.airlines.airlines.fragments.FragmentSplash;
 import com.truck.airlines.airlines.fragments.FragmentTruckList;
 import com.truck.airlines.airlines.fragments.FragmentUserRegistration;
 import com.truck.airlines.airlines.fragments.FragmentUserType;
-import com.truck.airlines.airlines.pojos.PostTruck;
 import com.truck.airlines.airlines.utils.C;
 
 import java.util.List;
@@ -131,7 +130,6 @@ public class ActivityContainer extends AppCompatActivity {
                 fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_KYC_DOCUMENT);
                 break;
             case C.FRAGMENT_ABOUT_US:
-
                 fragment = new FragmentAboutUs();
                 fragmentTransaction.replace(R.id.container, fragment);
                 fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_ABOUT_US);

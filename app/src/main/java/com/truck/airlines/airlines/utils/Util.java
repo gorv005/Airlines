@@ -170,18 +170,7 @@ public class Util {
         int id = Integer.parseInt(SharedPreference.getInstance(context).getLoginUser(C.USER).getUtId());
 
         switch (id) {
-            case 1:
-                sideMenuItems.add(new SideMenuItem(R.string.post_a_load, R.drawable.truck_left));
-                sideMenuItems.add(new SideMenuItem(R.string.search_load, R.drawable.truck_left));
-                sideMenuItems.add(new SideMenuItem(R.string.post_truck, R.drawable.truck_left));
-                sideMenuItems.add(new SideMenuItem(R.string.search_truck, R.drawable.truck_left));
-                sideMenuItems.add(new SideMenuItem(R.string.my_loads, R.drawable.truck_left));
-                sideMenuItems.add(new SideMenuItem(R.string.my_trucks, R.drawable.truck_left));
-                sideMenuItems.add(new SideMenuItem(R.string.kyc_document, R.drawable.truck_left));
-                sideMenuItems.add(new SideMenuItem(R.string.alternate_mobile_no, R.drawable.truck_left));
-                sideMenuItems.add(new SideMenuItem(R.string.toll_calculator, R.drawable.truck_left));
 
-                break;
             case 2:
                 break;
             case 3:
@@ -202,6 +191,7 @@ public class Util {
                 break;
             case 6:
 
+                sideMenuItems.add(new SideMenuItem(R.string.truck_post, R.drawable.truck_left));
 
                 break;
         }
@@ -256,12 +246,14 @@ public class Util {
             case 4:
                 sideMenuItems.add(new SideMenuItem(R.string.add_truck, R.drawable.truck_left));
                 sideMenuItems.add(new SideMenuItem(R.string.my_trucks, R.drawable.truck_left));
+
                 break;
             case 5:
                 sideMenuItems.add(new SideMenuItem(R.string.post_a_load, R.drawable.truck_left));
                 sideMenuItems.add(new SideMenuItem(R.string.my_loads, R.drawable.truck_left));
                 break;
             case 6:
+                sideMenuItems.add(new SideMenuItem(R.string.truck_post, R.drawable.truck_left));
                 break;
         }
 //        } else {

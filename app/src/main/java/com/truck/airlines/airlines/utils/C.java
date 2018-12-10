@@ -81,8 +81,8 @@ public interface C {
     String SUPPLIER = "3";
     String TRUCK_OWENER = "4";
     String TRANSPORTER = "5";
-
     String DRIVER = "6";
+
     String DATE_FORMAT = "yyyy-mm-dd";
     String API_GET_ADDRESS = "http://postalpincode.in/api/pincode/";
     String USER = "user";
