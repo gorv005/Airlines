@@ -4,6 +4,7 @@ package com.truck.airlines.airlines.fragments;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,9 +16,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.truck.airlines.airlines.ActivitySearchAddress;
 import com.truck.airlines.airlines.R;
 import com.truck.airlines.airlines.adapter.AdapterLoadsSummary;
 import com.truck.airlines.airlines.interfaces.IResult;
@@ -40,7 +43,7 @@ import butterknife.Unbinder;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FragmentLoadsSummary extends Fragment {
+public class FragmentLoadsSummary extends Fragment implements View.OnClickListener{
 
     @BindView(R.id.tvNoLoad)
     TextView tvNoLoad;
@@ -48,12 +51,14 @@ public class FragmentLoadsSummary extends Fragment {
 
     @BindView(R.id.rvLoads)
     RecyclerView rvLoads;
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
+    @BindView(R.id.fabFilter)
+    FloatingActionButton fabFilter;
     Unbinder unbinder;
-    AdapterLoadsSummary adapterLoadsSummary;
-    LinearLayoutManager layoutManager;
 
+    LinearLayoutManager layoutManager;
+     TextView etSourceCity;
+     TextView etDestinationCity;
+     String mSource,mDestination;
     public FragmentLoadsSummary() {
         // Required empty public constructor
     }
@@ -75,6 +80,7 @@ public class FragmentLoadsSummary extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         rvLoads.setLayoutManager(layoutManager);
         rvLoads.setHasFixedSize(true);
+        fabFilter.setOnClickListener(this);
         LoadSummaryReq loadSummaryReq = new LoadSummaryReq();
         loadSummaryReq.setUId(SharedPreference.getInstance(getActivity()).getLoginUser(C.USER).getUId());
         getLoadList(loadSummaryReq);
@@ -111,7 +117,7 @@ public class FragmentLoadsSummary extends Fragment {
                         //  showDialog(responsePost.getMessage());
                         if(responsePost.getVmsdata().size()>0) {
                             tvNoLoad.setVisibility(View.GONE);
-                            adapterLoadsSummary = new AdapterLoadsSummary(getActivity(), responsePost.getVmsdata());
+                            AdapterLoadsSummary  adapterLoadsSummary = new AdapterLoadsSummary(getActivity(), responsePost.getVmsdata());
                             rvLoads.setAdapter(adapterLoadsSummary);
                         }
                         else {
@@ -152,7 +158,63 @@ public class FragmentLoadsSummary extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+    private void openPopUpforFilter() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle(R.string.search_load);
+        View viewInflated = LayoutInflater.from(getContext()).inflate(R.layout.layout_search_source_destination, (ViewGroup) getView(), false);
+          etSourceCity = (TextView) viewInflated.findViewById(R.id.etSourceCity);
+          etDestinationCity = (TextView) viewInflated.findViewById(R.id.etDestinationCity);
 
+        builder.setView(viewInflated);
+
+        etSourceCity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ActivitySearchAddress.class);
+                intent.putExtra(C.ADDRESS_FOR, C.ADDRESS_SOURCE);
+                startActivityForResult(intent, C.REQUEST_ADDRESS);
+            }
+        });
+        etDestinationCity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ActivitySearchAddress.class);
+                intent.putExtra(C.ADDRESS_FOR, C.ADDRESS_DESTINATION);
+                startActivityForResult(intent, C.REQUEST_ADDRESS);
+            }
+        });
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                LoadSummaryReq loadSummaryReq = new LoadSummaryReq();
+                loadSummaryReq.setUId(SharedPreference.getInstance(getActivity()).getLoginUser(C.USER).getUId());
+                loadSummaryReq.setSourceAddress(etSourceCity.getText().toString());
+                loadSummaryReq.setDestinationAddress(etDestinationCity.getText().toString());
+                getLoadList(loadSummaryReq);
+                dialog.dismiss();
+
+            }
+        });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+    public void setSource(String stringExtra,String slat,String sLong) {
+        etSourceCity.setText(stringExtra);
+        mSource=stringExtra;
+
+    }
+
+    public void setDestination(String stringExtra,String dlat,String dLong) {
+        etDestinationCity.setText(stringExtra);
+        mDestination=stringExtra;
+
+    }
     private void showDialog(String msg) {
 
         AlertDialog.Builder builder;
@@ -176,4 +238,12 @@ public class FragmentLoadsSummary extends Fragment {
                 .show();
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.fabFilter:
+                openPopUpforFilter();
+            break;
+        }
+    }
 }

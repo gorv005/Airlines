@@ -38,6 +38,8 @@ public class AdapterLoadsSummary extends RecyclerView.Adapter<AdapterLoadsSummar
         holder.tvPrice.setText(data.get(position).getPrice());
         holder.tvCatName.setText(data.get(position).getCategoryName());
         holder.tvMaterialType.setText(data.get(position).getMaterialTypeName());
+        holder.tvSource.setText(data.get(position).getSourceAddress());
+        holder.tvDestination.setText(data.get(position).getDestinationAddress());
 
     }
 
@@ -46,7 +48,7 @@ public class AdapterLoadsSummary extends RecyclerView.Adapter<AdapterLoadsSummar
         return data.size();
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvDate,tvPrice,tvCatName,tvMaterialType;
+        TextView tvDate,tvPrice,tvCatName,tvMaterialType,tvSource,tvDestination;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -55,6 +57,8 @@ public class AdapterLoadsSummary extends RecyclerView.Adapter<AdapterLoadsSummar
             tvPrice = (TextView) itemView.findViewById(R.id.tvPrice);
             tvCatName = (TextView) itemView.findViewById(R.id.tvCatName);
             tvMaterialType = (TextView) itemView.findViewById(R.id.tvMaterialType);
+            tvSource = (TextView) itemView.findViewById(R.id.tvSource);
+            tvDestination = (TextView) itemView.findViewById(R.id.tvDestination);
 
         }
 

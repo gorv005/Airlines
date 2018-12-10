@@ -147,7 +147,8 @@
                 android:maxLines="1"
                 android:paddingLeft="10dp"
                 android:paddingTop="20dp"
-                android:paddingBottom="20dp"                android:textColor="@color/black" />
+                android:paddingBottom="20dp"
+                android:textColor="@color/black" />
 
             <ImageView
                 android:layout_width="match_parent"

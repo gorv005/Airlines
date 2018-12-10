@@ -230,6 +230,17 @@ public class ActivityContainer extends AppCompatActivity {
             }
 
         }
+        else  if (fragment instanceof FragmentLoadsSummary) {
+            if (data.getStringExtra(C.ADDRESS_SOURCE) != null) {
+
+                ((FragmentLoadsSummary) fragment).setSource(data.getStringExtra(C.ADDRESS_SOURCE),data.getStringExtra(C.LATITUDE),data.getStringExtra(C.LONGITUDE));
+
+
+            } else if (data.getStringExtra(C.ADDRESS_DESTINATION) != null) {
+                ((FragmentLoadsSummary) fragment).setDestination(data.getStringExtra(C.ADDRESS_DESTINATION),data.getStringExtra(C.LATITUDE),data.getStringExtra(C.LONGITUDE));
+
+            }
+        }
     }
 
 
