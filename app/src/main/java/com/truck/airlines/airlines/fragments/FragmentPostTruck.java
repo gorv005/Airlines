@@ -5,38 +5,41 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.Selection;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.GridView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.android.volley.Request;
 import com.google.gson.Gson;
+import com.truck.airlines.airlines.ActivitySearchAddress;
 import com.truck.airlines.airlines.R;
+import com.truck.airlines.airlines.adapter.AdapterMaterialName;
+import com.truck.airlines.airlines.adapter.AdapterMaterialType;
 import com.truck.airlines.airlines.interfaces.IResult;
-import com.truck.airlines.airlines.pojos.Location;
+import com.truck.airlines.airlines.pojos.Material;
+import com.truck.airlines.airlines.pojos.MaterialNameRequest;
+import com.truck.airlines.airlines.pojos.MaterialNameResponse;
+import com.truck.airlines.airlines.pojos.MaterialType;
+import com.truck.airlines.airlines.pojos.MaterialTypeResponse;
+import com.truck.airlines.airlines.pojos.PostLoad;
 import com.truck.airlines.airlines.pojos.PostTruck;
-import com.truck.airlines.airlines.pojos.Response;
-import com.truck.airlines.airlines.pojos.TruckType;
-import com.truck.airlines.airlines.pojos.TruckTypeResponse;
-import com.truck.airlines.airlines.pojos.WeightResponse;
-import com.truck.airlines.airlines.pojos.WeightType;
+import com.truck.airlines.airlines.pojos.ResponseApi;
+import com.truck.airlines.airlines.pojos.TruckPost;
 import com.truck.airlines.airlines.utils.C;
+import com.truck.airlines.airlines.utils.SharedPreference;
 import com.truck.airlines.airlines.utils.Util;
 import com.truck.airlines.airlines.webservice.VolleyService;
 
@@ -44,76 +47,45 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class FragmentPostTruck extends Fragment {
 
-//    @BindView(R.id.etSourcePincode)
-//    EditText etSourcePincode;
-    @BindView(R.id.etSourceCity)
-    EditText etSourceCity;
-//    @BindView(R.id.etDestinationPincode)
-//    EditText etDestinationPincode;
-    @BindView(R.id.etDestinationCity)
-    EditText etDestinationCity;
-    @BindView(R.id.etWeight)
-    EditText etWeight;
-    @BindView(R.id.etTruckType)
-    EditText etTruckType;
-    @BindView(R.id.etDateOfPost)
-    EditText etDateOfPost;
-    @BindView(R.id.etVehiclePart1)
-    EditText etVehiclePart1;
-    @BindView(R.id.etVehiclePart2)
-    EditText etVehiclePart2;
-    @BindView(R.id.etVehiclePart3)
-    EditText etVehiclePart3;
-    @BindView(R.id.etDriverName)
-    EditText etDriverName;
-    @BindView(R.id.etMobileNumber)
-    EditText etMobileNumber;
-    @BindView(R.id.etNoOfTruck)
-    EditText etNoOfTruck;
-//    @BindView(R.id.spinnerWeight)
-//    Spinner spinnerWeight;
-//    @BindView(R.id.spinnerTruckType)
-    Spinner spinnerTruckType;
-    @BindView(R.id.spinnerNoOfTruck)
-    Spinner spinnerNoOfTruck;
+
     @BindView(R.id.btnSubmit)
     Button btnSubmit;
-    private Dialog dialog;
-    boolean isSource = false;
-    List<TruckType> truckTypesList;
-    List<WeightType> weightTypesList;
-    String weightId, truckTypeId, mNoOfTruck, dateOFLoad;
-
-    String[] noOfTruck = new String[]{
-            "Select",
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10"
-
-    };
+    @BindView(R.id.etSourceCity)
+    TextView etSourceCity;
+    @BindView(R.id.etDestinationCity)
+    TextView etDestinationCity;
+    @BindView(R.id.etMaterialtype)
+    TextView etMaterialtype;
+    @BindView(R.id.etMaterialName)
+    TextView etMaterialName;
+    @BindView(R.id.etWeight)
+    TextView etWeight;
+    @BindView(R.id.etDateOfLoad)
+    TextView etDateOfLoad;
+    @BindView(R.id.content_activity_home)
+    RelativeLayout contentActivityHome;
+    Unbinder unbinder;
     Calendar myCalendar = Calendar.getInstance(Locale.US);
-
+    String dateOFLoad,materialId;
+    private Dialog dialog;
+    List<MaterialType> materialTypesList;
+    List<Material> materialList;
+    Material material;
+    String sLat,sLong,dLat,dLong;
     public FragmentPostTruck() {
         // Required empty public constructor
     }
@@ -123,7 +95,9 @@ public class FragmentPostTruck extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_post_truck, container, false);
+        View view = inflater.inflate(R.layout.fragment_post_truck, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        return view;
     }
 
     @Override
@@ -132,245 +106,93 @@ public class FragmentPostTruck extends Fragment {
         ButterKnife.bind(this, view);
 
         initialize();
-        getWeightList();
+
     }
 
-    void initialize() {
-        etMobileNumber.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (etMobileNumber.getText().length() == 0)
-                    etMobileNumber.setText(C.NUMBER_FORMAT);
-                return false;
-            }
-        });
-        etMobileNumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
 
-                if (!hasFocus && etMobileNumber.getText().toString().equals(C.NUMBER_FORMAT))
-                    etMobileNumber.setText("");
-            }
-        });
-        etMobileNumber.addTextChangedListener(new TextWatcher() {
-
-            public void afterTextChanged(Editable s) {
-            /*    if (s != null && s.length() == 5 && (s.charAt(4) < '7')) {
-                    etMobileNumber.setText("");
-                    etMobileNumber.setError("Number should start with 9,8 and 7");
-                }*/
-            }
-
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-
-            }
-
-            public void onTextChanged(CharSequence s, int start, int before,
-                                      int count) {
-                if (!s.toString().startsWith(C.NUMBER_FORMAT)) {
-                    etMobileNumber.setText(C.NUMBER_FORMAT);
-                    Selection.setSelection(etMobileNumber.getText(), etMobileNumber
-                            .getText().length());
-
-                }
-            }
-        });
-        etMobileNumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-              /*  if (!hasFocus && etMobileNumber.getText().toString().length() != 14)
-                    etMobileNumber.setError("Phone number must be 10 digits");*/
-
-            }
-        });
-        etDateOfPost.setOnClickListener(new View.OnClickListener() {
+    void  initialize(){
+        etDateOfLoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openCalender();
             }
         });
-
-        etTruckType.setOnClickListener(new View.OnClickListener() {
+        etMaterialtype.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                spinnerTruckType.performClick();
-            }
-        });
-//        etWeight.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                spinnerWeight.performClick();
-//            }
-//        });
-
-        spinnerNoOfTruck.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position != 0) {
-                    etNoOfTruck.setText(noOfTruck[position]);
-                    mNoOfTruck = "" + noOfTruck[position];
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+                getMatirialType();
 
             }
         });
-        etNoOfTruck.setOnClickListener(new View.OnClickListener() {
+        etMaterialName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                spinnerNoOfTruck.performClick();
+                getMaterialName();
             }
         });
-        final List<String> specialityList = new ArrayList<>(Arrays.asList(noOfTruck));
-        final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
-                getActivity(), R.layout.spinner_item_new, specialityList) {
+        etSourceCity.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean isEnabled(int position) {
-                if (position == 0) {
-                    // Disable the first item from Spinner
-                    // First item will be use for hint
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-
-            @Override
-            public View getDropDownView(int position, View convertView,
-                                        ViewGroup parent) {
-                View view = super.getDropDownView(position, convertView, parent);
-                TextView tv = (TextView) view;
-                if (position == 0) {
-                    // Set the hint text color gray
-                    tv.setTextColor(Color.GRAY);
-                } else {
-                    tv.setTextColor(Color.BLACK);
-                }
-                return view;
-            }
-        };
-        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerNoOfTruck.setAdapter(spinnerArrayAdapter);
-        spinnerTruckType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position != 0) {
-                    etTruckType.setText(truckTypesList.get(position).getTruckType());
-                    truckTypeId = truckTypesList.get(position).getId();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ActivitySearchAddress.class);
+                intent.putExtra(C.ADDRESS_FOR, C.ADDRESS_SOURCE);
+                startActivityForResult(intent, C.REQUEST_ADDRESS);
             }
         });
-//        spinnerWeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                if (position != 0) {
-//                    etWeight.setText(weightTypesList.get(position).getWeight());
-//                    weightId = weightTypesList.get(position).getId();
-//
-//                    getTruckType();
-//                }
-//            }
-
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
 
 
-//        etSourcePincode.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//                if (etSourcePincode.getText().toString().length() == 6) {
-//                    isSource = true;
-//                    getAddress(etSourcePincode.getText().toString());
-//                } else {
-//                    etSourceCity.setText("");
-//
-//                }
-//            }
-//        });
-//        etDestinationPincode.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//                if (etDestinationPincode.getText().toString().length() == 6) {
-//                    isSource = false;
-//
-//                    getAddress(etDestinationPincode.getText().toString());
-//                } else {
-//                    etDestinationCity.setText("");
-//
-//                }
-//            }
-//        });
+        etDestinationCity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getActivity(), ActivitySearchAddress.class);
+                intent.putExtra(C.ADDRESS_FOR, C.ADDRESS_DESTINATION);
+                startActivityForResult(intent, C.REQUEST_ADDRESS);
+            }
+        });
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isAllValid()) {
-                    PostTruck postTruck = new PostTruck();
-                    postTruck.setWeightId(weightId);
-                    postTruck.setTruckTypeId(truckTypeId);
-                    postTruck.setTruckNumber(etVehiclePart1.getText().toString() + " " +
-                            etVehiclePart2.getText().toString() + " " + etVehiclePart3.getText().toString());
-                    postTruck.setDriverName(etDriverName.getText().toString());
-                    postTruck.setDriverNumber(etMobileNumber.getText().toString().split("-")[1]);
-//                    postTruck.setSourcePincode(etSourcePincode.getText().toString());
-                    postTruck.setSourceCity(etSourceCity.getText().toString());
-//                    postTruck.setDestinationPincode(etDestinationPincode.getText().toString());
-                    postTruck.setDestinationCity(etDestinationCity.getText().toString());
-                    postTruck.setDate(dateOFLoad);
-                    doPost(postTruck);
+
+                    TruckPost truckPost = new TruckPost();
+                    truckPost.setUId(SharedPreference.getInstance(getActivity()).getLoginUser(C.USER).getUId());
+                    truckPost.setMaterialTypeId(materialId);
+                    truckPost.setMaterialId(material.getId());
+                    truckPost.setSourceAddress(etSourceCity.getText().toString());
+                    truckPost.setDestinationAddress(etDestinationCity.getText().toString());
+                    truckPost.setLatS(sLat);
+                    truckPost.setLngS(sLong);
+                    truckPost.setLatD(dLat);
+                    truckPost.setLngD(dLong);
+                    truckPost.setDate(dateOFLoad);
+                    truckPost.setCreatedBy(SharedPreference.getInstance(getActivity()).getLoginUser(C.USER).getUId());
+                    truckPost.setModifiedBy(SharedPreference.getInstance(getActivity()).getLoginUser(C.USER).getUId());
+                    doPost(truckPost);
                 }
             }
         });
 
     }
 
-    private void doPost(PostTruck postTruck) {
+
+    private void doPost(TruckPost postTruck) {
 
         dialog = Util.getProgressDialog(getActivity(), R.string.please_wait);
         dialog.setCancelable(false);
         dialog.show();
 
-         final Gson gson = new Gson();
-        String json = gson.toJson(postTruck);
+        HashMap<String, TruckPost> stringUserHashMap = new HashMap<>();
+        stringUserHashMap.put("vmsdata", postTruck);
+        final Gson gson = new Gson();
+        String json = gson.toJson(stringUserHashMap);
         JSONObject obj = null;
         try {
             obj = new JSONObject(json);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
 
         VolleyService volleyService = new VolleyService(getActivity());
         volleyService.postDataVolley(new IResult() {
@@ -380,10 +202,10 @@ public class FragmentPostTruck extends Fragment {
                 dialog.dismiss();
 
                 try {
-                    Response responsePost = gson.fromJson(response.toString(), Response.class);
-                    if (responsePost.getStatus().equals(C.STATUS_SUCCESS)) {
+                    Gson gson = new Gson();
+                    ResponseApi responsePost = gson.fromJson(response.toString(), ResponseApi.class);
+                    if (responsePost.getStatus()) {
                         emptyFields();
-
                         showDialog(responsePost.getMessage());
 
 
@@ -406,126 +228,30 @@ public class FragmentPostTruck extends Fragment {
                 Log.e("Response :", error.toString());
                 showDialog("ServerError :" + error.toString());
 
-//
 //                Intent intent = new Intent(getActivity(), ActivityContainer.class);
 //                intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_USER_TYPE);
 //                startActivity(intent);
-//
 //                dialog.dismiss();
-
             }
         }, "otp", C.API_TRUCK_POST, Util.getHeader(getActivity()), obj);
 
     }
-
-
     void emptyFields() {
-        etWeight.setText("");
-        etTruckType.setText("");
-        etVehiclePart1.setText("");
-        etVehiclePart2.setText("");
-        etVehiclePart3.setText("");
-        etDriverName.setText("");
-        etMobileNumber.setText("");
-//        etSourcePincode.setText("");
+
+        etMaterialtype.setText("");
+        etMaterialName.setText("");
         etSourceCity.setText("");
-//        etDestinationPincode.setText("");
         etDestinationCity.setText("");
-        etDateOfPost.setText("");
-    }
-
-    private void getAddress(String pincode) {
-
-        dialog = Util.getProgressDialog(getActivity(), R.string.please_wait);
-        dialog.setCancelable(false);
-        dialog.show();
-
-
-        VolleyService volleyService = new VolleyService(getActivity());
-        volleyService.getRequest(new IResult() {
-            @Override
-            public void notifySuccess(String requestType, String response) {
-                Log.e("Response :", response.toString());
-                dialog.dismiss();
-
-                try {
-                    Gson gson = new Gson();
-                    Location responsePost = gson.fromJson(response.toString(), Location.class);
-                    if (responsePost.getStatus().equals("Success")) {
-
-                        if (isSource) {
-                            etSourceCity.setText(responsePost.getPostOffice().get(0).getName() + ", " + responsePost.getPostOffice().get(0).getTaluk() + ", " +
-                                    responsePost.getPostOffice().get(0).getDistrict() + ", " + responsePost.getPostOffice().get(0).getState());
-                        } else {
-                            etDestinationCity.setText(responsePost.getPostOffice().get(0).getName() + ", " + responsePost.getPostOffice().get(0).getTaluk() + ", " +
-                                    responsePost.getPostOffice().get(0).getDistrict() + ", " + responsePost.getPostOffice().get(0).getState());
-
-                        }
-
-                    } else {
-                        showDialog(getString(R.string.no_pincode_found));
-
-                    }
-
-                } catch (Exception e) {
-
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void notifyError(String requestType, String error) {
-
-                Log.e("Response :", error.toString());
-                showDialog("ServerError :" + error.toString());
-
-//
-//                Intent intent = new Intent(getActivity(), ActivityContainer.class);
-//                intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_USER_TYPE);
-//                startActivity(intent);
-//
-                dialog.dismiss();
-
-            }
-        }, Request.Method.GET, C.API_GET_ADDRESS + pincode, Util.getHeader(getActivity()));
-
-
-    }
-
-    private void showDialog(String msg) {
-
-        AlertDialog.Builder builder;
-       /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder = new AlertDialog.Builder(getActivity(), android.R.style.Theme_Material_Dialog_Alert);
-        } else {
-            builder = new AlertDialog.Builder(getActivity());
-        }*/
-        builder = new AlertDialog.Builder(getActivity());
-
-        builder.setTitle(getString(R.string.alert))
-                .setMessage(msg)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-
-                    }
-                })
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
+        etDateOfLoad.setText("");
     }
 
     private void openCalender() {
         DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH));
         //  myCalendar.set(Calendar.YEAR, myCalendar.get(Calendar.MONTH) +1);
-        myCalendar.setTimeInMillis(System.currentTimeMillis());
-        datePickerDialog.getDatePicker().setMinDate(myCalendar.getTimeInMillis());
+        // myCalendar.setTimeInMillis(System.currentTimeMillis());
+        //   datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
         //datePickerDialog.getDatePicker().setMaxDate(myCalendar.getTimeInMillis()+1000*60*60*24*30);
-
-
         datePickerDialog.show();
-
-
     }
 
     DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
@@ -540,244 +266,251 @@ public class FragmentPostTruck extends Fragment {
         }
 
     };
+    public void getMaterialName() {
+
+
+        dialog = Util.getProgressDialog(getActivity(), R.string.please_wait);
+        dialog.setCancelable(false);
+        dialog.show();
+
+        MaterialNameRequest materialNameRequest=new MaterialNameRequest();
+        materialNameRequest.setMaterialTypeId(materialId);
+        HashMap<String, MaterialNameRequest> stringUserHashMap = new HashMap<>();
+        stringUserHashMap.put("vmsdata", materialNameRequest);
+        final Gson gson = new Gson();
+        String json = gson.toJson(stringUserHashMap);
+        JSONObject obj = null;
+        try {
+            obj = new JSONObject(json);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        VolleyService volleyService = new VolleyService(getActivity());
+        volleyService.postDataVolley(new IResult() {
+            @Override
+            public void notifySuccess(String requestType, String response) {
+                Log.e("Response :", response.toString());
+                dialog.dismiss();
+
+                Gson gson = new Gson();
+                try {
+                    MaterialNameResponse alArrayList = gson.fromJson(response, MaterialNameResponse.class);
+
+                    if (alArrayList.getStatus()) {
+
+                        materialList = alArrayList.getMaterials();
+                        setspinnerItemForMetetailName(materialList);
+                    }
+
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void notifyError(String requestType, String error) {
+
+                Log.e("Response :", error.toString());
+                dialog.dismiss();
+
+
+            }
+        }, "truckType", C.API_MATERIAL_NAME, Util.getHeader(getActivity()), obj);
+
+    }
+
+    void setspinnerItemForMetetailName(final List<Material> list) {
+        final AdapterMaterialName spinnerDisabilityArrayAdapter = new AdapterMaterialName(getActivity(), list);
+        final LayoutInflater factory = LayoutInflater.from(getActivity());
+        final View deleteDialogView = factory.inflate(
+                R.layout.layout_material_type, null);
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        //   dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(deleteDialogView);
+        dialog.setCancelable(true);
+
+        TextView tvTitle = (TextView) deleteDialogView.findViewById(R.id.tvTitle);
+        tvTitle.setText(R.string.select_material_type);
+
+        GridView gvMaterialType = (GridView) deleteDialogView.findViewById(R.id.gvMaterialType);
+        gvMaterialType.setAdapter(spinnerDisabilityArrayAdapter);
+        gvMaterialType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                /* vehicleId = "" + vehicletypeList.get(position).getId();*/
+                material = materialList.get(position);
+                String data = materialList.get(position).getName();
+                etMaterialName.setText(data);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+
+
+    }
+    public boolean isAllValid() {
+
+        if (etSourceCity.getText().toString().length() == 0) {
+            etSourceCity.setError(this.getResources().getString(R.string.required_field));
+            etSourceCity.requestFocus();
+            return false;
+        } else if (etDestinationCity.getText().toString().length() == 0) {
+            etDestinationCity.setError(this.getResources().getString(R.string.required_field));
+            etDestinationCity.requestFocus();
+            return false;
+        } else if (etMaterialtype.getText().toString().length() == 0) {
+            etMaterialtype.setError(this.getResources().getString(R.string.required_field));
+            etMaterialtype.requestFocus();
+            return false;
+        } else if (etMaterialName.getText().toString().length() == 0) {
+            etMaterialName.setError(this.getResources().getString(R.string.required_field));
+            etMaterialName.requestFocus();
+            return false;
+        } else if (etDateOfLoad.getText().toString().length() == 0) {
+            etDateOfLoad.setError(this.getResources().getString(R.string.required_field));
+            etDateOfLoad.requestFocus();
+            return false;
+        }
+
+
+        return true;
+    }
+
+    public void getMatirialType() {
+
+
+        dialog = Util.getProgressDialog(getActivity(), R.string.please_wait);
+        dialog.setCancelable(false);
+        dialog.show();
+
+
+        JSONObject obj = null;
+        try {
+            obj = new JSONObject("{\"ff\":\"ff\"}");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        VolleyService volleyService = new VolleyService(getActivity());
+        volleyService.postDataVolley(new IResult() {
+            @Override
+            public void notifySuccess(String requestType, String response) {
+                Log.e("Response :", response.toString());
+                dialog.dismiss();
+
+                Gson gson = new Gson();
+                try {
+                    MaterialTypeResponse alArrayList = gson.fromJson(response, MaterialTypeResponse.class);
+
+                    if (alArrayList.getStatusCode()) {
+
+                        materialTypesList = alArrayList.getData();
+                        setspinnerItemForMaterial(materialTypesList);
+                    }
+
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void notifyError(String requestType, String error) {
+
+                Log.e("Response :", error.toString());
+                dialog.dismiss();
+
+
+            }
+        }, "truckType", C.API_MATERIAL_TYPE, Util.getHeader(getActivity()), obj);
+
+    }
+    void setspinnerItemForMaterial(final List<MaterialType> list) {
+        final AdapterMaterialType spinnerDisabilityArrayAdapter = new AdapterMaterialType(getActivity(), list);
+        final LayoutInflater factory = LayoutInflater.from(getActivity());
+        final View deleteDialogView = factory.inflate(
+                R.layout.layout_material_type, null);
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        //   dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(deleteDialogView);
+        dialog.setCancelable(true);
+
+        TextView tvTitle = (TextView) deleteDialogView.findViewById(R.id.tvTitle);
+        tvTitle.setText(R.string.select_material_type);
+
+        GridView gvMaterialType = (GridView) deleteDialogView.findViewById(R.id.gvMaterialType);
+        gvMaterialType.setAdapter(spinnerDisabilityArrayAdapter);
+        gvMaterialType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                materialId = "" + materialTypesList.get(position).getId();
+                String data = materialTypesList.get(position).getMaterialName();
+                etMaterialtype.setText(data);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+
+
+    }
 
     private void updateLabel() {
 
         String myFormat = C.DATE_FORMAT;
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ENGLISH);
 
-        etDateOfPost.setText(sdf.format(myCalendar.getTime()));
-        dateOFLoad = "" + myCalendar.getTimeInMillis();
-
+        etDateOfLoad.setText(sdf.format(myCalendar.getTime()));
+        dateOFLoad = "" + myCalendar.getTimeInMillis()/1000L;
+    }
+    public void setSource(String stringExtra,String slat,String sLong) {
+        etSourceCity.setText(stringExtra);
+        this.sLat=slat;
+        this.sLong=sLong;
     }
 
-    public boolean isAllValid() {
-
-//        if (etSourcePincode.getText().toString().length() == 0) {
-//            etSourcePincode.setError(this.getResources().getString(R.string.required_field));
-//            etSourcePincode.requestFocus();
-//            return false;
-//        } else if (etDestinationPincode.getText().toString().length() == 0) {
-//            etDestinationPincode.setError(this.getResources().getString(R.string.required_field));
-//            etDestinationPincode.requestFocus();
-//            return false;
-//        } else
-            if (etWeight.getText().toString().length() == 0) {
-            etWeight.setError(this.getResources().getString(R.string.required_field));
-            etWeight.requestFocus();
-            return false;
-        } else if (etTruckType.getText().toString().length() == 0) {
-            etTruckType.setError(this.getResources().getString(R.string.required_field));
-            etTruckType.requestFocus();
-            return false;
-        } else if (etVehiclePart1.getText().toString().length() == 0) {
-            etVehiclePart1.setError(this.getResources().getString(R.string.required_field));
-            etVehiclePart1.requestFocus();
-            return false;
-        } else if (etVehiclePart2.getText().toString().length() == 0) {
-            etVehiclePart2.setError(this.getResources().getString(R.string.required_field));
-            etVehiclePart2.requestFocus();
-            return false;
-        } else if (etVehiclePart3.getText().toString().length() == 0) {
-            etVehiclePart3.setError(this.getResources().getString(R.string.required_field));
-            etVehiclePart3.requestFocus();
-            return false;
-        } else if (etDriverName.getText().toString().length() == 0) {
-            etDriverName.setError(this.getResources().getString(R.string.required_field));
-            etDriverName.requestFocus();
-            return false;
-        } else if (etMobileNumber.getText().toString().length() == 0) {
-            etMobileNumber.setError(this.getResources().getString(R.string.required_field));
-            etMobileNumber.requestFocus();
-            return false;
-        } else if (etMobileNumber.getText().toString().length() < 14) {
-            etMobileNumber.setError(this.getResources().getString(R.string.enter_valid_phone_number));
-            etMobileNumber.requestFocus();
-            return false;
-        }
-//        else if (etSourcePincode.getText().toString().length() < 6) {
-//            etSourcePincode.setError(this.getResources().getString(R.string.please_enter_valid_pincode));
-//            etSourcePincode.requestFocus();
-//            return false;
-//        } else if (etDestinationPincode.getText().toString().length() < 6) {
-//            etDestinationPincode.setError(this.getResources().getString(R.string.please_enter_valid_pincode));
-//            etDestinationPincode.requestFocus();
-//            return false;
-//        }
-        return true;
+    public void setDestination(String stringExtra,String dlat,String dLong) {
+        etDestinationCity.setText(stringExtra);
+        this.dLat=dlat;
+        this.dLong=dLong;
+    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
-    public void getTruckType() {
+    private void showDialog(String msg) {
 
+        AlertDialog.Builder builder;
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(this);
+        }*/
 
-        dialog = Util.getProgressDialog(getActivity(), R.string.please_wait);
-        dialog.setCancelable(false);
-        dialog.show();
+        builder = new AlertDialog.Builder(getActivity());
 
+        builder.setTitle("Alert")
+                .setMessage(msg)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
 
-        JSONObject obj = null;
-        try {
-            obj = new JSONObject("{\"ff\":\"ff\"}");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        VolleyService volleyService = new VolleyService(getActivity());
-        volleyService.postDataVolley(new IResult() {
-            @Override
-            public void notifySuccess(String requestType, String response) {
-                Log.e("Response :", response.toString());
-                dialog.dismiss();
-
-                Gson gson = new Gson();
-                try {
-                    TruckTypeResponse alArrayList = gson.fromJson(response, TruckTypeResponse.class);
-                    if (alArrayList.getStatusCode().equals(C.STATUS_SUCCESS)) {
-
-                        truckTypesList = alArrayList.getData();
-                        setspinnerItemForTruck(truckTypesList);
                     }
-
-                } catch (Exception e) {
-
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void notifyError(String requestType, String error) {
-
-                Log.e("Response :", error.toString());
-                dialog.dismiss();
-
-
-            }
-        }, "truckType", C.API_TRUCK_TYPE, Util.getHeader(getActivity()), obj);
-
-    }
-
-
-    void setspinnerItemForTruck(List<TruckType> list) {
-
-
-        etTruckType.setHint(getString(R.string.select));
-        final ArrayAdapter<TruckType> spinnerDisabilityArrayAdapter = new ArrayAdapter<TruckType>(
-                getActivity(), R.layout.spinner_item_new, list) {
-            @Override
-            public boolean isEnabled(int position) {
-                if (position == 0) {
-                    // Disable the first item from Spinner
-                    // First item will be use for hint
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-
-            @Override
-            public View getDropDownView(int position, View convertView,
-                                        ViewGroup parent) {
-                View view = super.getDropDownView(position, convertView, parent);
-                TextView tv = (TextView) view;
-                if (position == 0) {
-                    // Set the hint text color gray
-                    tv.setTextColor(Color.GRAY);
-                } else {
-                    tv.setTextColor(Color.BLACK);
-                }
-                return view;
-            }
-        };
-        spinnerDisabilityArrayAdapter.setDropDownViewResource(R.layout.dialog_spinner_dropdown_item);
-        spinnerTruckType.setAdapter(spinnerDisabilityArrayAdapter);
-    }
-
-    public void getWeightList() {
-
-
-        dialog = Util.getProgressDialog(getActivity(), R.string.please_wait);
-        dialog.setCancelable(false);
-        dialog.show();
-
-
-        JSONObject obj = null;
-        try {
-            obj = new JSONObject("{\"ff\":\"ff\"}");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        VolleyService volleyService = new VolleyService(getActivity());
-        volleyService.postDataVolley(new IResult() {
-            @Override
-            public void notifySuccess(String requestType, String response) {
-                Log.e("Response :", response.toString());
-                dialog.dismiss();
-
-                Gson gson = new Gson();
-                try {
-                    WeightResponse alArrayList = gson.fromJson(response, WeightResponse.class);
-
-                    if (alArrayList.getStatusCode().equals(C.STATUS_SUCCESS)) {
-                        WeightType truckType = new WeightType();
-                        truckType.setId("0");
-                        truckType.setWeight(getString(R.string.select));
-                        alArrayList.getData().set(0, truckType);
-                        weightTypesList = alArrayList.getData();
-                        setspinnerItemForWeight(weightTypesList);
-                    }
-                } catch (Exception e) {
-
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void notifyError(String requestType, String error) {
-
-                Log.e("Response :", error.toString());
-                dialog.dismiss();
-
-
-            }
-        }, "truckType", C.API_WEIGHT, Util.getHeader(getActivity()), obj);
-
-    }
-
-    void setspinnerItemForWeight(List<WeightType> list) {
-
-        etWeight.setHint(getString(R.string.select));
-        final ArrayAdapter<WeightType> spinnerDisabilityArrayAdapter = new ArrayAdapter<WeightType>(
-                getActivity(), R.layout.spinner_item_new, list) {
-            @Override
-            public boolean isEnabled(int position) {
-                if (position == 0) {
-                    // Disable the first item from Spinner
-                    // First item will be use for hint
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-
-            @Override
-            public View getDropDownView(int position, View convertView,
-                                        ViewGroup parent) {
-                View view = super.getDropDownView(position, convertView, parent);
-                TextView tv = (TextView) view;
-                if (position == 0) {
-                    // Set the hint text color gray
-                    tv.setTextColor(Color.GRAY);
-                } else {
-                    tv.setTextColor(Color.BLACK);
-                }
-                return view;
-            }
-        };
-        spinnerDisabilityArrayAdapter.setDropDownViewResource(R.layout.dialog_spinner_dropdown_item);
-//        spinnerWeight.setAdapter(spinnerDisabilityArrayAdapter);
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
 }

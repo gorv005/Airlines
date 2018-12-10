@@ -70,8 +70,8 @@ public interface C {
     String API_MATERIAL_NAME = BASE_URL + "master/materials";
     String API_WEIGHT = BASE_URL + "trucks/weight";
     String API_TRUCK_LOAD = BASE_URL + "load/create";
-    String API_TRUCK_POST = BASE_URL + "trucks/truckpost";
-    String API_TRUCK_LIST = BASE_URL + "trucks/get_trucks";
+    String API_TRUCK_POST = BASE_URL + "vehiclepost/create";
+    String API_TRUCK_LIST = BASE_URL + "vehicle/data";
     String API_LOAD_LIST = BASE_URL + "trucks/get_loads";
 
     String API_ADD_TRUCK = BASE_URL + "vehicle/create";

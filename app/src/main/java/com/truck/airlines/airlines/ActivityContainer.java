@@ -27,6 +27,7 @@ import com.truck.airlines.airlines.fragments.FragmentSplash;
 import com.truck.airlines.airlines.fragments.FragmentTruckList;
 import com.truck.airlines.airlines.fragments.FragmentUserRegistration;
 import com.truck.airlines.airlines.fragments.FragmentUserType;
+import com.truck.airlines.airlines.pojos.PostTruck;
 import com.truck.airlines.airlines.utils.C;
 
 import java.util.List;
@@ -255,7 +256,21 @@ public class ActivityContainer extends AppCompatActivity {
                 ((FragmentLoadsSummary) fragment).setDestination(data.getStringExtra(C.ADDRESS_DESTINATION), data.getStringExtra(C.LATITUDE), data.getStringExtra(C.LONGITUDE));
 
             }
+
         }
+        else  if (fragment instanceof FragmentPostTruck) {
+            if (data.getStringExtra(C.ADDRESS_SOURCE) != null) {
+
+                ((FragmentPostTruck) fragment).setSource(data.getStringExtra(C.ADDRESS_SOURCE),data.getStringExtra(C.LATITUDE),data.getStringExtra(C.LONGITUDE));
+
+
+            }  else if (data.getStringExtra(C.ADDRESS_DESTINATION) != null) {
+                ((FragmentPostTruck) fragment).setDestination(data.getStringExtra(C.ADDRESS_DESTINATION),data.getStringExtra(C.LATITUDE),data.getStringExtra(C.LONGITUDE));
+
+            }
+
+        }
+
     }
 
 

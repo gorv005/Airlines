@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +17,13 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.truck.airlines.airlines.R;
+import com.truck.airlines.airlines.adapter.AdapterTruckListing;
 import com.truck.airlines.airlines.adapter.AdapterTrucklist;
 import com.truck.airlines.airlines.interfaces.IResult;
+import com.truck.airlines.airlines.pojos.LoadSummaryReq;
 import com.truck.airlines.airlines.pojos.ResponseTruckList;
 import com.truck.airlines.airlines.utils.C;
+import com.truck.airlines.airlines.utils.SharedPreference;
 import com.truck.airlines.airlines.utils.Util;
 import com.truck.airlines.airlines.webservice.VolleyService;
 
@@ -39,7 +43,7 @@ public class FragmentTruckList extends Fragment {
     @BindView(R.id.tvTotalTruck)
     TextView tvTotalTruck;
     @BindView(R.id.lvTruckList)
-    ListView lvTruckList;
+    RecyclerView lvTruckList;
     private Dialog dialog;
 
     public FragmentTruckList() {
@@ -64,14 +68,15 @@ public class FragmentTruckList extends Fragment {
     }
 
     private void getTruckList() {
-
+        LoadSummaryReq loadSummaryReq = new LoadSummaryReq();
+        loadSummaryReq.setUId(SharedPreference.getInstance(getActivity()).getLoginUser(C.USER).getUId());
         dialog = Util.getProgressDialog(getActivity(), R.string.please_wait);
         dialog.setCancelable(false);
         dialog.show();
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("phone", "ff");
+        HashMap<String, LoadSummaryReq> stringUserHashMap = new HashMap<>();
+        stringUserHashMap.put("vmsdata", loadSummaryReq);
         final Gson gson = new Gson();
-        String json = gson.toJson(hashMap);
+        String json = gson.toJson(stringUserHashMap);
         JSONObject obj = null;
         try {
             obj = new JSONObject(json);
@@ -89,12 +94,10 @@ public class FragmentTruckList extends Fragment {
                 try {
                     Gson gson = new Gson();
                     ResponseTruckList responsePost = gson.fromJson(response.toString(), ResponseTruckList.class);
-                    if (responsePost.getStatusCode().equals(C.STATUS_SUCCESS)) {
+                    if (responsePost.getStatus()) {
 
-                        AdapterTrucklist adapterTrucklist = new AdapterTrucklist(getActivity(), responsePost.getData());
+                        AdapterTruckListing adapterTrucklist = new AdapterTruckListing(getActivity(), responsePost.getVmsdata());
                         lvTruckList.setAdapter(adapterTrucklist);
-                        tvTotalTruck.setText("Total truck : " + responsePost.getData().size());
-
 
                     } else {
 //                        Util.showAlert(getActivity(), getString(R.string.alert), responsePost.getMessage(), getString(R.string.ok), R.drawable.warning);

@@ -8,25 +8,34 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ResponseTruckList {
 
-    @SerializedName("status_code")
+    @SerializedName("vmsdata")
     @Expose
-    private String statusCode;
+    private List<TruckInfo> vmsdata = null;
+    @SerializedName("status")
+    @Expose
+    private Boolean status;
     @SerializedName("message")
     @Expose
     private String message;
-    @SerializedName("data")
-    @Expose
-    private ArrayList<Truck> data = null;
 
-    public String getStatusCode() {
-        return statusCode;
+    public List<TruckInfo> getVmsdata() {
+        return vmsdata;
     }
 
-    public void setStatusCode(String statusCode) {
-        this.statusCode = statusCode;
+    public void setVmsdata(List<TruckInfo> vmsdata) {
+        this.vmsdata = vmsdata;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
     public String getMessage() {
@@ -35,14 +44,6 @@ public class ResponseTruckList {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    public ArrayList<Truck> getData() {
-        return data;
-    }
-
-    public void setData(ArrayList<Truck> data) {
-        this.data = data;
     }
 
 }

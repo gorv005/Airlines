@@ -1,270 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content_activity_home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical">
 
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="5dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="@string/submit"
+        android:textColor="@color/colorwhite"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_above="@id/btnSubmit"
         android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
             android:layout_marginTop="5dp"
             android:orientation="vertical"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp">
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/vehicle_no"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/etVehiclePart1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="Ex-PB"
-                    android:inputType="textCapWords"
-                    android:maxLength="2"
-
-                    android:maxLines="1"
-                    android:textColor="@color/black" />
-
-                <EditText
-                    android:id="@+id/etVehiclePart2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="Ex-03"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:maxLines="1"
-                    android:textColor="@color/black" />
-
-                <EditText
-                    android:id="@+id/etVehiclePart3"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="Ex-V4999"
-                    android:inputType="textCapWords"
-                    android:maxLength="7"
-
-                    android:maxLines="1"
-                    android:textColor="@color/black" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/driverName"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-
-            <EditText
-                android:id="@+id/etDriverName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textCapWords"
-                android:maxLength="50"
-                android:maxLines="1"
-                android:textColor="@color/black" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/mobileNumber"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-
-            <EditText
-                android:id="@+id/etMobileNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/mobileNumber"
-                android:inputType="number"
-                android:maxLength="14"
-                android:maxLines="1"
-                android:textColor="@color/black" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/source_city"
-                android:textSize="16sp"
-                android:textStyle="bold" />
 
 
             <TextView
                 android:id="@+id/etSourceCity"
-                style="@style/Base.Widget.AppCompat.EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/source_city"
-                android:maxLength="6"
+                android:editable="false"
+                android:focusable="false"
+                android:inputType="textCapWords"
                 android:maxLines="1"
+                android:paddingBottom="20dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="20dp"
                 android:textColor="@color/black" />
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/destination_city"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey" />
 
             <TextView
                 android:id="@+id/etDestinationCity"
-                style="@style/Base.Widget.AppCompat.EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:editable="false"
                 android:focusable="false"
-                android:hint="@string/destination_city"
                 android:inputType="textCapWords"
                 android:maxLines="1"
+                android:paddingBottom="20dp"
+                android:paddingLeft="10dp"
+                android:hint="@string/destination_city"
+                android:paddingTop="20dp"
                 android:textColor="@color/black" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/date_of_post"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey" />
 
 
             <TextView
-                android:id="@+id/etDateOfPost"
-                style="@style/Widget.AppCompat.EditText"
+                android:id="@+id/etMaterialtype"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/destination"
                 android:editable="false"
                 android:focusable="false"
-                android:hint="@string/date_of_post"
-                android:lines="1"
-                android:maxLength="50"
+                android:hint="@string/Materialtype"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:paddingBottom="20dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="20dp"
                 android:textColor="@color/black" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/weight"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey" />
 
             <TextView
-                android:id="@+id/etWeight"
-                style="@style/Base.Widget.AppCompat.EditText"
+                android:id="@+id/etMaterialName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/down_arrow"
+                android:editable="false"
+                android:focusable="false"
+                android:hint="@string/material_name"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:paddingBottom="20dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="20dp"
+                android:textColor="@color/black" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:visibility="gone"
+                android:background="@color/grey" />
+
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/etWeight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:editable="false"
                 android:focusable="false"
                 android:hint="@string/weight"
-                android:lines="1"
-                android:maxLength="50"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:paddingBottom="20dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="20dp"
                 android:textColor="@color/black" />
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey" />
 
-            <TextView
-                android:layout_width="wrap_content"
 
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/truck_type"
-                android:textSize="16sp"
-                android:textStyle="bold" />
 
 
             <TextView
-                android:id="@+id/etTruckType"
-                style="@style/Base.Widget.AppCompat.EditText"
+                android:id="@+id/etDateOfLoad"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/down_arrow"
                 android:editable="false"
                 android:focusable="false"
-                android:hint="@string/truck_type"
-                android:lines="1"
-                android:maxLength="50"
+                android:hint="@string/date_of_load"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:paddingBottom="20dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="20dp"
                 android:textColor="@color/black" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/no_of_trucks"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:visibility="gone" />
-
-
-            <EditText
-                android:id="@+id/etNoOfTruck"
-
+            <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/down_arrow"
-                android:editable="false"
-                android:focusable="false"
-                android:lines="1"
-                android:maxLength="50"
-                android:textColor="@color/black"
-                android:visibility="gone" />
+                android:layout_height="1dp"
+                android:background="@color/grey" />
 
-            <Spinner
-
-                android:id="@+id/spinnerNoOfTruck"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_gravity="start"
-                android:layout_marginEnd="4dp"
-                android:layout_marginStart="4dp"
-                android:gravity="start"
-                android:paddingStart="40dp"
-                android:visibility="invisible" />
-
-            <Button
-                android:id="@+id/btnSubmit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="15dp"
-                android:background="@color/colorPrimary"
-                android:gravity="center"
-                android:text="@string/submit"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
+
