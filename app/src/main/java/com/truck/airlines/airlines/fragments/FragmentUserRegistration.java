@@ -284,7 +284,7 @@ public class FragmentUserRegistration extends Fragment {
 
         HashMap<String, String> stringUserHashMap = new HashMap<>();
         stringUserHashMap.put("state_id", stateId);
-        HashMap<String, HashMap<String,String>> map = new HashMap<>();
+        HashMap<String, HashMap<String, String>> map = new HashMap<>();
         map.put("vmsdata", stringUserHashMap);
         final Gson gson = new Gson();
         String json = gson.toJson(map);

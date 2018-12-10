@@ -7,7 +7,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -176,44 +175,41 @@ public class Util {
                 sideMenuItems.add(new SideMenuItem(R.string.search_load, R.drawable.truck_left));
                 sideMenuItems.add(new SideMenuItem(R.string.post_truck, R.drawable.truck_left));
                 sideMenuItems.add(new SideMenuItem(R.string.search_truck, R.drawable.truck_left));
-                sideMenuItems.add(new SideMenuItem(R.string.profile, R.drawable.truck_left));
                 sideMenuItems.add(new SideMenuItem(R.string.my_loads, R.drawable.truck_left));
                 sideMenuItems.add(new SideMenuItem(R.string.my_trucks, R.drawable.truck_left));
                 sideMenuItems.add(new SideMenuItem(R.string.kyc_document, R.drawable.truck_left));
-                sideMenuItems.add(new SideMenuItem(R.string.about_us, R.drawable.truck_left));
-                sideMenuItems.add(new SideMenuItem(R.string.policy_info, R.drawable.truck_left));
-                sideMenuItems.add(new SideMenuItem(R.string.contact_us, R.drawable.truck_left));
                 sideMenuItems.add(new SideMenuItem(R.string.alternate_mobile_no, R.drawable.truck_left));
                 sideMenuItems.add(new SideMenuItem(R.string.toll_calculator, R.drawable.truck_left));
-                sideMenuItems.add(new SideMenuItem(R.string.logout, R.drawable.truck_left));
+
                 break;
             case 2:
                 break;
             case 3:
                 sideMenuItems.add(new SideMenuItem(R.string.post_a_load, R.drawable.truck_left));
                 sideMenuItems.add(new SideMenuItem(R.string.my_loads, R.drawable.truck_left));
-                sideMenuItems.add(new SideMenuItem(R.string.profile, R.drawable.truck_left));
-                sideMenuItems.add(new SideMenuItem(R.string.about_us, R.drawable.truck_left));
-                sideMenuItems.add(new SideMenuItem(R.string.policy_info, R.drawable.truck_left));
-                sideMenuItems.add(new SideMenuItem(R.string.contact_us, R.drawable.truck_left));
-                sideMenuItems.add(new SideMenuItem(R.string.logout, R.drawable.truck_left));
+
 
                 break;
             case 4:
                 sideMenuItems.add(new SideMenuItem(R.string.add_truck, R.drawable.truck_left));
                 sideMenuItems.add(new SideMenuItem(R.string.my_trucks, R.drawable.truck_left));
-                sideMenuItems.add(new SideMenuItem(R.string.about_us, R.drawable.truck_left));
-                sideMenuItems.add(new SideMenuItem(R.string.policy_info, R.drawable.truck_left));
-                sideMenuItems.add(new SideMenuItem(R.string.contact_us, R.drawable.truck_left));
-                sideMenuItems.add(new SideMenuItem(R.string.logout, R.drawable.truck_left));
+
                 break;
             case 5:
+                sideMenuItems.add(new SideMenuItem(R.string.post_a_load, R.drawable.truck_left));
+                sideMenuItems.add(new SideMenuItem(R.string.my_loads, R.drawable.truck_left));
+
                 break;
             case 6:
 
 
                 break;
         }
+        sideMenuItems.add(new SideMenuItem(R.string.profile, R.drawable.truck_left));
+        sideMenuItems.add(new SideMenuItem(R.string.about_us, R.drawable.truck_left));
+        sideMenuItems.add(new SideMenuItem(R.string.policy_info, R.drawable.truck_left));
+        sideMenuItems.add(new SideMenuItem(R.string.contact_us, R.drawable.truck_left));
+        sideMenuItems.add(new SideMenuItem(R.string.logout, R.drawable.truck_left));
 
 //        } else {
 //            sideMenuItems.add(new SideMenuItem(R.string.post_a_load, R.drawable.truck_left));
@@ -262,6 +258,8 @@ public class Util {
                 sideMenuItems.add(new SideMenuItem(R.string.my_trucks, R.drawable.truck_left));
                 break;
             case 5:
+                sideMenuItems.add(new SideMenuItem(R.string.post_a_load, R.drawable.truck_left));
+                sideMenuItems.add(new SideMenuItem(R.string.my_loads, R.drawable.truck_left));
                 break;
             case 6:
                 break;

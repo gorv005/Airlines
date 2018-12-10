@@ -11,8 +11,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.truck.airlines.airlines.fragments.FragmentAboutUs;
 import com.truck.airlines.airlines.fragments.FragmentAddTruck;
-import com.truck.airlines.airlines.fragments.FragmentAddressSearch;
+import com.truck.airlines.airlines.fragments.FragmentContactUs;
 import com.truck.airlines.airlines.fragments.FragmentKYCDocuments;
 import com.truck.airlines.airlines.fragments.FragmentLanguageSelect;
 import com.truck.airlines.airlines.fragments.FragmentLoadList;
@@ -87,42 +88,50 @@ public class ActivityContainer extends AppCompatActivity {
                 fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_REGISTER);
                 break;
             case C.FRAGMENT_POST_TRUCK:
+                tvTitle.setText(R.string.post_truck);
                 fragment = new FragmentPostTruck();
                 fragmentTransaction.replace(R.id.container, fragment);
                 fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_POST_TRUCK);
                 break;
             case C.FRAGMENT_POST_LOAD:
+                tvTitle.setText(R.string.post_a_load);
                 fragment = new FragmentPostLoad();
                 fragmentTransaction.replace(R.id.container, fragment);
                 fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_POST_LOAD);
                 break;
             case C.FRAGMENT_PROFILE:
+                tvTitle.setText(R.string.profile);
                 fragment = new FragmentProfile();
                 fragmentTransaction.replace(R.id.container, fragment);
                 fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_PROFILE);
                 break;
             case C.FRAGMENT_TOTAL_TRUCK:
+                tvTitle.setText(R.string.total_truck);
                 fragment = new FragmentTruckList();
                 fragmentTransaction.replace(R.id.container, fragment);
                 fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_TOTAL_TRUCK);
                 break;
             case C.FRAGMENT_LOADS_SUMMARY:
+                tvTitle.setText(R.string.load_summary);
                 fragment = new FragmentLoadsSummary();
                 fragmentTransaction.replace(R.id.container, fragment);
                 fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_TOTAL_LOAD);
                 break;
             case C.FRAGMENT_TOTAL_LOADS:
+                tvTitle.setText(R.string.load_list);
                 fragment = new FragmentLoadList();
                 fragmentTransaction.replace(R.id.container, fragment);
                 fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_TOTAL_LOAD);
                 break;
             case C.FRAGMENT_KYC_DOCUMENT:
+                tvTitle.setText(R.string.kyc_document);
                 fragment = new FragmentKYCDocuments();
                 fragmentTransaction.replace(R.id.container, fragment);
                 fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_KYC_DOCUMENT);
                 break;
             case C.FRAGMENT_ABOUT_US:
-                fragment = new FragmentAddressSearch();
+
+                fragment = new FragmentAboutUs();
                 fragmentTransaction.replace(R.id.container, fragment);
                 fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_ABOUT_US);
                 break;
@@ -145,6 +154,13 @@ public class ActivityContainer extends AppCompatActivity {
                 fragmentTransaction.replace(R.id.container, fragment);
                 fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_ADD_TRUCK);
                 break;
+            case C.FRAGMENT_CONTACT_US:
+                getSupportActionBar().show();
+                fragment = new FragmentContactUs();
+                fragmentTransaction.replace(R.id.container, fragment);
+                fragmentTransaction.addToBackStack(C.TAG_FRAGMENT_CONTACT_US);
+                break;
+
 
         }
         fragment.setArguments(bundle);
@@ -220,24 +236,23 @@ public class ActivityContainer extends AppCompatActivity {
             if (resultCode == C.RESULT_ADDRESS) {
                 if (data.getStringExtra(C.ADDRESS_SOURCE) != null) {
 
-                    ((FragmentPostLoad) fragment).setSource(data.getStringExtra(C.ADDRESS_SOURCE),data.getStringExtra(C.LATITUDE),data.getStringExtra(C.LONGITUDE));
+                    ((FragmentPostLoad) fragment).setSource(data.getStringExtra(C.ADDRESS_SOURCE), data.getStringExtra(C.LATITUDE), data.getStringExtra(C.LONGITUDE));
 
 
                 } else if (data.getStringExtra(C.ADDRESS_DESTINATION) != null) {
-                    ((FragmentPostLoad) fragment).setDestination(data.getStringExtra(C.ADDRESS_DESTINATION),data.getStringExtra(C.LATITUDE),data.getStringExtra(C.LONGITUDE));
+                    ((FragmentPostLoad) fragment).setDestination(data.getStringExtra(C.ADDRESS_DESTINATION), data.getStringExtra(C.LATITUDE), data.getStringExtra(C.LONGITUDE));
 
                 }
             }
 
-        }
-        else  if (fragment instanceof FragmentLoadsSummary) {
+        } else if (fragment instanceof FragmentLoadsSummary) {
             if (data.getStringExtra(C.ADDRESS_SOURCE) != null) {
 
-                ((FragmentLoadsSummary) fragment).setSource(data.getStringExtra(C.ADDRESS_SOURCE),data.getStringExtra(C.LATITUDE),data.getStringExtra(C.LONGITUDE));
+                ((FragmentLoadsSummary) fragment).setSource(data.getStringExtra(C.ADDRESS_SOURCE), data.getStringExtra(C.LATITUDE), data.getStringExtra(C.LONGITUDE));
 
 
             } else if (data.getStringExtra(C.ADDRESS_DESTINATION) != null) {
-                ((FragmentLoadsSummary) fragment).setDestination(data.getStringExtra(C.ADDRESS_DESTINATION),data.getStringExtra(C.LATITUDE),data.getStringExtra(C.LONGITUDE));
+                ((FragmentLoadsSummary) fragment).setDestination(data.getStringExtra(C.ADDRESS_DESTINATION), data.getStringExtra(C.LATITUDE), data.getStringExtra(C.LONGITUDE));
 
             }
         }

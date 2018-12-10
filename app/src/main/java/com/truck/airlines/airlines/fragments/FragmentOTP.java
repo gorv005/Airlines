@@ -78,7 +78,7 @@ public class FragmentOTP extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         ButterKnife.bind(this, view);
-        etPhoneNumber.setText("8588848472");
+        etPhoneNumber.setText("9411008787");
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override

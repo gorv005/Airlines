@@ -1,6 +1,9 @@
 package com.truck.airlines.airlines;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -105,7 +108,7 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
                     intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_KYC_DOCUMENT);
                     startActivity(intent);
                 } else if (sideMenuItem.getNameResourse() == R.string.about_us) {
-                    Intent intent = new Intent(ActivityMain.this, ActivitySearchAddress.class);
+                    Intent intent = new Intent(ActivityMain.this, ActivityContainer.class);
                     intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_ABOUT_US);
                     startActivity(intent);
                 } else if (sideMenuItem.getNameResourse() == R.string.logout) {
@@ -113,8 +116,10 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
                     Intent intent = new Intent(ActivityMain.this, ActivityContainer.class);
                     intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_OTP);
                     startActivity(intent);
-                }else if (sideMenuItem.getNameResourse() == R.string.my_trucks) {
-
+                } else if (sideMenuItem.getNameResourse() == R.string.contact_us) {
+                    Intent intent = new Intent(ActivityMain.this, ActivityContainer.class);
+                    intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_CONTACT_US);
+                    startActivity(intent);
                 } else if (sideMenuItem.getNameResourse() == R.string.add_truck) {
                     Intent intent = new Intent(ActivityMain.this, ActivityContainer.class);
                     intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_ADD_TRUCK);
@@ -157,7 +162,7 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
                     startActivity(intent);
                 } else if (sideMenuItem.getNameResourse() == R.string.my_loads) {
                     Intent intent = new Intent(ActivityMain.this, ActivityContainer.class);
-                    intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_TOTAL_LOADS);
+                    intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_LOADS_SUMMARY);
                     startActivity(intent);
                 } else if (sideMenuItem.getNameResourse() == R.string.search_load) {
                     Intent intent = new Intent(ActivityMain.this, ActivityContainer.class);
@@ -172,10 +177,7 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
                     intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_ABOUT_US);
                     startActivity(intent);
                 } else if (sideMenuItem.getNameResourse() == R.string.logout) {
-                    SharedPreference.getInstance(ActivityMain.this).clearData();
-                    Intent intent = new Intent(ActivityMain.this, ActivityContainer.class);
-                    intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_OTP);
-                    startActivity(intent);
+                    showLogoutPopup();
                 } else if (sideMenuItem.getNameResourse() == R.string.my_trucks) {
 
                 } else if (sideMenuItem.getNameResourse() == R.string.add_truck) {
@@ -187,6 +189,35 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
         });
 
 
+    }
+
+    private void showLogoutPopup() {
+
+
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(this);
+        }
+        builder.setTitle(R.string.logout)
+                .setMessage(R.string.logout_msg)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        SharedPreference.getInstance(ActivityMain.this).clearData();
+                        Intent intent = new Intent(ActivityMain.this, ActivityContainer.class);
+                        intent.putExtra(C.FRAGMENT_ACTION, C.FRAGMENT_OTP);
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
 

@@ -113,6 +113,7 @@ public class FragmentLoadList extends Fragment {
 
                 Log.e("Response :", error.toString());
                 showDialog("ServerError :" + error.toString());
+                dialog.dismiss();
 
 //
 //                Intent intent = new Intent(getActivity(), ActivityContainer.class);
